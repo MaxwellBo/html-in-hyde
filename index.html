@@ -8,6 +8,45 @@
   <style>
     body {
       background-color: skyblue;
+      /* background-color: rgb(111, 160, 38); */
+      /* background-image: url('img/clouds.webp'); */
+    }
+
+    #brat {
+      position: absolute;
+      text-align: center;
+      font-family: Arial, Helvetica, sans-serif;
+      vertical-align: middle;
+      line-height: 70px;      
+      width: 100px;
+      background-color: #8ace00;
+      height: 70px;
+      /* transform: translate3d(25em, 6em, -6em) scaleX(0.7) rotateY(-384deg); */
+      animation: spin 3s ease-in-out infinite;
+    }
+
+    @keyframes spin {
+      0% {
+        transform: translate3d(13em, 6em, -6em) rotateY(0deg);
+      }
+
+      25% {
+        transform: translate3d(25em, 6em, -6em) scaleX(0.7) rotateY(180deg);
+      }
+
+      50% {
+        /* transform: ; */
+        transform: translate3d(25em, 6em, -6em) scaleX(0.7) rotateY(0deg);
+      }
+
+      75% {
+        /* transform: ; */
+        transform: translate3d(25em, 6em, -6em) scaleX(0.7) rotateY(-180deg);
+      }
+
+      100% {
+        transform: translate3d(13em, 6em, -6em) scaleX(0.7) rotateY(0deg);
+      }
     }
 
     #scene {
@@ -184,6 +223,12 @@
         <li>picnic blankets (optional)</li>
       </ul>
     </div>
+    <form>
+      <input type="text" name="name" placeholder="Name" />
+      <input type="email" name="email" placeholder="Email" />
+      <button type="submit">RSVP</button>
+    </form>
+    <h2 id="brat">brat</h2>
     <img id="grass" src="img/grass.avif" alt="grass" />
     <img id="tree1" src="img/tree1.png" alt="tree" />
     <img id="tree2" src="img/tree1.png" alt="tree" />
