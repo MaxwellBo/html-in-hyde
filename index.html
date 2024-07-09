@@ -46,7 +46,7 @@
     #copy2 {
       padding: 0.5em;
       position: absolute;
-      transform: translate3d(8em, 43em, 13em) rotateY(2deg);
+      transform: translate3d(23em, 39em, 13em) rotateY(0deg);
       background-color: burlywood;
       font-size: smaller;
     }
@@ -56,6 +56,11 @@
       height: 200px;
       position: absolute;
       transform: translate3d(32em, 32em, -3em) rotateX(90deg) rotate(20deg)
+    }
+
+    #basket {
+      width: 72px;
+      transform: translate3d(37em, 34em, -4em);
     }
 
     #sun {
@@ -86,12 +91,62 @@
       position: absolute;
     }
 
+    ul {
+      padding-inline-start: 20px;
+    }
+
     #birds {
       position: absolute;
     }
 
     #butterfly {
       position: absolute;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    * {
+      margin: 0;
+    }
+
+    body {
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    img,
+    picture,
+    video,
+    canvas,
+    svg {
+      display: block;
+      max-width: 100%;
+    }
+
+    input,
+    button,
+    textarea,
+    select {
+      font: inherit;
+    }
+
+    p,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      overflow-wrap: break-word;
+    }
+
+    #root,
+    #__next {
+      isolation: isolate;
     }
   </style>
 </head>
@@ -104,14 +159,18 @@
       <p><b>When:</b> TBA
     </div>
     <div id="copy2">
-      All you need to bring is your own computer or HTML-writing device!
-      <br />
-      (Extra snacks and picnic blankets are welcome but not required.)
+      <p>Bring:</p>
+      <ul>
+        <li>a computer or HTML-writing device</li>
+        <li>snacks</li>
+        <li>picnic blankets (optional)</li>
+      </ul>
     </div>
     <img id="grass" src="img/grass.avif" alt="grass" />
     <img id="tree1" src="img/tree1.png" alt="tree" />
     <img id="tree2" src="img/tree1.png" alt="tree" />
-    <img id="blanket" src="img/blanket.jpg" alt="tree" />
+    <img id="blanket" src="img/blanket.jpg" alt="blanket" />
+    <img id="basket" src="img/basket.png" alt="basket" />
   </div>
 </body>
 
