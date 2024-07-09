@@ -63,6 +63,23 @@
       transform: translate3d(37em, 34em, -4em);
     }
 
+    #magpie {
+      width: 72px;
+      transform: translate3d(33em, 29em, -5em);
+      /* animation: peck 3s ease-in-out infinite; */
+    }
+
+    @keyframes peck {
+      0% {
+        transform: rotateZ(0deg);
+      }
+      50% {
+        transform: rotateZ(30deg);
+      }
+      100% {
+        transform: rotateZ(0deg);
+      }
+    }
     #sun {
       position: absolute;
     }
@@ -171,6 +188,7 @@
     <img id="tree2" src="img/tree1.png" alt="tree" />
     <img id="blanket" src="img/blanket.jpg" alt="blanket" />
     <img id="basket" src="img/basket.png" alt="basket" />
+    <img id="magpie" src="img/magpie.png" alt="magpie" />
   </div>
 </body>
 
