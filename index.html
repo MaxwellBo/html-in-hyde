@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HTML in Hyde</title>
+  <style>
+    body {
+      background-color: skyblue;
+    }
+
+    #scene {
+      position: relative;
+      perspective: 40em;
+      transform-style: preserve-3d;
+    }
+
+    #sun {
+      position: absolute;
+    }
+
+    #cloud {
+      position: absolute;
+    }
+
+    #duck {
+      position: absolute;
+    }
+
+    #grass {
+      position: absolute;
+      transform: translate3d(7em, 10em, 0em) rotateX(90deg);
+    }
+
+    #tree1 {
+      position: absolute;
+      transform: translate3d(5em, -11em, 3em) rotateY(30deg)
+    }
+
+    #tree2 {
+      position: absolute;
+      transform: translate3d(17em, -11em, -4em) rotateY(-30deg)
+    }
+
+    #copy {
+      position: absolute;
+      transform: translate3d(9em, 19em, 10em) rotateY(7deg);
+      background-color: white;
+      font-size: smaller;
+    }
+
+    #rainbow {
+      position: absolute;
+    }
+
+    #flowers {
+      position: absolute;
+    }
+
+    #path {
+      position: absolute;
+    }
+
+    #bench {
+      position: absolute;
+    }
+
+    #birds {
+      position: absolute;
+    }
+
+    #butterfly {
+      position: absolute;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="scene">
+    <div id="copy">
+      <h1>HTML in Hyde</h1>
+      <p><b>Where:</b> Hyde Park
+      <p><b>When:</b> TBA
+    </div>
+    <img id="grass" src="img/grass.avif" alt="grass" />
+    <img id="tree1" src="img/tree1.png" alt="tree" />
+    <img id="tree2" src="img/tree1.png" alt="tree" />
+  </div>
+</body>
+
+</html>
