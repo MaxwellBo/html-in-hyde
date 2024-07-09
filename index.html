@@ -12,8 +12,50 @@
 
     #scene {
       position: relative;
-      perspective: 40em;
+      perspective: 50em;
+      margin: auto;
       transform-style: preserve-3d;
+    }
+
+    #grass {
+      width: 700px;
+      height: 600px;
+      position: absolute;
+      transform-origin: center center;
+      transform: translate3d(7em, 20em, -7em) rotateX(90deg);
+    }
+
+    #tree1 {
+      position: absolute;
+      transform: translate3d(-3em, 5em, -11em) rotateY(30deg)
+    }
+
+    #tree2 {
+      position: absolute;
+      transform: translate3d(27em, 4em, -11em) rotateY(-19deg);
+    }
+
+    #copy {
+      padding: 0.5em;
+      position: absolute;
+      transform: translate3d(12em, 36em, 8em) rotateY(7deg);
+      background-color: burlywood;
+      font-size: smaller;
+    }
+
+    #copy2 {
+      padding: 0.5em;
+      position: absolute;
+      transform: translate3d(29em, 43em, 13em) rotateY(-1deg);
+      background-color: burlywood;
+      font-size: smaller;
+    }
+
+    #blanket {
+      width: 200px;
+      height: 200px;
+      position: absolute;
+      transform: translate3d(32em, 32em, -3em) rotateX(90deg) rotate(20deg)
     }
 
     #sun {
@@ -26,28 +68,6 @@
 
     #duck {
       position: absolute;
-    }
-
-    #grass {
-      position: absolute;
-      transform: translate3d(7em, 14em, 0em) rotateX(90deg);
-    }
-
-    #tree1 {
-      position: absolute;
-      transform: translate3d(5em, -7em, 3em) rotateY(30deg)
-    }
-
-    #tree2 {
-      position: absolute;
-      transform: translate3d(17em, -7em, -4em) rotateY(-30deg)
-    }
-
-    #copy {
-      position: absolute;
-      transform: translate3d(9em, 23em, 10em) rotateY(7deg);
-      background-color: white;
-      font-size: smaller;
     }
 
     #rainbow {
@@ -83,9 +103,15 @@
       <p><b>Where:</b> Hyde Park
       <p><b>When:</b> TBA
     </div>
+    <div id="copy2">
+      All you need to bring is your own computer or HTML-writing device!
+      <br />
+      (Extra snacks and picnic blankets are welcome but not required.)
+    </div>
     <img id="grass" src="img/grass.avif" alt="grass" />
     <img id="tree1" src="img/tree1.png" alt="tree" />
     <img id="tree2" src="img/tree1.png" alt="tree" />
+    <img id="blanket" src="img/blanket.jpg" alt="tree" />
   </div>
 </body>
 
