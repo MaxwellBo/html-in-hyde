@@ -313,7 +313,7 @@
         const tick = () => {
           requestAnimationFrame(() => {
             const weight = bezier(str)
-            const angle = (Date.now() / 1000) % 360
+            const angle = (Date.now() / 1000)
             const originX = initPerX + (Math.sin(angle / 4) * 0.1)
             const originY = initPerY + (Math.cos(angle / 20) * 0.1) + 0.1
             const perX = (weight * touchX) + ((1-weight) * originX)
