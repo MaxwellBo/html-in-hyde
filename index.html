@@ -3,12 +3,15 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" 
+      content="width=1000, initial-scale=1.0, user-scalable=0"/>
   <title>HTML in Hyde</title>
   <style>
     body {
       background-color: skyblue;
       cursor: url('img/butterfly.png'), auto;
+      touch-action: none;
+      overflow: hidden;
       /* background-color: rgb(111, 160, 38); */
       /* background-image: url('img/clouds.webp'); */
     }
@@ -42,10 +45,11 @@
 
     #scene {
       position: relative;
-      perspective: 50em;
-      perspective-origin: top;
-      max-width: 800px;
-      margin: 5vw;
+      perspective: 40em;
+      perspective-origin: 50% 10%;
+      height: 100vh;
+      width: 100vw;
+      max-width: 1000px;
       transform-style: preserve-3d;
     }
 
@@ -67,13 +71,13 @@
       transform: translate3d(27em, 4em, -11em) rotateY(-19deg);
     }
 
-    #copy {
+    #copyTitle {
       padding: 0.5em;
       position: absolute;
       border-radius: 25px;
       background-color: white;
-      font-size: larger;
-      transform: translate3d(-3em, -2em, -8em) rotateY(32deg) rotateX(-11deg);
+      font-size: smaller;
+      transform: translate3d(10em, 12em, 12em) rotateY(10deg) rotateX(-11deg);
     }
 
     #copy2 {
@@ -99,7 +103,8 @@
       padding: 1em;
       position: absolute;
       background-color: #336312;
-      transform: translate3d(0em, 19em, -10em) rotateY(30deg) rotateX(0deg)
+      height: 4rem;
+      transform: translate3d(20em, 35em, 10em);
     }
 
     #attendees {
@@ -133,6 +138,10 @@
       width: 72px;
       transform: translate3d(33em, 34em, -5em);
       /* animation: peck 3s ease-in-out infinite; */
+    }
+
+    #spacing {
+      height: 70em;
     }
 
     @keyframes peck {
@@ -189,6 +198,12 @@
       position: absolute;
     }
 
+    #form {
+      position: absolute;
+      top: 5em;
+      left: 5em;
+    }
+
     *,
     *::before,
     *::after {
@@ -211,6 +226,9 @@
     svg {
       display: block;
       max-width: 100%;
+    }
+
+    #scene > * {
     }
 
     input,
@@ -239,7 +257,106 @@
 
 <body>
   <div id="scene">
-    <div id="copy">
+
+    <script>
+      document.addEventListener("DOMContentLoaded", async function () {
+        const rsvpList = document.getElementById('rsvps');
+        // https://www.val.town/v/mbo/htmlinhydeRSVPs
+        const endpoint = 'https://mbo-htmlinhydersvps.web.val.run';
+
+        const names = await fetch(endpoint).then(response => response.json());
+        
+        for (const name of names) {
+          const listItem = document.createElement('li');
+          listItem.textContent = name;
+          rsvpList.appendChild(listItem);
+        }
+        
+
+        var siteWidth = 900;
+        var scale = Math.min(screen.width, screen.height) / siteWidth;
+
+        document.querySelector('meta[name="viewport"]').setAttribute('content', 'width='+siteWidth+', initial-scale='+scale+'');
+
+        const count = document.createElement('p');
+        count.textContent = `RSVPs: ${names.length}`;
+        document.getElementById('rsvps').prepend(count);
+        // add touch listener
+        const scene = document.getElementById("scene")
+        let touchX = 0;
+        let touchY = 0;
+        let isTouching = false;
+        let str = 0;
+        let perX = 0.5;
+        let perY = 0.2;
+
+        const updateStr = () => {
+          setTimeout(() => {
+            if (isTouching) {
+              str = Math.min(1, str + 0.05);
+            } else {
+              str = Math.max(0, str - 0.05);
+            }
+            updateStr()
+          }, 50);
+        }
+        updateStr();
+        const bezier = (n) =>{
+          return n * n * (3.0 - 2.0 * n);
+        }
+        const tick = () => {
+          requestAnimationFrame(() => {
+            const weight = bezier(str)
+            perX = (weight * touchX) + ((1-weight) * 0.5)
+            perY = (weight * touchY) + ((1-weight) * 0.2)
+            scene.style.perspectiveOrigin = `${perX * 100}% ${perY * 100}%`
+            tick()
+          });
+        }
+        tick();
+        document.addEventListener('touchmove', function(event) {
+          const touch = event.touches[0];
+          touchX = (touch.clientX / window.innerWidth);
+          touchY = (touch.clientY / window.innerHeight);
+        });
+        document.addEventListener('touchstart', function() {
+          isTouching = true;
+        });
+        document.addEventListener('touchend', function() {
+          isTouching = false;
+        });
+        document.addEventListener('mousemove', function(e) {
+          touchX = (e.clientX / window.innerWidth);
+          touchY = (e.clientY / window.innerHeight);
+        });
+        document.addEventListener('mousedown', function() {
+          isTouching = true;
+        });
+        document.addEventListener('mouseup', function() {
+          isTouching = false;
+        });
+      });
+    </script>
+    <img id="grass" src="img/grass.avif" alt="grass" />
+    <div id="attendees">
+      <h2>Attendees</h2>
+      <ul id="rsvps"></ul>
+    </div>
+    <!-- https://www.val.town/v/mbo/htmlinhydeRSVPs -->
+    
+    <form id="rsvp" action="https://mbo-htmlinhydersvps.web.val.run" method="POST">
+      <input type="text" name="name" placeholder="Name" />
+      <input type="email" name="email" placeholder="Email" />
+      <button type="submit">RSVP</button>
+    </form>
+    <img id="tree2" src="img/tree1.png" alt="tree" />
+    <h2 id="brat">brat</h2>
+    <img id="tree1" src="img/tree1.png" alt="tree" />
+    <img id="blanket" src="img/blanket.jpg" alt="blanket" />
+    <img id="basket" src="img/basket.png" alt="basket" />
+    <img id="magpie" src="img/magpie.png" alt="magpie" />
+
+    <div id="copyTitle">
       <h1>HTML in Hyde #0</h1>
       <p><b>Where:</b> Hyde Park
       <p><b>When:</b> Sunday, 21st July, 2024
@@ -263,42 +380,7 @@
         <a href="resources.html">resources →</a>
       </p>
     </div>
-    <script>
-      document.addEventListener("DOMContentLoaded", async function () {
-        const rsvpList = document.getElementById('rsvps');
-        // https://www.val.town/v/mbo/htmlinhydeRSVPs
-        const endpoint = 'https://mbo-htmlinhydersvps.web.val.run';
-
-        const names = await fetch(endpoint).then(response => response.json());
-        
-        for (const name of names) {
-          const listItem = document.createElement('li');
-          listItem.textContent = name;
-          rsvpList.appendChild(listItem);
-        }
-        
-        const count = document.createElement('p');
-        count.textContent = `RSVPs: ${names.length}`;
-        document.getElementById('rsvps').prepend(count);
-      });
-    </script>
-    <div id="attendees">
-      <h2>Attendees</h2>
-      <ul id="rsvps"></ul>
-    </div>
-    <!-- https://www.val.town/v/mbo/htmlinhydeRSVPs -->
-    <form id="rsvp" action="https://mbo-htmlinhydersvps.web.val.run" method="POST">
-      <input type="text" name="name" placeholder="Name" />
-      <input type="email" name="email" placeholder="Email (for reminder)" />
-      <button type="submit">RSVP</button>
-    </form>
-    <h2 id="brat">brat</h2>
-    <img id="grass" src="img/grass.avif" alt="grass" />
-    <img id="tree1" src="img/tree1.png" alt="tree" />
-    <img id="tree2" src="img/tree1.png" alt="tree" />
-    <img id="blanket" src="img/blanket.jpg" alt="blanket" />
-    <img id="basket" src="img/basket.png" alt="basket" />
-    <img id="magpie" src="img/magpie.png" alt="magpie" />
+    <div id="spacing" ></div>
   </div>
 </body>
 
