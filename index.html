@@ -50,6 +50,7 @@
       width: 100vw;
       max-width: 1000px;
       transform-style: preserve-3d;
+      touch-action: none;
     }
 
     #grass {
@@ -289,7 +290,7 @@
         let isTouching = false;
         let str = 0;
         let perX = 0.5;
-        let perY = 0.2;
+        let perY = 0.05;
 
         const updateStr = () => {
           setTimeout(() => {
@@ -309,7 +310,7 @@
           requestAnimationFrame(() => {
             const weight = bezier(str)
             perX = (weight * touchX) + ((1-weight) * 0.5)
-            perY = (weight * touchY) + ((1-weight) * 0.2)
+            perY = (weight * touchY) + ((1-weight) * 0.2) - 0.15
             scene.style.perspectiveOrigin = `${perX * 100}% ${perY * 100}%`
             tick()
           });
