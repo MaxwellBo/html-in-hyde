@@ -50,7 +50,6 @@
       width: 100vw;
       max-width: 1000px;
       transform-style: preserve-3d;
-      touch-action: none;
     }
 
     #grass {
@@ -333,6 +332,7 @@
         });
         document.addEventListener('touchend', function(e) {
           isTouching = false;
+          scene.style.touchAction = 'auto';
         });
         document.addEventListener('mousemove', function(e) {
           touchX = (e.clientX / window.innerWidth);
