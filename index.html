@@ -4,15 +4,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" 
-      content="width=1000, initial-scale=1.0"/>
+      content="initial-scale=1"/>
   <title>HTML in Hyde</title>
   <style>
     body {
       background-color: skyblue;
       cursor: url('img/butterfly.png'), auto;
       overflow: hidden;
+      height: 100vh;
+      width: 100vw;
+      box-sizing: border-box;
       /* background-color: rgb(111, 160, 38); */
       /* background-image: url('img/clouds.webp'); */
+      touch-action: pinch-zoom;
     }
 
     #brat {
@@ -48,7 +52,7 @@
       perspective-origin: 50% 10%;
       height: 100vh;
       width: 100vw;
-      max-width: 1000px;
+      max-width: 900px;
       transform-style: preserve-3d;
     }
 
@@ -56,7 +60,6 @@
       width: 700px;
       height: 600px;
       position: absolute;
-      transform-origin: center center;
       transform: translate3d(7em, 20em, -7em) rotateX(90deg);
     }
 
@@ -227,6 +230,10 @@
     }
 
     #scene > * {
+      user-select: none;
+    }
+    #rsvp {
+      user-select: auto !important;
     }
 
     input,
@@ -272,9 +279,9 @@
         
 
         var siteWidth = 900;
-        var scale = Math.min(screen.width, screen.height) / siteWidth;
-        const offsetY = Math.max(0, screen.height - screen.width*1) / 2
-        const offsetX = Math.max(0, screen.width - screen.height*1) / 2
+        var scale = Math.min(document.documentElement.clientWidth, document.documentElement.clientHeight) / siteWidth;
+        const offsetY = Math.max(0, window.innerHeight - window.innerWidth*1) / 2
+        const offsetX = Math.max(0, window.innerWidth - window.innerHeight*1) / 2
         document.body.style.paddingTop = `${offsetY}px`
         document.body.style.paddingLeft = `${offsetX}px`
         document.querySelector('meta[name="viewport"]').setAttribute('content', 'width='+siteWidth+', initial-scale='+scale+'');
@@ -290,16 +297,15 @@
         let str = 0;
         let perX = 0.5;
         let perY = 0.05;
-
         const updateStr = () => {
           setTimeout(() => {
             if (isTouching) {
-              str = Math.min(1, str + 0.05);
+              str = Math.min(1, str + 0.01);
             } else {
-              str = Math.max(0, str - 0.05);
+              str = Math.max(0, str - 0.01);
             }
             updateStr()
-          }, 50);
+          }, 10);
         }
         updateStr();
         const bezier = (n) =>{
@@ -318,21 +324,22 @@
         document.addEventListener('touchmove', function(event) {
           if (event.touches.length === 1) {
             isTouching = true
-            scene.style.touchAction = 'none';
           } else {
             isTouching = false
-            scene.style.touchAction = 'auto';
           }
           const touch = event.touches[0];
           touchX = (touch.clientX / window.innerWidth);
           touchY = (touch.clientY / window.innerHeight);
         });
         document.addEventListener('touchstart', function(e) {
-          isTouching = true;
+          if (e.touches.length === 1) {
+            isTouching = true
+          } else {
+            isTouching = false
+          }
         });
         document.addEventListener('touchend', function(e) {
           isTouching = false;
-          scene.style.touchAction = 'auto';
         });
         document.addEventListener('mousemove', function(e) {
           touchX = (e.clientX / window.innerWidth);
