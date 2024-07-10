@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" 
-      content="width=1000, initial-scale=1.0, user-scalable=0"/>
+      content="width=1000, initial-scale=1.0"/>
   <title>HTML in Hyde</title>
   <style>
     body {
@@ -31,15 +31,15 @@
 
     @keyframes spin {
       0% {
-        transform: translate3d(13em, 6em, -6em) scaleX(0.7) rotateY(0);
+        transform: translate3d(13em, 6em, -11em) scaleX(0.7) rotateY(0);
       }
 
       50% {
-        transform: translate3d(25em, 6em, -6em) scaleX(0.7) rotateY(360deg);
+        transform: translate3d(25em, 6em, -11em) scaleX(0.7) rotateY(360deg);
       }
 
       100% {
-        transform: translate3d(13em, 6em, -6em) scaleX(0.7) rotateY(-360deg);
+        transform: translate3d(13em, 6em, -11em) scaleX(0.7) rotateY(-360deg);
       }
     }
 
@@ -68,7 +68,7 @@
 
     #tree2 {
       position: absolute;
-      transform: translate3d(27em, 4em, -11em) rotateY(-19deg);
+      transform: translate3d(27em, 4em, -14em) rotateY(-19deg);
     }
 
     #copyTitle {
@@ -116,7 +116,6 @@
     }
 
     #rsvps {
-      max-height: 200px;
       overflow-y: scroll;
     }
 
@@ -315,14 +314,19 @@
         }
         tick();
         document.addEventListener('touchmove', function(event) {
+          if (event.touches.length === 1) {
+            isTouching = true
+          } else {
+            isTouching = false
+          }
           const touch = event.touches[0];
           touchX = (touch.clientX / window.innerWidth);
           touchY = (touch.clientY / window.innerHeight);
         });
-        document.addEventListener('touchstart', function() {
+        document.addEventListener('touchstart', function(e) {
           isTouching = true;
         });
-        document.addEventListener('touchend', function() {
+        document.addEventListener('touchend', function(e) {
           isTouching = false;
         });
         document.addEventListener('mousemove', function(e) {
@@ -349,9 +353,9 @@
       <input type="email" name="email" placeholder="Email" />
       <button type="submit">RSVP</button>
     </form>
-    <img id="tree2" src="img/tree1.png" alt="tree" />
-    <h2 id="brat">brat</h2>
     <img id="tree1" src="img/tree1.png" alt="tree" />
+    <h2 id="brat">brat</h2>
+    <img id="tree2" src="img/tree1.png" alt="tree" />
     <img id="blanket" src="img/blanket.jpg" alt="blanket" />
     <img id="basket" src="img/basket.png" alt="basket" />
     <img id="magpie" src="img/magpie.png" alt="magpie" />
