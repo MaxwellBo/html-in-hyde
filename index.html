@@ -16,7 +16,7 @@
       box-sizing: border-box;
       /* background-color: rgb(111, 160, 38); */
       /* background-image: url('img/clouds.webp'); */
-      touch-action: none;
+      touch-action: pinch-zoom;
     }
 
     #brat {
@@ -54,6 +54,7 @@
       width: 100vw;
       max-width: 900px;
       transform-style: preserve-3d;
+      touch-action: none;
     }
 
     #grass {
@@ -324,19 +325,12 @@
         document.addEventListener('touchmove', function(event) {
           if (event.touches.length === 1) {
             isTouching = true
-            scene.style.touchAction = 'none';
-            document.body.touchAction = 'none';
           } else {
             isTouching = false
-            scene.style.touchAction = 'auto';
-            document.body.touchAction = 'auto';
           }
           const touch = event.touches[0];
           touchX = (touch.clientX / window.innerWidth);
           touchY = (touch.clientY / window.innerHeight);
-          if (isTouching) {
-            event.stopPropagation();
-          }
         });
         document.addEventListener('touchstart', function(e) {
           if (e.touches.length === 1) {
@@ -347,7 +341,6 @@
         });
         document.addEventListener('touchend', function(e) {
           isTouching = false;
-          scene.style.touchAction = 'auto';
         });
         document.addEventListener('mousemove', function(e) {
           touchX = (e.clientX / window.innerWidth);
