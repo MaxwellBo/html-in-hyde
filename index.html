@@ -67,9 +67,10 @@
     #copy {
       padding: 0.5em;
       position: absolute;
-      transform: translate3d(12em, 36em, 8em) rotateY(7deg);
-      background-color: burlywood;
-      font-size: smaller;
+      border-radius: 25px;
+      background-color: white;
+      font-size: larger;
+      transform: translate3d(-3em, -2em, -8em) rotateY(32deg) rotateX(-11deg);
     }
 
     #copy2 {
@@ -77,9 +78,24 @@
       position: absolute;
       background-color: #4a79f1;
       border: 2px dotted;
-      background-image: url('img/blanket2.jpg');
-      transform: translate3d(23em, 39em, 13em) rotateY(5deg) rotateX(90deg);
+      /* background-image: url('img/blanket2.jpg'); */
+      transform: translate3d(11em, 42em, 2em) rotateY(5deg) rotateX(90deg);
       font-size: smaller;
+    }
+
+    #copy3 {
+      padding: 0.5em;
+      position: absolute;
+      background-color: burlywood;
+      transform: translate3d(8em, 41em, -9em) rotateY(6deg) rotateX(0deg);;
+      font-size: smaller;
+    }
+
+    #rsvp {
+      padding: 1em;
+      position: absolute;
+      background-color: #336312;
+      transform: translate3d(0em, 19em, -10em) rotateY(30deg) rotateX(0deg)
     }
 
     #blanket {
@@ -90,13 +106,15 @@
     }
 
     #basket {
+      position: absolute;
       width: 72px;
       transform: translate3d(37em, 34em, -4em);
     }
 
     #magpie {
+      position: absolute;
       width: 72px;
-      transform: translate3d(33em, 29em, -5em);
+      transform: translate3d(33em, 34em, -5em);
       /* animation: peck 3s ease-in-out infinite; */
     }
 
@@ -204,7 +222,7 @@
     <div id="copy">
       <h1>HTML in Hyde #0</h1>
       <p><b>Where:</b> Hyde Park
-      <p><b>When:</b> TBA
+      <p><b>When:</b> Sunday, 21st June, 2024
     </div>
     <div id="copy2">
       <p>Bring:</p>
@@ -214,7 +232,17 @@
         <li>picnic blankets (optional)</li>
       </ul>
     </div>
-    <form>
+    <div id="copy3">
+      <p>
+        build something fun!
+        <br />
+        JS allowed but NO BUNDLERS!!!
+        <br />
+        no prior programming experience needed (others will help you!)
+      </p>
+
+    </div>
+    <form id="rsvp">
       <input type="text" name="name" placeholder="Name" />
       <input type="email" name="email" placeholder="Email" />
       <button type="submit">RSVP</button>
