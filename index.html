@@ -17,7 +17,7 @@
       text-align: center;
       font-family: Arial, Helvetica, sans-serif;
       vertical-align: middle;
-      line-height: 70px;      
+      line-height: 70px;
       width: 100px;
       background-color: #8ace00;
       height: 70px;
@@ -42,6 +42,7 @@
     #scene {
       position: relative;
       perspective: 50em;
+      perspective-origin: top;
       margin: 5vw;
       transform-style: preserve-3d;
     }
@@ -87,7 +88,8 @@
       padding: 0.5em;
       position: absolute;
       background-color: burlywood;
-      transform: translate3d(8em, 41em, -9em) rotateY(6deg) rotateX(0deg);;
+      transform: translate3d(8em, 40em, -9em) rotateY(6deg) rotateX(0deg);
+      ;
       font-size: smaller;
     }
 
@@ -96,6 +98,19 @@
       position: absolute;
       background-color: #336312;
       transform: translate3d(0em, 19em, -10em) rotateY(30deg) rotateX(0deg)
+    }
+
+    #attendees {
+      transform: translate3d(37em, 10em, -9em) rotateY(-18deg) rotateX(7deg);
+      color: white;
+      position: absolute;
+      background-color: #336312;
+      padding: 2px;
+    }
+
+    #rsvps {
+      max-height: 200px;
+      overflow-y: scroll;
     }
 
     #blanket {
@@ -122,13 +137,16 @@
       0% {
         transform: rotateZ(0deg);
       }
+
       50% {
         transform: rotateZ(30deg);
       }
+
       100% {
         transform: rotateZ(0deg);
       }
     }
+
     #sun {
       position: absolute;
     }
@@ -239,10 +257,35 @@
         JS allowed but NO BUNDLERS!!!
         <br />
         no prior programming experience needed (others will help you!)
+        <br />
+        <a href="resources.html">resources →</a>
       </p>
-
     </div>
-    <form id="rsvp">
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const rsvpList = document.getElementById('rsvps');
+        const endpoint = 'https://mbo-htmlinhydersvps.web.val.run';
+
+        fetch(endpoint)
+          .then(response => response.json())
+          .then(data => {
+            data.forEach(name => {
+              const listItem = document.createElement('li');
+              listItem.textContent = name;
+              rsvpList.appendChild(listItem);
+            });
+          })
+          .catch(error => {
+            console.error('Error fetching the RSVP list:', error);
+          });
+      });
+    </script>
+    <div id="attendees">
+      <h2>Attendees</h2>
+      <ul id="rsvps"></ul>
+    </div>
+    <!-- https://www.val.town/v/mbo/htmlinhydeRSVPs -->
+    <form id="rsvp" action="https://mbo-htmlinhydersvps.web.val.run" method="POST">
       <input type="text" name="name" placeholder="Name" />
       <input type="email" name="email" placeholder="Email" />
       <button type="submit">RSVP</button>
