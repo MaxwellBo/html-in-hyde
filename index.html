@@ -10,7 +10,6 @@
     body {
       background-color: skyblue;
       cursor: url('img/butterfly.png'), auto;
-      touch-action: none;
       overflow: hidden;
       /* background-color: rgb(111, 160, 38); */
       /* background-image: url('img/clouds.webp'); */
@@ -274,7 +273,7 @@
 
         var siteWidth = 900;
         var scale = Math.min(screen.width, screen.height) / siteWidth;
-        const offsetY = Math.max(0, screen.height - screen.width*1)
+        const offsetY = Math.max(0, screen.height - screen.width*1) / 2
         const offsetX = Math.max(0, screen.width - screen.height*1) / 2
         document.body.style.paddingTop = `${offsetY}px`
         document.body.style.paddingLeft = `${offsetX}px`
