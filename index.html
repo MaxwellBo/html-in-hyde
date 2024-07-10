@@ -315,9 +315,9 @@
             const weight = bezier(str)
             const angle = (Date.now() / 1000)
             const originX = initPerX + (Math.sin(angle / 4) * 0.1)
-            const originY = initPerY + (Math.cos(angle / 20) * 0.1) + 0.1
+            const originY = initPerY + (Math.cos(angle / 20) * 0.1)
             const perX = (weight * touchX) + ((1-weight) * originX)
-            const perY = (weight * touchY) + ((1-weight) * originY + 0.15) - 0.15
+            const perY = (weight * (touchY -0.25)) + ((1-weight) * originY + 0.15)
             scene.style.perspectiveOrigin = `${perX * 100}% ${perY * 100}%`
             tick()
           });
