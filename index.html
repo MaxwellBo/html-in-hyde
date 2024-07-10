@@ -22,30 +22,20 @@
       background-color: #8ace00;
       height: 70px;
       /* transform: translate3d(25em, 6em, -6em) scaleX(0.7) rotateY(-384deg); */
-      animation: spin 3s ease-in-out infinite;
+      animation: spin 10s ease-in-out infinite;
     }
 
     @keyframes spin {
       0% {
-        transform: translate3d(13em, 6em, -6em) rotateY(0deg);
-      }
-
-      25% {
-        transform: translate3d(25em, 6em, -6em) scaleX(0.7) rotateY(180deg);
+        transform: translate3d(13em, 6em, -6em) scaleX(0.7) rotateY(0);
       }
 
       50% {
-        /* transform: ; */
-        transform: translate3d(25em, 6em, -6em) scaleX(0.7) rotateY(0deg);
-      }
-
-      75% {
-        /* transform: ; */
-        transform: translate3d(25em, 6em, -6em) scaleX(0.7) rotateY(-180deg);
+        transform: translate3d(25em, 6em, -6em) scaleX(0.7) rotateY(360deg);
       }
 
       100% {
-        transform: translate3d(13em, 6em, -6em) scaleX(0.7) rotateY(0deg);
+        transform: translate3d(13em, 6em, -6em) scaleX(0.7) rotateY(-360deg);
       }
     }
 
