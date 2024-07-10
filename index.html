@@ -63,7 +63,7 @@
 
     #tree1 {
       position: absolute;
-      transform: translate3d(-3em, 5em, -11em) rotateY(30deg)
+      transform: translate3d(0em, 5em, -7em) rotateY(30deg)
     }
 
     #tree2 {
@@ -83,18 +83,18 @@
     #copy2 {
       padding: 0.5em;
       position: absolute;
-      background-color: #4a79f1;
+      background-color: #a7a4d8;
       border: 2px dotted;
       /* background-image: url('img/blanket2.jpg'); */
-      transform: translate3d(11em, 42em, 2em) rotateY(5deg) rotateX(90deg);
-      font-size: smaller;
+      transform: translate3d(14em, 42em, 4em) rotateY(5deg) rotateX(90deg);
+      font-size: small;
     }
 
     #copy3 {
       padding: 0.5em;
       position: absolute;
       background-color: burlywood;
-      transform: translate3d(8em, 40em, -9em) rotateY(6deg) rotateX(0deg);
+      transform: translate3d(8em, 40em, -5em) rotateY(6deg) rotateX(0deg);
       ;
       font-size: smaller;
     }
@@ -104,7 +104,7 @@
       position: absolute;
       background-color: #336312;
       height: 4rem;
-      transform: translate3d(20em, 35em, 10em);
+      transform: translate3d(15em, 35em, 11em);
     }
 
     #attendees {
@@ -319,8 +319,10 @@
         document.addEventListener('touchmove', function(event) {
           if (event.touches.length === 1) {
             isTouching = true
+            scene.style.touchAction = 'none';
           } else {
             isTouching = false
+            scene.style.touchAction = 'auto';
           }
           const touch = event.touches[0];
           touchX = (touch.clientX / window.innerWidth);
