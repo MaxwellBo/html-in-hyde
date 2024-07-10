@@ -274,7 +274,10 @@
 
         var siteWidth = 900;
         var scale = Math.min(screen.width, screen.height) / siteWidth;
-
+        const offsetY = Math.max(0, screen.height - screen.width*1) / 2
+        const offsetX = Math.max(0, screen.width - screen.height*1) / 2
+        document.body.style.paddingTop = `${offsetY}px`
+        document.body.style.paddingLeft = `${offsetX}px`
         document.querySelector('meta[name="viewport"]').setAttribute('content', 'width='+siteWidth+', initial-scale='+scale+'');
 
         const count = document.createElement('p');
