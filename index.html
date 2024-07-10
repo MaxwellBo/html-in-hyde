@@ -16,6 +16,7 @@
       box-sizing: border-box;
       /* background-color: rgb(111, 160, 38); */
       /* background-image: url('img/clouds.webp'); */
+      touch-action: none;
     }
 
     #brat {
@@ -340,10 +341,8 @@
         document.addEventListener('touchstart', function(e) {
           if (e.touches.length === 1) {
             isTouching = true
-            scene.style.touchAction = 'none';
           } else {
             isTouching = false
-            scene.style.touchAction = 'auto';
           }
         });
         document.addEventListener('touchend', function(e) {
