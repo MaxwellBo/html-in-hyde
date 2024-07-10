@@ -294,8 +294,8 @@
         let touchY = 0;
         let isTouching = false;
         let str = 0;
-        let perX = 0.5;
-        let perY = 0.05;
+        const initPerX = 0.5
+        const initPerY = 0.05
         const updateStr = () => {
           setTimeout(() => {
             if (isTouching) {
@@ -313,8 +313,11 @@
         const tick = () => {
           requestAnimationFrame(() => {
             const weight = bezier(str)
-            perX = (weight * touchX) + ((1-weight) * 0.5)
-            perY = (weight * touchY) + ((1-weight) * 0.2) - 0.15
+            const angle = (Date.now() / 1000) % 360
+            const originX = initPerX + (Math.sin(angle / 4) * 0.1)
+            const originY = initPerY + (Math.cos(angle / 20) * 0.1) + 0.1
+            const perX = (weight * touchX) + ((1-weight) * originX)
+            const perY = (weight * touchY) + ((1-weight) * originY + 0.15) - 0.15
             scene.style.perspectiveOrigin = `${perX * 100}% ${perY * 100}%`
             tick()
           });
