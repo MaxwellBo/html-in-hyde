@@ -300,12 +300,12 @@
         const updateStr = () => {
           setTimeout(() => {
             if (isTouching) {
-              str = Math.min(1, str + 0.05);
+              str = Math.min(1, str + 0.01);
             } else {
-              str = Math.max(0, str - 0.05);
+              str = Math.max(0, str - 0.01);
             }
             updateStr()
-          }, 50);
+          }, 10);
         }
         updateStr();
         const bezier = (n) =>{
