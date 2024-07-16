@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#8ace00">
+  <meta name="theme-color" content="#006400">
   <meta name="description" content="what?, schedule, why?, resources">
   <meta name="keywords" content="HTML, Hyde Park, picnic, web development, fun">
   <meta name="author" content="Max Bo">
@@ -13,10 +13,17 @@
 </head>
 <style>
   body {
-    color: darkgreen;
+    color: #006400;
     max-width: 80ch;
     cursor: url('img/leaf.png'), auto;
     margin: 1em 2em;
+  }
+
+  .comma-seperated > * {
+    display: inline-block;
+  }
+  .comma-seperated > *:not(:last-child)::after {
+    content: ", ";
   }
 </style>
 
@@ -90,8 +97,8 @@
   <br />
   <a href="https://diagram.website/">Diagram Website - An internet map</a> has attempted to paint a picture of this
   community (which is, unsurprisingly, quite decentralized). Some of my favorite links are:
-  <ul>
 
+  <ul class="comma-seperated">
     <li><a href="https://usb.club/">USB Club</a></li>
     </li>
     <li><a href="https://internetour.com/">Internet Tour</a></li>
@@ -162,7 +169,7 @@
     </li>
     <li><a href="https://scrapism.lav.io/">Scrapism</a></li>
     </li>
-    <li><a href="https://www.frieze.com/article/online-publications-bridging-poetry-and-code">E-litterature</a></li>
+    <li><a href="https://www.frieze.com/article/online-publications-bridging-poetry-and-code">E-literature</a></li>
     </li>
     <li><a href="https://velvetyne.fr/news/about-ascii-art-and-jgs-font/">ASCII Art</a></li>
     </li>
