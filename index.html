@@ -193,16 +193,17 @@
 
     <script>
       document.addEventListener("DOMContentLoaded", async function () {
-        const rsvpList = document.getElementById('rsvps');
+        const ul = document.getElementById('rsvps');
         // https://www.val.town/v/mbo/htmlinhydeRSVPs
         const endpoint = 'https://mbo-htmlinhydersvps.web.val.run';
 
-        const names = await fetch(endpoint).then(response => response.json());
+        const rsvps = await fetch(endpoint).then(response => response.json());
         
-        for (const name of names) {
-          const listItem = document.createElement('li');
-          listItem.textContent = name;
-          rsvpList.appendChild(listItem);
+        for (const { name, status } of rsvps) {
+          const li = document.createElement('li');
+          const suffix = status === 'maybe' ? ' (maybe)' : '';
+          li.textContent = name + suffix;
+          ul.appendChild(li);
         }
         
 
@@ -215,7 +216,7 @@
         document.querySelector('meta[name="viewport"]').setAttribute('content', 'width='+siteWidth+', initial-scale='+scale+'');
 
         const count = document.createElement('p');
-        count.textContent = `RSVPs: ${names.length}`;
+        count.textContent = `RSVPs: ${rsvps.length}`;
         document.getElementById('rsvps').prepend(count);
         // add touch listener
         const scene = document.getElementById("scene")
@@ -294,7 +295,8 @@
     <form id="rsvp" action="https://mbo-htmlinhydersvps.web.val.run" method="POST">
       <input type="text" name="name" placeholder="Name" />
       <input type="email" name="email" placeholder="Email (for reminder)" />
-      <button type="submit">RSVP</button>
+      <button type="submit" name="status" value="going">Going</button>
+      <button type="submit" name="status" value="maybe">Maybe</button>
     </form>
     <img id="tree1" src="img/tree1.png" alt="tree" />
     <h2 id="brat">brat</h2>
