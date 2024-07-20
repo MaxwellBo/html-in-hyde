@@ -330,9 +330,19 @@
       <br />
       I used Val Town power the RSVP form, with the code hosted here: <a
         href="https://www.val.town/v/mbo/htmlinhydeRSVPs">val.town/v/mbo/htmlinhydeRSVPs</a>. You can even <a
-        href="https://docs.val.town/types/http/jsx/">deliver HTML from a val</a>! Maybe pair it with <a
-        href="https://htmx.org/">htmx</a> or <a href="https://leanrada.com/htmz/">htmz</a> for a <i>true</i> hypermedia
+        href="https://docs.val.town/types/http/jsx/">return dynamic HTML from a val</a>!
       experience.
+    </li>
+    <li>
+      <a href="https://htmx.org/">htmx</a> or <a href="https://leanrada.com/htmz/">htmz</a>
+      <br />
+      Both of these make it much easier to sprinkle in interactivity to a static HTML page.
+      <br />
+      They both offer the same primitive, <a href="https://htmx.org/docs/#swapping"><i>swapping</i></a>, where a HTML response replaces an existing page element.
+      <br />
+      Swapping can get you pretty far, and pairs well with val.town HTML responses.
+      <br />
+      NB: htmz is by far the simplest of the 2, only offering swapping.
     </li>
     <li>
       <a href="https://esm.sh/">esm.sh</a>, <a href="https://www.skypack.dev/">Skypack</a>, <a
@@ -340,7 +350,7 @@
       <br />
       Remember when I said NO BUNDLERS ALLOWED on the front page?
       <br />
-      Well you'll need some way of importing JS libraries, right?
+      Well you might need some way of importing JS libraries, right?
       <br />
       With the services linked above, you can import libraries directly from a CDN,
       in a <a
