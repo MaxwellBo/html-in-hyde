@@ -355,12 +355,7 @@
       &lt;script type=&quot;module&quot;&gt;
         import confetti from &quot;https://esm.sh/canvas-confetti@1.6.0&quot;
 
-        window.confetti = () =&gt; {
-          confetti.create(document.getElementById('confetti'), {
-            resize: true,
-            useWorker: true
-          })({ particleCount: 200, spread: 200 })
-        }
+        window.confetti = () => confetti.create(document.getElementById('confetti'))()()
       &lt;/script&gt;
       &lt;button onclick=&quot;confetti()&quot;&gt;🎉&lt;/button&gt;
       &lt;canvas id=&quot;confetti&quot;&gt;&lt;/canvas&gt;
@@ -368,18 +363,13 @@
 
       <script type="module">
         import confetti from "https://esm.sh/canvas-confetti@1.6.0"
-
-        window.confetti = () => {
-          confetti.create(document.getElementById('confetti'), {
-            resize: true,
-            useWorker: true
-          })({ particleCount: 200, spread: 200 })
-        }
+        window.confetti = () => confetti.create(document.getElementById('confetti'))()()
       </script>
       <button onclick="confetti()">🎉</button>
       <canvas id="confetti"></canvas>
       <br />
-      I use this a lot in <a href="https://maxbo.me/a-html-file-is-all-you-need.html">Can we build a reactive article in a single HTML file?</a> if you'd like more examples.
+      I use this a lot in <a href="https://maxbo.me/a-html-file-is-all-you-need.html">Can we build a reactive article in
+        a single HTML file?</a> if you'd like more examples.
     </li>
   </ul>
   <small>c. 2024</small> <a href="https://maxbo.me">~mb</a>
