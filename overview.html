@@ -115,7 +115,7 @@
   Fortunately, there's a growing community of people who share this nostalgia.
   <br />
   <a href="https://diagram.website/">Diagram Website - An internet map</a> has attempted to paint a picture of this
-  community (which is, unsurprisingly, quite decentralized). 
+  community (which is, unsurprisingly, quite decentralized).
   <br />
   <br />
   Here's a subset of said map that may serve as decent inspiration:
@@ -239,10 +239,10 @@
     <br />
     <li>
       <a href="https://www.are.na/laurel-schwulst">Laurel Schwulst</a>: (
-        <ul class="comma-seperated">
-          <li><a href="https://www.are.na/laurel-schwulst/ultralight-websites">ultralight websites</a></li>
-          <li><a href="https://www.are.na/laurel-schwulst/model-sites-mewvo9x0og8">Model Sites 2</a></li>
-        </ul>
+      <ul class="comma-seperated">
+        <li><a href="https://www.are.na/laurel-schwulst/ultralight-websites">ultralight websites</a></li>
+        <li><a href="https://www.are.na/laurel-schwulst/model-sites-mewvo9x0og8">Model Sites 2</a></li>
+      </ul>
       )
     </li>
     <li>
@@ -273,7 +273,7 @@
   <small>(this can be the same person)</small>
 
   <h4><i>Still???</i></h4>
-  
+
   Do the <a href="https://extrapractice.space/computer-dance/#instructions">computer dance</a>.
 
   <h2>Resources</h2>
@@ -291,7 +291,8 @@
     <li>
       <a href="https://mmm.page/">mmm.page</a> <br /> While I personally really like mmm.page, it's not entirely in the
       spirit of the event to use it.
-      But it's great for building a fun site really quick. So... use this if you need to leave early, or if you really don't want to touch HTML (😔)</b>
+      But it's great for building a fun site really quick. So... use this if you need to leave early, or if you really
+      don't want to touch HTML (😔)</b>
     </li>
     <li>
       <a href="https://www.canva.com/website-builder/">Canva Websites</a> <br />
@@ -302,8 +303,9 @@
   <h3>For those who edited a Tumblr theme once</h3>
   <ul>
     <li>
-      <a href="https://glitch.com/">Glitch</a> <br /> A more "modern" browser-based service for website building. 
-      It's got extra bells and whistles like a proper page preview and auto-refresh, so it might be better for someone who finds Neocities too spartan.
+      <a href="https://glitch.com/">Glitch</a> <br /> A more "modern" browser-based service for website building.
+      It's got extra bells and whistles like a proper page preview and auto-refresh, so it might be better for someone
+      who finds Neocities too spartan.
     </li>
   </ul>
 
@@ -327,7 +329,57 @@
       <br />
       I used Val Town power the RSVP form, with the code hosted here: <a
         href="https://www.val.town/v/mbo/htmlinhydeRSVPs">val.town/v/mbo/htmlinhydeRSVPs</a>. You can even <a
-        href="https://docs.val.town/types/http/jsx/">deliver HTML from a val</a>! Maybe pair it with <a href="https://htmx.org/">htmx</a> or <a href="https://leanrada.com/htmz/">htmz</a> for a <i>true</i> hypermedia experience.
+        href="https://docs.val.town/types/http/jsx/">deliver HTML from a val</a>! Maybe pair it with <a
+        href="https://htmx.org/">htmx</a> or <a href="https://leanrada.com/htmz/">htmz</a> for a <i>true</i> hypermedia
+      experience.
+    </li>
+    <li>
+      <a href="https://esm.sh/">esm.sh</a>, <a href="https://www.skypack.dev/">Skypack</a>, <a
+        href="https://unpkg.com/">UNPKG</a>
+      <br />
+      Remember when I said NO BUNDLERS ALLOWED on the front page?
+      <br />
+      Well you'll need some way of importing JS libraries, right?
+      <br />
+      With the services linked above, you can import libraries directly from a CDN,
+      in a <a
+        href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules#applying_the_module_to_your_html">module
+        script</a>,
+      using <a
+        href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import"><code>import</code>
+        syntax</a>. As an example:
+
+      <br />
+
+      <pre>
+      &lt;script type=&quot;module&quot;&gt;
+        import confetti from &quot;https://esm.sh/canvas-confetti@1.6.0&quot;
+
+        window.confetti = () =&gt; {
+          confetti.create(document.getElementById('confetti'), {
+            resize: true,
+            useWorker: true
+          })({ particleCount: 200, spread: 200 })
+        }
+      &lt;/script&gt;
+      &lt;button onclick=&quot;confetti()&quot;&gt;🎉&lt;/button&gt;
+      &lt;canvas id=&quot;confetti&quot;&gt;&lt;/canvas&gt;
+      </pre>
+
+      <script type="module">
+        import confetti from "https://esm.sh/canvas-confetti@1.6.0"
+
+        window.confetti = () => {
+          confetti.create(document.getElementById('confetti'), {
+            resize: true,
+            useWorker: true
+          })({ particleCount: 200, spread: 200 })
+        }
+      </script>
+      <button onclick="confetti()">🎉</button>
+      <canvas id="confetti"></canvas>
+      <br />
+      I use this a lot in <a href="https://maxbo.me/a-html-file-is-all-you-need.html">Can we build a reactive article in a single HTML file?</a> if you'd like more examples.
     </li>
   </ul>
   <small>c. 2024</small> <a href="https://maxbo.me">~mb</a>
