@@ -1,337 +1,64 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
   <meta charset="UTF-8">
-  <meta name="theme-color" content="#8ace00">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#006400">
   <meta name="description" content="a HTML freewrite in a Sydney park">
   <meta name="keywords" content="HTML, Hyde Park, picnic, web development, fun">
   <meta name="author" content="Max Bo">
-  <link rel="icon" type="image/png" href="img/butterfly.png"/>
-  <meta property="og:title" content="HTML in Hyde #0" />
+  <link rel="icon" type="image/png" href="img/leaf.png" />
+  <meta property="og:image" content="img/leaf.png" />
+  <meta property="og:title" content="Overview - HTML in Hyde" />
   <meta property="og:description" content="a HTML freewrite in a Sydney park" />
-  <meta property="og:image" content="img/butterfly.png" />
-  <meta property="og:url" content="https://maxbo.me/html-in-hyde/" />
+  <meta property="og:url" content="https://maxbo.me/html-in-hyde/overview" />
   <meta property="og:type" content="website" />
-  <meta property="og:site_name" content="HTML in Hyde #0" />
+  <meta property="og:site_name" content="HTML in Hyde" />
   <meta property="og:locale" content="en_AU" />
-
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:site" content="@_max_bo_" />
-  <meta name="twitter:creator" content="@_max_bo_" />
-  <meta name="twitter:title" content="HTML in Hyde #0" />
+  <meta name="twitter:site" content="@_max_bo" />
+  <meta name="twitter:creator" content="@_max_bo" />
+  <meta name="twitter:title" content="HTML in Hyde" />
   <meta name="twitter:description" content="a HTML freewrite in a Sydney park" />
-  <meta name="twitter:image" content="img/butterfly.png" />
-  <meta name="twitter:url" content="https://maxbo.me/html-in-hyde/" />
-  <meta name="twitter:domain" content="maxbo.me" />
-
-  <link rel="stylesheet" href="reset.css">
-  <meta name="viewport" content="initial-scale=1"/>
-  <title>HTML in Hyde #0</title>
-  <style>
-    body {
-      background-color: skyblue;
-      cursor: url('img/butterfly.png'), auto;
-      overflow: hidden;
-      height: 100vh;
-      width: 100vw;
-      box-sizing: border-box;
-      /* background-color: rgb(111, 160, 38); */
-      /* background-image: url('img/clouds.webp'); */
-      touch-action: pinch-zoom;
-    }
-
-    #brat {
-      position: absolute;
-      text-align: center;
-      font-family: Arial, Helvetica, sans-serif;
-      vertical-align: middle;
-      line-height: 70px;
-      width: 100px;
-      background-color: #8ace00;
-      height: 70px;
-      animation: spin 10s ease-in-out infinite;
-    }
-
-    @keyframes spin {
-      0% {
-        transform: translate3d(13em, 6em, -8em) scaleX(0.7) rotateY(0);
-      }
-
-      50% {
-        transform: translate3d(25em, 6em, -8em) scaleX(0.7) rotateY(360deg);
-      }
-
-      100% {
-        transform: translate3d(13em, 6em, -8em) scaleX(0.7) rotateY(-360deg);
-      }
-    }
-
-    #scene {
-      position: relative;
-      perspective: 40em;
-      perspective-origin: 50% 10%;
-      height: 100vh;
-      width: 100vw;
-      max-width: 900px;
-      transform-style: preserve-3d;
-    }
-
-    #grass {
-      width: 700px;
-      height: 600px;
-      position: absolute;
-      transform: translate3d(7em, 20em, -7em) rotateX(90deg);
-    }
-
-    #tree1 {
-      position: absolute;
-      transform: translate3d(0em, 5em, -7em) rotateY(30deg)
-    }
-
-    #tree2 {
-      position: absolute;
-      transform: translate3d(27em, 4em, -14em) rotateY(-19deg);
-    }
-
-    #copyTitle {
-      padding: 0.5em;
-      position: absolute;
-      border-radius: 25px;
-      background-color: white;
-      font-size: smaller;
-      transform: translate3d(10em, 12em, 12em) rotateY(10deg) rotateX(-11deg);
-    }
-
-    #copy2 {
-      padding: 0.5em;
-      position: absolute;
-      background-color: #a7a4d8;
-      border: 2px dotted;
-      /* background-image: url('img/blanket2.jpg'); */
-      transform: translate3d(13em, 41em, 4em) rotateY(5deg) rotateX(90deg);
-      font-size: small;
-    }
-
-    #copy3 {
-      padding: 0.5em;
-      position: absolute;
-      background-color: burlywood;
-      transform: translate3d(8em, 37em, -3em) rotateY(6deg) rotateX(0deg);
-      font-size: smaller;
-    }
-
-    #rsvp {
-      padding: 1em;
-      position: absolute;
-      background-color: #326312e9;
-      height: 4rem;
-      transform: translate3d(15em, 35em, 11em);
-    }
-
-    #attendees {
-      transform: translate3d(30em, 7em, -12em) rotateY(-18deg) rotateX(7deg);
-      color: white;
-      position: absolute;
-      background-color: #326312e9;
-      padding: 2px;
-    }
-
-    #rsvps {
-      column-count: 3;
-    }
-
-    #blanket {
-      width: 200px;
-      height: 200px;
-      position: absolute;
-      transform: translate3d(32em, 32em, -3em) rotateX(90deg) rotate(20deg)
-    }
-
-    #basket {
-      position: absolute;
-      width: 72px;
-      transform: translate3d(37em, 34em, -4em);
-    }
-
-    #magpie {
-      position: absolute;
-      width: 72px;
-      transform: translate3d(33em, 34em, -5em);
-      /* animation: peck 3s ease-in-out infinite; */
-    }
-
-    @keyframes peck {
-      0% {
-        transform: rotateZ(0deg);
-      }
-
-      50% {
-        transform: rotateZ(30deg);
-      }
-
-      100% {
-        transform: rotateZ(0deg);
-      }
-    }
-
-    ul {
-      padding-inline-start: 20px;
-    }
-
-    #form {
-      position: absolute;
-      top: 5em;
-      left: 5em;
-    }
-  </style>
+  <meta name="twitter:image" content="img/leaf.png" />
+  <title>Overview - HTML in Hyde</title>
 </head>
+<style>
+  body {
+    color: #006400;
+    max-width: 80ch;
+    cursor: url('0/img/leaf.png'), auto;
+    margin: 1em 2em;
+  }
+</style>
 
 <body>
-  <div id="scene">
+  <h1>HTML in Hyde</h1>
 
-    <script>
-      document.addEventListener("DOMContentLoaded", async function () {
-        const ul = document.getElementById('rsvps');
-        // https://www.val.town/v/mbo/htmlinhydeRSVPs
-        const endpoint = 'https://mbo-htmlinhydersvps.web.val.run';
+  HTML in Hyde is a <i>HTML Freewrite</i> - <a href="https://html.energy/events.html"><q>[an event] in which people get
+      together and write HTML documents</q></a>.
+  This one is in a park (like the Ontario based <a href="https://html.green/">HTML in the Park</a>)!
 
-        const rsvps = await fetch(endpoint).then(response => response.json());
-        
-        for (const { name, status } of rsvps) {
-          const li = document.createElement('li');
-          const suffix = status === 'maybe' ? ' (maybe)' : '';
-          li.textContent = name + suffix;
-          ul.appendChild(li);
-        }
-        
+  <h2>Where?</h2>
+  North-East the Anzac Memorial in Hyde Park, Sydney.
 
-        var siteWidth = 900;
-        var scale = Math.min(document.documentElement.clientWidth, document.documentElement.clientHeight) / siteWidth;
-        const offsetY = Math.max(0, window.innerHeight - window.innerWidth*1) / 2
-        const offsetX = Math.max(0, window.innerWidth - window.innerHeight*1) / 2
-        document.body.style.paddingTop = `${offsetY}px`
-        document.body.style.paddingLeft = `${offsetX}px`
-        document.querySelector('meta[name="viewport"]').setAttribute('content', 'width='+siteWidth+', initial-scale='+scale+'');
+  <h2>Past events</h2>
 
-        const count = document.createElement('p');
-        count.textContent = `RSVPs: ${rsvps.length}`;
-        document.getElementById('rsvps').prepend(count);
-        // add touch listener
-        const scene = document.getElementById("scene")
-        let touchX = 0;
-        let touchY = 0;
-        let isTouching = false;
-        let str = 0;
-        const initPerX = 0.5
-        const initPerY = 0.05
-        const updateStr = () => {
-          setTimeout(() => {
-            if (isTouching) {
-              str = Math.min(1, str + 0.01);
-            } else {
-              str = Math.max(0, str - 0.01);
-            }
-            updateStr()
-          }, 10);
-        }
-        updateStr();
-        const bezier = (n) =>{
-          return n * n * (3.0 - 2.0 * n);
-        }
-        const tick = () => {
-          requestAnimationFrame(() => {
-            const weight = bezier(str)
-            const angle = (Date.now() / 1000)
-            const originX = initPerX + (Math.sin(angle / 4) * 0.1)
-            const originY = initPerY + (Math.cos(angle / 6) * 0.07) + 0.02
-            const perX = (weight * touchX) + ((1-weight) * originX)
-            const perY = (weight * (touchY -0.35)) + ((1-weight) * originY )
-            scene.style.perspectiveOrigin = `${perX * 100}% ${perY * 100}%`
-            tick()
-          });
-        }
-        tick();
-        document.addEventListener('touchmove', function(event) {
-          if (event.touches.length === 1) {
-            isTouching = true
-          } else {
-            isTouching = false
-          }
-          const touch = event.touches[0];
-          touchX = (touch.clientX / window.innerWidth);
-          touchY = (touch.clientY / window.innerHeight);
-        });
-        document.addEventListener('touchstart', function(e) {
-          if (e.touches.length === 1) {
-            isTouching = true
-          } else {
-            isTouching = false
-          }
-        });
-        document.addEventListener('touchend', function(e) {
-          isTouching = false;
-        });
-        document.addEventListener('mousemove', function(e) {
-          touchX = (e.clientX / window.innerWidth);
-          touchY = (e.clientY / window.innerHeight);
-        });
-        document.addEventListener('mousedown', function() {
-          isTouching = true;
-        });
-        document.addEventListener('mouseup', function() {
-          isTouching = false;
-        });
-      });
-    </script>
-    <img id="grass" src="img/grass.avif" alt="grass" />
-    <div id="attendees">
-      <h2>Attendees</h2>
-      <ul id="rsvps"></ul>
-    </div>
-    <!-- https://www.val.town/v/mbo/htmlinhydeRSVPs -->
-    
-    <form id="rsvp" action="https://mbo-htmlinhydersvps.web.val.run" method="POST">
-      <input type="text" name="name" placeholder="Name" />
-      <input type="email" name="email" placeholder="Email (for reminder)" />
-      <button type="submit" name="status" value="going">Going</button>
-      <button type="submit" name="status" value="maybe">Maybe</button>
-    </form>
-    <img id="tree1" src="img/tree1.png" alt="tree" />
-    <h2 id="brat">brat</h2>
-    <img id="tree2" src="img/tree1.png" alt="tree" />
-    <img id="blanket" src="img/blanket.jpg" alt="blanket" />
-    <img id="basket" src="img/basket.png" alt="basket" />
-    <img id="magpie" src="img/magpie.png" alt="magpie" />
+  <h3>HTML in Hyde #0</h3>
 
-    <div id="copyTitle">
-      <h1>HTML in Hyde #0</h1>
-      <p><b>Where:</b> Hyde Park, near the Anzac memorial <a href="https://www.google.com/maps/place/33%C2%B052'32.3%22S+151%C2%B012'41.9%22E/@-33.8756429,151.2109979,19z/data=!3m1!4b1!4m4!3m3!8m2!3d-33.875644!4d151.211643?entry=ttu">(📍 map?)</a>
-      <p><b>When:</b> Sunday, 21st July, 12pm (sharp) - 3:00, 2024 <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&dates=20240721T020000Z%2F20240721T043000Z&details=%F0%9F%93%8D%20https%3A%2F%2Fwww.google.com%2Fmaps%2Fplace%2F33%25C2%25B052%2732.3%2522S%2B151%25C2%25B012%2741.9%2522E%2F%40-33.8756429%2C151.2109979%2C19z%2Fdata%3D%213m1%214b1%214m4%213m3%218m2%213d-33.875644%214d151.211643%3Fentry%3Dttu%0A%F0%9F%94%97%20https%3A%2F%2Fmaxbo.me%2Fhtml-in-hyde%2Foverview&location=Hyde%20Park%2C%20near%20the%20Anzac%20memorial&text=HTML%20in%20Hyde%20%230">(📅 gcal?)</a>
-      <p>+1s welcome! just send them this link!</p>
-    </div>
-    <div id="copy2">
-      <p>Bring:</p>
-      <ul>
-        <li>a (charged) computer or HTML-writing device</li>
-        <li>snacks</li>
-        <li>arts and crafts equipment <br /> paper? pens? pencils? crayons? paints? (optional!)</li>
-        <li>picnic blankets (optional)</li>
-      </ul>
-    </div>
-    <div id="copy3">
-      <p>
-        build a fun website!!! for:
-        <br />
-        your dog? a poem? a recipe? a short story? a game? a gallery?
-        <br />
-        JS allowed but strictly NO BUNDLERS!!!
-        <br />
-        no prior programming experience needed (others will help you!)
-        <br />
-        <a href="overview.html">overview, inspiration, resources →</a>
-      </p>
-    </div>
-  </div>
+  <figure>
+    <a href="0/invitation.html"><img width="200px" src="0/invitation.png"></a>
+    <figcaption>
+      <a href="0/invitation.html">Invitation</a>
+      <br />
+      <a href="0/overview.html">Overview</a>
+    </figcaption>
+  </figure>
 </body>
+
+<footer>
+  <small>c. 2024</small> <a href="https://maxbo.me">~mb</a>
+</footer>
 </html>
