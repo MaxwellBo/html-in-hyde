@@ -31,6 +31,16 @@
     cursor: url('img/leaf.png'), auto;
     margin: 1em 2em;
   }
+
+  a > img {
+    border: blue 3px dashed;
+    padding: 1px;
+  }
+
+  a:visited > img {
+    border: purple 3px;
+  }
+
 </style>
 
 <body>
@@ -55,9 +65,11 @@
   
   <h2>Photos</h2>
 
-  <img src="photos/1.jpg" alt="a photo of the event" width="300px">
-  <img src="photos/2.jpg" alt="a photo of the event" width="300px">
   <img src="photos/3.jpg" alt="a photo of the event" width="600px">
+  <a href="https://poppenhu.is/jackie/cakes/brat">
+    <img src="photos/1.jpg" alt="a photo of the event" width="300px">
+  </a>
+  <img src="photos/2.jpg" alt="a photo of the event" width="300px">
 
 
 </body>
