@@ -1,0 +1,50 @@
+body {
+    margin: 0;
+    height: 100vh;
+    overflow: hidden;
+    cursor: none;
+    background: url('bg.gif') no-repeat center center fixed;
+    background-size: cover;
+}
+
+.zombie-arms-container {
+    position: absolute;
+    bottom: -150px; /* Adjust this value based on the height of the container */
+    width: 100%;
+    left: 300px;
+    display: flex;
+    flex-wrap: wrap; /* Allow arms to wrap to new lines */
+    justify-content: space-around;
+    z-index: 3000; /* Ensure it appears above the center image */
+}
+
+.zombie-arm {
+    height: 400px; /* Reduce size to increase density */
+    margin: -100px;
+    margin-left: -300px; /* Small margin for spacing */
+    transition: transform 0.1s;
+    transform-origin: bottom left; /* Set the pivot point to the bottom center */
+    z-index: 3001; /* Ensure individual arms appear above the center image */
+}
+
+.custom-cursor {
+    width: 400px; /* 4 times bigger */
+    height: 400px; /* 4 times bigger */
+    position: absolute;
+    pointer-events: none;
+    z-index: 1000;
+}
+
+/* Center image styling */
+.center-image-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2000; /* Ensure it appears above other elements except the arms */
+}
+
+.center-image {
+    width: 800px; /* Adjust the size of the image as needed */
+    height: auto; /* Maintain aspect ratio */
+}

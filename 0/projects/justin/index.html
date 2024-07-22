@@ -1,0 +1,352 @@
+<html>
+    <head>
+        <title>Blankets</title>
+    </head>
+    <style>
+        body {
+            background-color: rgb(70, 191, 70);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #meetup {
+            height: 600px;
+            width: 600px;
+            left: 50px;
+            position: relative;
+            z-index: -1000;
+        }
+
+        #anz-blanket {
+            width: 80;
+            height: 130;
+            background-color: rgb(0, 195, 255);
+            position: absolute;
+            top: 300px;
+            left: 150px;
+            z-index: 0;
+            border-radius: 3px;
+            border-style: solid;
+            border-width: 0.5px;
+            border-color: rgb(0, 169, 221);
+        }
+
+        #grey-blanket {
+            width: 120;
+            height: 120;
+            background-color: rgb(146, 146, 146);
+            position: absolute;
+            top: 310px;
+            left: 30px;
+            rotate: 4deg;
+            z-index: -1;
+            border-radius: 3px;
+        }
+
+        #aqua-blanket {
+            width: 120;
+            height: 120;
+            background-color: rgb(1, 218, 251);
+            position: absolute;
+            top: 180px;
+            left: 60px;
+            rotate: 11deg;
+            z-index: 1;
+            border-radius: 5px;
+            border-color: black;
+            border-width: 0.5px;
+            border-style: solid;
+        }
+
+        #rice-blanket-1 {
+            width: 45;
+            height: 70;
+            background-color: rgb(238, 238, 238);
+            position: absolute;
+            top: 230px;
+            left: 220px;
+            z-index: 1;
+        }
+
+        #rice-blanket-2 {
+            width: 90;
+            height: 60;
+            background-color: rgb(209, 209, 209);
+            position: absolute;
+            top: 235px;
+            left: 265px;
+            z-index: 1;
+        }
+
+        #purple-blanket {
+            width: 95;
+            height: 95;
+            background-color: rgb(98, 66, 130);
+            position: absolute;
+            top: 332;
+            left: 233px;
+            z-index: 1;
+            border-radius: 5px;
+            border-color: black;
+            border-width: 0.5px;
+            border-style: solid;
+            clip-path: polygon(0 0, 80% 0, 100% 35%, 100% 100%, 0 100%, 0 20%);
+        }
+
+        #purple-fold {
+            width: 95;
+            height: 95;
+            background-color: rgb(44, 44, 44);
+            position: absolute;
+            top: 332;
+            left: 233px;
+            z-index: 2;
+            border-radius: 5px;
+            border-color: black;
+            border-width: 0.5px;
+            border-style: solid;
+            clip-path: polygon(68% 15%, 80% 0, 100% 35%);
+        }
+
+        #grey-check-blanket {
+            width: 65;
+            height: 35;
+            background-color: rgb(66, 66, 66);
+            position: absolute;
+            top: 347;
+            left: 313px;
+            z-index: -2;
+            rotate: 18deg;
+            border-radius: 3px;
+            border-color: black;
+            border-width: 0.5px;
+            border-style: solid;
+        }
+
+        #blue-splotch-blanket {
+            width: 90;
+            height: 90;
+            background-color: rgb(60, 50, 172);
+            position: absolute;
+            top: 372;
+            left: 323px;
+            z-index: -1;
+            border-radius: 5px;
+            border-color: black;
+            border-width: 0.5px;
+            border-style: solid;
+        }
+
+        #blue-green-blanket {
+            width: 85;
+            height: 85;
+            background-color: rgb(36, 118, 100);
+            position: absolute;
+            top: 257;
+            left: 334px;
+            z-index: -1;
+            rotate: 17deg;
+            border-radius: 4px;
+            border-color: black;
+            border-width: 0.5px;
+            border-style: solid;
+        }
+
+        #yellow-towel {
+            width: 45;
+            height: 90;
+            background-color: rgb(249, 253, 161);
+            position: absolute;
+            top: 135px;
+            left: 240px;
+            z-index: -1;
+            rotate: -2;
+            border-radius: 0px;
+            border-color: rgb(249, 255, 128);
+            border-width: 0px;
+            border-style: solid;
+        }
+
+        #pink-towel-1 {
+            width: 45;
+            height: 80;
+            background-color: rgb(254, 120, 196);
+            position: absolute;
+            top: 135px;
+            left: 200px;
+            z-index: -1;
+            rotate: 15deg;
+            border-radius: 0px;
+            border-width: 0px;
+            border-style: solid;
+        }
+
+        #pink-towel-2 {
+            width: 45;
+            height: 70;
+            background-color: rgb(255, 140, 205);
+            position: absolute;
+            top: 160px;
+            left: 310px;
+            z-index: -1;
+            rotate: 29deg;
+            border-radius: 0px;
+            border-color: white;
+            border-width: 2px 0;
+            border-style: solid;
+        }
+
+        #pink-towel-2 #stripe-1 {
+            width: 30%;
+            height: 100%;
+            left: 10%;
+            background-color: white;
+            position: absolute;
+        }
+
+        #pink-towel-2 #stripe-2 {
+            width: 30%;
+            height: 100%;
+            left: 60%;
+            background-color: white;
+            position: absolute;
+        }
+
+        #blue-towel {
+            width: 45;
+            height: 75;
+            background-color: rgb(71, 102, 203);
+            position: absolute;
+            top: 70px;
+            left: 290px;
+            z-index: -1;
+            rotate: 5deg;
+            border-radius: 0px;
+            border-color: rgb(249, 255, 128);
+            border-width: 0px;
+            border-style: solid;
+        }
+
+        #white-blue-towel {
+            width: 45;
+            height: 85;
+            background-color: rgb(121, 147, 231);
+            position: absolute;
+            top: 170px;
+            left: 20px;
+            z-index: 1;
+            rotate: 13deg;
+            border-radius: 0px;
+            border-color: rgb(255, 255, 255);
+            border-width: 2px 0;
+            border-style: solid;
+        }
+
+        #yellow-blanket {
+            width: 85;
+            height: 85;
+            background-color: rgb(250, 207, 14);
+            position: absolute;
+            top: 490px;
+            left: 340px;
+            z-index: 1;
+            rotate: -5deg;
+            border-radius: 0px;
+            border-color: rgb(255, 255, 255);
+            border-width: 0;
+            border-style: solid;
+        }
+
+        #yellow-blanket #square-1 {
+            background-color: white;
+            height: 42.5px;
+            width: 42.5px;
+            top: 42.5px;
+            left: 42.5px;
+            position: absolute;
+        }
+
+        #yellow-blanket #square-2 {
+            background-color: rgb(254, 238, 166);
+            height: 42.5px;
+            width: 42.5px;
+            top: 0px;
+            left: 42.5px;
+            position: absolute;
+        }
+
+        #yellow-blanket #square-3 {
+            background-color: rgb(243, 223, 134);
+            height: 42.5px;
+            width: 42.5px;
+            top: 42.5px;
+            left: 0px;
+            position: absolute;
+        }
+
+        #cake-tub {
+            background-color: rgba(235, 235, 235, 0.409);
+            width: 40px;
+            height: 40px;
+            border-radius: 0px;
+            left: 270px;
+            z-index: 4;
+            top: 290px;
+            rotate: 30deg;
+            position: absolute;
+        }
+
+        #cake {
+            background-color: rgb(165, 255, 30);
+            width: 30px;
+            height: 30px;
+            top: 5px;
+            left: 5px;
+            position: absolute;
+            border-radius: 1px;
+        }
+
+        #brat {
+            font-family: arial;
+            font-size: 10px;
+            transform: scale(0.7, 1);
+            position: absolute;
+            top: 7.8px;
+            left: -1.5px;
+            letter-spacing: -0.2px;
+        }
+    </style>
+    <body>
+        <div id="meetup">
+            <div id="anz-blanket"></div>
+            <div id="grey-blanket"></div>
+            <div id="aqua-blanket"></div>
+            <div id="rice-blanket-1"></div>
+            <div id="rice-blanket-2"></div>
+            <div id="purple-blanket"></div>
+            <div id="purple-fold"></div>
+            <div id="grey-check-blanket"></div>
+            <div id="blue-splotch-blanket"></div>
+            <div id="blue-green-blanket"></div>
+            <div id="yellow-towel"></div>
+            <div id="pink-towel-1"></div>
+            <div id="pink-towel-2">
+                <div id="stripe-1"></div>
+                <div id="stripe-2"></div>
+            </div>
+            <div id="blue-towel"></div>
+            <div id="white-blue-towel"></div>
+            <div id="yellow-blanket">
+                <div id="square-1"></div>
+                <div id="square-2"></div>
+                <div id="square-3"></div>
+            </div>
+            <div id="cake-tub">
+                <div id="cake">
+                    <div id="brat">&lt;br/&gt;at</div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
