@@ -1,0 +1,139 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: #fff8e7;
+
+    --height: 500px;
+    --aspect-ratio: 1.41;
+}
+
+main {
+    font-family: "Times New Roman", Times, serif;
+    font-size: 16px;
+    border: 1px solid #000000;
+    background: #fff;
+    box-shadow: 0 4px 8px 0 #0000005c;
+
+    display: flex;
+    flex-direction: column;
+    width: calc(var(--height) * var(--aspect-ratio));
+    height: var(--height);
+
+    header,
+    article {
+        padding: 20px;
+    }
+
+    header {
+        border-bottom: 1px solid #000;
+
+        h1 {
+            color: black;
+            font-size: 2.5rem;
+            font-weight: normal;
+            margin: 0;
+        }
+    }
+
+    article {
+        font-size: 1.2rem;
+        overflow-y: auto;
+        flex: 1;
+
+        p {
+            text-align: justify;
+        }
+
+        p,
+        ol,
+        table {
+            margin-bottom: 12px;
+        }
+
+        ol,
+        ul,
+        dl {
+            margin-left: 30px;
+            margin-right: 30px;
+        }
+
+        table {
+            border-collapse: collapse;
+            margin-left: auto;
+            margin-right: auto;
+            max-width: 90%;
+        }
+
+        th,
+        td {
+            border: 1px solid black;
+        }
+
+        th {
+            font-weight: bold;
+            text-align: center;
+        }
+
+        td,
+        th {
+            padding: 5px;
+        }
+
+        a {
+            text-decoration: none;
+            color: #4338ca;
+            font-weight: bold;
+        }
+    }
+
+    .metadata {
+        display: flex;
+        flex-direction: column;
+
+        .label {
+            text-transform: uppercase;
+            font-family: "Helvetica";
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .first-row {
+            width: 100%;
+            border-bottom: 1px solid black;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+
+            .field {
+                padding: 8px;
+            }
+
+            .field:not(:last-child) {
+                border-right: 1px solid black;
+            }
+        }
+
+        .linked-by {
+            padding: 8px;
+            flex: 1;
+
+            .label {
+                text-align: center;
+            }
+
+            li {
+                list-style-type: none;
+            }
+        }
+    }
+}
