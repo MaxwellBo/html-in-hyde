@@ -23,12 +23,6 @@
   <meta name="twitter:description" content="what happened???" />
   <meta name="twitter:image" content="img/leaf.png" />
   <title>Gallery - HTML in Hyde</title>
-  <script>
-    if (window.self !== window.top) {
-      /* this document is loaded in a frame/iframe */
-      document.documentElement.className += " iframe";
-    }
- </script>
 </head>
 <style>
   body {
@@ -63,6 +57,14 @@
 </style>
 
 <body>
+  <!-- force links to open in iframe parent -->
+  <base target="_parent">
+  <script>
+    if (window.self !== window.top) {
+      /* this document is loaded in a frame/iframe */
+      document.documentElement.className += " iframe";
+    }
+ </script>
   <a class='noiframe' href="https://maxbo.me/html-in-hyde">← index</a>
   <h1 class='noiframe'>HTML in Hyde #0 - Gallery</h1>
 
