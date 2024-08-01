@@ -1,0 +1,39 @@
+html {
+  cursor: url('0/img/leaf.png'), auto;
+}
+
+body {
+  color: #006400;
+  max-width: 80ch;
+  margin: 1em 2em;
+}
+
+a>img {
+  border: blue 3px dashed;
+  padding: 1px;
+}
+
+a:visited>img {
+  border: purple 3px;
+}
+
+img {
+  max-inline-size: 100%;
+  block-size: auto;
+}
+
+.comma-seperated>* {
+  display: inline-block;
+}
+
+.comma-seperated>*:not(:last-child)::after {
+  content: ", ";
+}
+
+.iframe .noiframe {
+  display: none;
+}
+
+.iframe h2 {
+  font-size: large;
+}
