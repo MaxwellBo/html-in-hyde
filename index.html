@@ -82,7 +82,7 @@
     <li><a href="https://jisu.world/bag/index.html">What's in Jisu's bag?</a></li>
     <li><a href="https://laurelschwulst.com/medium/website/">Laurel Schwulst</a></li>
     <li><a href="https://internetour.com/">Internet Tour</a></li>
-    <li><a href="https://wwp.ungual.digital/">wonderful website webagogy</a>
+    <li><a href="https://wwp.ungual.digital/">wonderful website webagogy</a></li>
     <li><a href="http://contemporary-home-computing.org/prof-dr-style/">Prof. Dr. Style</a></li>
     <li><a href="https://maggieappleton.com/folk-interfaces">Folk Interfaces</a></li>
     <li><a href="https://geocities.restorativland.org/">The Geocities Gallery</a></li>
@@ -148,7 +148,7 @@
   </ul>
 
   <script>
-    fetch('https://api.are.na/v2/channels/html-in-hyde-recommended-inspo-channels/contents')
+    fetch('https://api.are.na/v2/channels/html-in-hyde-recommended-inspo-channels/contents?per=50')
       .then(response => response.json())
       .then(data => {
         data.contents.forEach(content => {
