@@ -37,3 +37,9 @@ img {
 .iframe h2 {
   font-size: large;
 }
+
+blockquote {
+  border-left: 2px dotted #006400;
+  padding-left: 1em;
+  margin-left: 0;
+}
