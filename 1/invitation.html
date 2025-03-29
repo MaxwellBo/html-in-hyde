@@ -41,10 +41,33 @@
       width: 100px;
       height: 100px;
     }
+
+    .train::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 20px;
+      width: 20px;
+      height: 20px;
+      background: #333;
+      border-radius: 50%;
+      box-shadow: 40px 0 0 #333;
+    }
+
+    .train:not(:first-child)::before {
+      content: '';
+      position: absolute;
+      right: -20px;
+      top: 40px;
+      width: 20px;
+      height: 5px;
+      background: #333;
+    }
   </style>
 
   <script>
     const COLORS = ['red', 'blue', 'green', 'yellow', 'purple', 'orange', 'pink', 'brown', 'gray', 'black', 'white'];
+    const NAMES = ["Max", "Hamish", "Annaliese", "Mia", "John", "Jane", "Jim"];
 
     function animateTrain(index) {
       let t = index;
@@ -53,13 +76,14 @@
           t += 1 / 60;
 
           const train = document.getElementById('train-' + index);
-          const x = 25 + (10 * (Math.sin(t)));
-          const z = -7 + (10 * (Math.cos(t)));
-          const rotateY = (t * 57) % 360;
+          const x = 25 + (20 * (Math.sin(t / 3)));
+          const z = -7 + (20 * (Math.cos(t / 3)));
+          const rotateY = (t * 57 / 3) % 360;
           // const y = -6 * Math.cos(t);
           // const rotateY = 183 + 10 * Math.sin(t);
           train.style.transform = `translate3d(${x}em, 30em, ${z}em) rotateY(${rotateY}deg)`
           train.style.backgroundColor = COLORS[index]
+          train.innerHTML = NAMES[index];
 
           tick();
         })
