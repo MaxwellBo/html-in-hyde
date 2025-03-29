@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HTML in Hyde #1</title>
+
+
+  <style>
+    body {
+      background-color: skyblue;
+      overflow: hidden;
+      height: 100vh;
+      width: 100vw;
+      background-image: url('../0/img/clouds.jpg');
+    }
+
+    main {
+      margin: 0 auto;
+    }
+
+    #scene {
+      perspective: 40em;
+      perspective-origin: 50% 10%;
+      transform-style: preserve-3d;
+      height: 100vh;
+      width: 100vw;
+      max-width: 900px;
+    }
+
+    #grass {
+      width: 700px;
+      height: 600px;
+      transform: translate3d(7em, 20em, -7em) rotateX(90deg);
+    }
+
+    #train {
+      width: 100px;
+      height: 100px;
+      background-color: red;
+      transform: translate3d(7em, 20em, -7em) rotateX(90deg);
+    }
+  </style>
+
+  <script>
+    let t = 0;
+    const tick = () => {
+      requestAnimationFrame(() => {
+        t += 1 / 60;
+
+        const train = document.getElementById('train');
+        const x = 25 + (10 * (Math.sin(t)));
+        const z = -7 + (10 * (Math.cos(t)));
+        const rotateY = (t * 57) % 360;
+        // const y = -6 * Math.cos(t);
+        // const rotateY = 183 + 10 * Math.sin(t);
+        train.style.transform = `translate3d(${x}em, -10em, ${z}em) rotateY(${rotateY}deg)`
+
+        tick();
+      })
+    }
+    tick();
+  </script>
+</head>
+
+<body>
+  <main>
+    <div id="scene">
+      <h1> HELLO WORLD</h1>
+      <img id="grass" src="../0/img/grass.avif" alt="grass" />
+
+
+      <div id="train">
+
+      </div>
+    </div>
+  </main>
+</body>
+
+</html>
