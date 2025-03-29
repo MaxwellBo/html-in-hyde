@@ -5,700 +5,97 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>HTML in Hyde #1</title>
+
+
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
     body {
-      font-family: Arial, sans-serif;
-      background-color: #f0f0f0;
-      padding: 20px;
-    }
-
-    .container {
-      max-width: 1000px;
-      margin: 0 auto;
-      background-color: white;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      padding: 20px;
-    }
-
-    h1 {
-      text-align: center;
-      margin-bottom: 20px;
-      color: #333;
-    }
-
-    .controls {
-      display: flex;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      margin-bottom: 20px;
-      padding: 15px;
-      background-color: #f9f9f9;
-      border-radius: 8px;
-    }
-
-    .control-group {
-      margin: 10px;
-    }
-
-    label {
-      font-weight: bold;
-      margin-right: 10px;
-    }
-
-    button {
-      background-color: #4CAF50;
-      color: white;
-      border: none;
-      padding: 8px 16px;
-      text-align: center;
-      border-radius: 4px;
-      cursor: pointer;
-      margin-right: 10px;
-    }
-
-    button:hover {
-      background-color: #45a049;
-    }
-
-    #speed-control {
-      width: 150px;
-      vertical-align: middle;
-    }
-
-    select {
-      padding: 5px;
-      border-radius: 4px;
-      border: 1px solid #ccc;
-    }
-
-    .track-container {
-      position: relative;
-      margin: 0 auto;
-      width: 100%;
-      height: 500px;
-      border: 2px solid #333;
-      border-radius: 8px;
+      background-color: skyblue;
       overflow: hidden;
-      background-color: #e9f5e9;
+      height: 100vh;
+      width: 100vw;
+      background-image: url('../0/img/clouds.jpg');
     }
 
-    #track-canvas {
-      width: 100%;
-      height: 100%;
+    main {
+      margin: 0 auto;
     }
 
-    .rsvp-form {
-      margin-top: 20px;
-      padding: 15px;
-      background-color: #f9f9f9;
-      border-radius: 8px;
+    #scene {
+      perspective: 40em;
+      perspective-origin: 50% 10%;
+      transform-style: preserve-3d;
+      height: 100vh;
+      width: 100vw;
+      max-width: 900px;
     }
 
-    .form-group {
-      margin-bottom: 15px;
+    #grass {
+      position: absolute;
+      width: 700px;
+      height: 600px;
+      transform: translate3d(7em, 20em, -7em) rotateX(90deg);
     }
 
-    input[type="text"],
-    input[type="email"] {
-      width: 100%;
-      padding: 8px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-    }
-
-    .submit-btn {
-      background-color: #4CAF50;
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-
-    .connection-status {
-      margin-top: 10px;
-      font-size: 0.9em;
-      color: #666;
-    }
-
-    .participants {
-      margin-top: 15px;
-    }
-
-    .participant-list {
-      margin-top: 5px;
-      font-size: 0.9em;
+    .train {
+      position: absolute;
+      width: 100px;
+      height: 100px;
     }
   </style>
+
+  <script>
+    const COLORS = ['red', 'blue', 'green', 'yellow', 'purple', 'orange', 'pink', 'brown', 'gray', 'black', 'white'];
+
+    function animateTrain(index) {
+      let t = index;
+      const tick = () => {
+        requestAnimationFrame(() => {
+          t += 1 / 60;
+
+          const train = document.getElementById('train-' + index);
+          const x = 25 + (10 * (Math.sin(t)));
+          const z = -7 + (10 * (Math.cos(t)));
+          const rotateY = (t * 57) % 360;
+          // const y = -6 * Math.cos(t);
+          // const rotateY = 183 + 10 * Math.sin(t);
+          train.style.transform = `translate3d(${x}em, 30em, ${z}em) rotateY(${rotateY}deg)`
+          train.style.backgroundColor = COLORS[index]
+
+          tick();
+        })
+      }
+      tick();
+    }
+
+    animateTrain(0);
+    animateTrain(1);
+    animateTrain(2);
+    animateTrain(3);
+    animateTrain(4);
+    animateTrain(5);
+    animateTrain(6);
+  </script>
 </head>
 
 <body>
-  <div class="container">
-
-    <div id="copy1">
-      <h1>HTML in Hyde #1</h1>
-      <p><b>Where:</b> Hyde Park, near the Anzac memorial <a
-          href="https://www.google.com/maps/place/33%C2%B052'32.3%22S+151%C2%B012'41.9%22E/@-33.8756429,151.2109979,19z/data=!3m1!4b1!4m4!3m3!8m2!3d-33.875644!4d151.211643?entry=ttu">(📍
-          map?)</a>
-      <p><b>When:</b> Sunday, 21st July, 12pm (sharp) - 3:00, 2024 <a href="TODO">(📅 gcal?)</a>
-      <p>+1s welcome! just send them this link!</p>
-    </div>
-
-    <div id="copy2">
-      <p>Bring:</p>
-      <ul>
-        <li>a (charged) computer or HTML-writing device</li>
-        <li>snacks</li>
-        <li>arts and crafts equipment <br /> paper? pens? pencils? crayons? paints? (optional!)</li>
-        <li>picnic blankets (optional)</li>
-      </ul>
-    </div>
-    <div id="copy3">
-      <p>
-        build a fun website!!! for:
-        <br />
-        your dog? a poem? a recipe? a short story? a game? a gallery?
-        <br />
-        JS allowed but strictly NO BUNDLERS!!!
-        <br />
-        no prior programming experience needed (others will help you!)
-        <br />
-        <a href="overview.html">overview, inspiration, resources →</a>
-      </p>
-    </div>
+  <main>
+    <div id="scene">
+      <h1> HELLO WORLD</h1>
+      <img id="grass" src="../0/img/grass.avif" alt="grass" />
 
 
-    <div class="controls">
-      <div class="control-group">
-        <label for="speed-control">Speed:</label>
-        <input type="range" id="speed-control" min="0" max="10" value="2" step="1">
-        <span id="speed-value">2</span>
+      <div id="train-0" class="train"></div>
+      <div id="train-1" class="train"></div>
+
+      <div id="train-2" class="train">
       </div>
 
-      <div class="control-group">
-        <label for="track-select">Track:</label>
-        <select id="track-select">
-          <option value="oval">Oval</option>
-          <option value="figure8">Figure 8</option>
-          <option value="circle">Circle</option>
-        </select>
-      </div>
-    </div>
-
-    <div class="track-container">
-      <canvas id="track-canvas"></canvas>
-    </div>
-
-    <div class="rsvp-form">
-      <h2>RSVP to Join the Train</h2>
-      <p>Submit your details to add your carriage to the train!</p>
-
-      <form id="rsvp-form">
-        <div class="form-group">
-          <label for="name">Name:</label>
-          <input type="text" id="name" name="name" required>
-        </div>
-
-        <div class="form-group">
-          <label for="email">Email:</label>
-          <input type="email" id="email" name="email" required>
-        </div>
-
-        <button type="submit" class="submit-btn">Join the Train</button>
-      </form>
-
-      <div class="connection-status">Status: <span id="connection-status">Connecting...</span></div>
-
-      <div class="participants">
-        <h3>Current Participants:</h3>
-        <div id="participant-list" class="participant-list">Loading...</div>
-      </div>
-    </div>
-  </div>
-
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      // Canvas setup
-      const canvas = document.getElementById('track-canvas');
-      const ctx = canvas.getContext('2d');
-
-      // Set canvas dimensions
-      function resizeCanvas() {
-        const container = document.querySelector('.track-container');
-        canvas.width = container.offsetWidth;
-        canvas.height = container.offsetHeight;
-      }
-
-      // Initialize variables
-      let speed = 2;
-      let currentTrack = 'oval';
-      let train = [];
-      let trackPath = [];
-      let animationId = null;
-      let participants = [];
-
-      // Train and track colors
-      const COLORS = {
-        locomotive: '#E81309',
-        carriages: ['#4B89DC', '#3C70B4', '#1F3A5F', '#8CC152', '#F6BB42'],
-        tracks: '#6C5B48',
-        trackTies: '#8B7355',
-        background: '#e9f5e9'
-      };
-
-      // Track paths definitions
-      const TRACKS = {
-        oval: [],
-        figure8: [],
-        circle: []
-      };
-
-      // Initialize the simulation
-      function init() {
-        resizeCanvas();
-        createTrackPaths();
-        initTrain();
-        bindEvents();
-        updateUI();
-        startAnimation();
-        initEventSource();
-      }
-
-      // Create track paths
-      function createTrackPaths() {
-        const width = canvas.width;
-        const height = canvas.height;
-        const centerX = width / 2;
-        const centerY = height / 2;
-
-        // Oval track
-        TRACKS.oval = [];
-        const ovalWidth = width * 0.8;
-        const ovalHeight = height * 0.7;
-        const stepSize = 0.01;
-
-        for (let t = 0; t < 2 * Math.PI; t += stepSize) {
-          const x = centerX + Math.cos(t) * (ovalWidth / 2);
-          const y = centerY + Math.sin(t) * (ovalHeight / 2);
-          TRACKS.oval.push({ x, y });
-        }
-
-        // Circle track
-        TRACKS.circle = [];
-        const radius = Math.min(width, height) * 0.35;
-
-        for (let t = 0; t < 2 * Math.PI; t += stepSize) {
-          const x = centerX + Math.cos(t) * radius;
-          const y = centerY + Math.sin(t) * radius;
-          TRACKS.circle.push({ x, y });
-        }
-
-        // Figure 8 track
-        TRACKS.figure8 = [];
-        const fig8Size = Math.min(width, height) * 0.35;
-
-        for (let t = 0; t < 2 * Math.PI; t += stepSize) {
-          const x = centerX + fig8Size * Math.sin(t);
-          const y = centerY + fig8Size * Math.sin(t) * Math.cos(t);
-          TRACKS.figure8.push({ x, y });
-        }
-
-        trackPath = TRACKS[currentTrack];
-      }
-
-      // Initialize the train with locomotive only
-      function initTrain() {
-        train = [];
-
-        // Add locomotive
-        train.push({
-          position: 0,
-          width: 40,
-          height: 20,
-          color: COLORS.locomotive,
-          type: 'locomotive'
-        });
-
-        // Add carriages based on participants
-        updateTrainCarriages();
-      }
-
-      // Update train carriages based on participants
-      function updateTrainCarriages() {
-        // Remove all carriages but keep the locomotive
-        train = train.filter(car => car.type === 'locomotive');
-
-        // Fixed spacing between carriages
-        const carriageSeparation = 0.02;
-
-        // Add carriages for each participant
-        participants.forEach((participant, index) => {
-          const position = (1 - carriageSeparation * (index + 1)) % 1;
-
-          train.push({
-            position: position,
-            width: 30,
-            height: 15,
-            color: COLORS.carriages[index % COLORS.carriages.length],
-            type: 'carriage',
-            name: participant.name
-          });
-        });
-      }
-
-      // Bind events to UI controls
-      function bindEvents() {
-        // Speed control
-        const speedControl = document.getElementById('speed-control');
-        speedControl.addEventListener('input', function () {
-          speed = parseInt(this.value);
-          document.getElementById('speed-value').textContent = speed;
-        });
-
-        // Track selection
-        const trackSelect = document.getElementById('track-select');
-        trackSelect.addEventListener('change', function () {
-          currentTrack = this.value;
-          trackPath = TRACKS[currentTrack];
-          resetTrain();
-        });
-
-        // RSVP form submission
-        const rsvpForm = document.getElementById('rsvp-form');
-        rsvpForm.addEventListener('submit', async function (e) {
-          e.preventDefault();
-
-          const nameInput = document.getElementById('name');
-          const emailInput = document.getElementById('email');
-
-          const name = nameInput.value.trim();
-          const email = emailInput.value.trim();
-
-          if (!name || !email) {
-            alert('Please fill out all fields');
-            return;
-          }
-
-          try {
-            const response = await fetch('/submit-rsvp', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({ name, email }),
-            });
-
-            if (response.ok) {
-              // Clear the form on success
-              nameInput.value = '';
-              emailInput.value = '';
-              alert('RSVP submitted successfully! Your carriage has been added to the train.');
-            } else {
-              const data = await response.text();
-              alert('Error submitting RSVP: ' + data);
-            }
-          } catch (error) {
-            console.error('Error:', error);
-            alert('An error occurred while submitting your RSVP');
-          }
-        });
-
-        // Handle window resize
-        window.addEventListener('resize', function () {
-          resizeCanvas();
-          createTrackPaths();
-          resetTrain();
-        });
-      }
-
-      // Reset train position
-      function resetTrain() {
-        initTrain();
-      }
-
-      // Initialize SSE connection for real-time updates
-      function initEventSource() {
-        const connectionStatus = document.getElementById('connection-status');
-        connectionStatus.textContent = 'Connecting...';
-
-        const eventSource = new EventSource('/rsvp-updates');
-
-        eventSource.onopen = () => {
-          connectionStatus.textContent = 'Connected';
-        };
-
-        eventSource.onmessage = (event) => {
-          try {
-            const data = JSON.parse(event.data);
-
-            if (data.rsvps) {
-              participants = data.rsvps;
-              updateTrainCarriages();
-              updateParticipantList();
-            }
-          } catch (e) {
-            console.error('Error parsing event data:', e);
-          }
-        };
-
-        eventSource.onerror = () => {
-          connectionStatus.textContent = 'Connection error. Reconnecting...';
-          eventSource.close();
-          setTimeout(initEventSource, 3000);
-        };
-
-        return eventSource;
-      }
-
-      // Update the participant list in the UI
-      function updateParticipantList() {
-        const participantList = document.getElementById('participant-list');
-
-        if (participants.length === 0) {
-          participantList.textContent = 'No participants yet.';
-          return;
-        }
-
-        let html = '';
-        for (let i = 0; i < participants.length; i++) {
-          html += "<div>" + participants[i].name + " (" + participants[i].email + ")</div>";
-        }
-        participantList.innerHTML = html;
-      }
-
-      // Update UI elements
-      function updateUI() {
-        document.getElementById('speed-value').textContent = speed;
-      }
-
-      // Animation loop
-      function animate() {
-        try {
-          ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-          drawTrack();
-          updateTrain();
-          drawTrain();
-
-          animationId = requestAnimationFrame(animate);
-        } catch (error) {
-          console.error('Animation error:', error);
-          // Try to restart the animation
-          setTimeout(() => startAnimation(), 1000);
-        }
-      }
-
-      // Start animation
-      function startAnimation() {
-        if (animationId) {
-          cancelAnimationFrame(animationId);
-        }
-        animationId = requestAnimationFrame(animate);
-      }
-
-      // Draw the track
-      function drawTrack() {
-        if (!trackPath || trackPath.length === 0) {
-          createTrackPaths();
-          return;
-        }
-
-        // Draw the track bed
-        ctx.beginPath();
-        ctx.strokeStyle = COLORS.tracks;
-        ctx.lineWidth = 14;
-        ctx.lineCap = 'round';
-
-        ctx.moveTo(trackPath[0].x, trackPath[0].y);
-
-        for (let i = 1; i < trackPath.length; i++) {
-          ctx.lineTo(trackPath[i].x, trackPath[i].y);
-        }
-
-        // Close the path
-        ctx.lineTo(trackPath[0].x, trackPath[0].y);
-        ctx.stroke();
-
-        // Draw the track ties
-        ctx.strokeStyle = COLORS.trackTies;
-        ctx.lineWidth = 2;
-
-        for (let i = 0; i < trackPath.length; i += 20) {
-          const point = trackPath[i];
-          const nextPoint = trackPath[(i + 5) % trackPath.length];
-
-          // Calculate the perpendicular line
-          const dx = nextPoint.x - point.x;
-          const dy = nextPoint.y - point.y;
-          const len = Math.sqrt(dx * dx + dy * dy);
-
-          if (len > 0) {
-            const perpX = -dy / len;
-            const perpY = dx / len;
-
-            const tieLength = 20;
-
-            ctx.beginPath();
-            ctx.moveTo(point.x + perpX * tieLength, point.y + perpY * tieLength);
-            ctx.lineTo(point.x - perpX * tieLength, point.y - perpY * tieLength);
-            ctx.stroke();
-          }
-        }
-      }
-
-      // Update train positions
-      function updateTrain() {
-        if (!trackPath || trackPath.length === 0 || !train || train.length === 0) {
-          return;
-        }
-
-        const speedFactor = 0.0005 * speed;
-        const carriageSeparation = 0.02;
-
-        // Update locomotive first
-        train[0].position = (train[0].position + speedFactor) % 1;
-
-        // Update all carriages based on the locomotive's position
-        for (let i = 1; i < train.length; i++) {
-          train[i].position = (train[0].position - (carriageSeparation * i) + 1) % 1;
-        }
-      }
-
-      // Draw the train
-      function drawTrain() {
-        if (!trackPath || trackPath.length === 0 || !train || train.length === 0) {
-          return;
-        }
-
-        // Calculate arc lengths for precise positioning
-        const arcLengths = [];
-        let totalLength = 0;
-
-        for (let i = 1; i < trackPath.length; i++) {
-          const p1 = trackPath[i - 1];
-          const p2 = trackPath[i];
-          const dx = p2.x - p1.x;
-          const dy = p2.y - p1.y;
-          const segmentLength = Math.sqrt(dx * dx + dy * dy);
-          totalLength += segmentLength;
-          arcLengths.push(totalLength);
-        }
-
-        // Connect back to start
-        const lastP = trackPath[trackPath.length - 1];
-        const firstP = trackPath[0];
-        const lastDx = firstP.x - lastP.x;
-        const lastDy = firstP.y - lastP.y;
-        const lastSegmentLength = Math.sqrt(lastDx * lastDx + lastDy * lastDy);
-        totalLength += lastSegmentLength;
-
-        // Draw each carriage
-        train.forEach((carriage, index) => {
-          const { position, width, height, color, type, name } = carriage;
-
-          // Find the exact point on the track based on position
-          const targetLength = position * totalLength;
-
-          // Find the segment containing the target point
-          let segmentIndex = 0;
-          let segmentStart = 0;
-
-          for (let i = 0; i < arcLengths.length; i++) {
-            if (targetLength <= arcLengths[i]) {
-              segmentIndex = i;
-              segmentStart = i > 0 ? arcLengths[i - 1] : 0;
-              break;
-            }
-          }
-
-          // Handle the case where we need to wrap around to the beginning
-          if (targetLength > arcLengths[arcLengths.length - 1]) {
-            segmentIndex = 0;
-            segmentStart = 0;
-          }
-
-          // Calculate interpolation within the segment
-          const p1 = trackPath[segmentIndex];
-          const p2 = segmentIndex < trackPath.length - 1 ? trackPath[segmentIndex + 1] : trackPath[0];
-
-          const segmentLength = (segmentIndex < arcLengths.length ? arcLengths[segmentIndex] : totalLength) - segmentStart;
-          const segmentPosition = (targetLength - segmentStart) / segmentLength;
-
-          // Interpolate between current and next point for exact positioning
-          const x = p1.x + (p2.x - p1.x) * segmentPosition;
-          const y = p1.y + (p2.y - p1.y) * segmentPosition;
-
-          // Calculate angle for correct orientation
-          const angle = Math.atan2(p2.y - p1.y, p2.x - p1.x);
-
-          // Draw the carriage
-          ctx.save();
-          ctx.translate(x, y);
-          ctx.rotate(angle);
-
-          // Locomotive with smokestack
-          if (type === 'locomotive') {
-            // Main body
-            ctx.fillStyle = color;
-            ctx.fillRect(-width / 2, -height / 2, width, height);
-
-            // Smokestack
-            ctx.fillRect(-width / 3, -height / 2 - 8, 8, 8);
-
-            // Front window
-            ctx.fillStyle = '#FFFFFF';
-            ctx.fillRect(width / 4, -height / 4, width / 4, height / 2);
-
-            // Wheels
-            ctx.fillStyle = '#333';
-            ctx.beginPath();
-            ctx.arc(-width / 4, height / 2, 5, 0, Math.PI * 2);
-            ctx.fill();
-            ctx.beginPath();
-            ctx.arc(width / 4, height / 2, 5, 0, Math.PI * 2);
-            ctx.fill();
-          } else {
-            // Carriage body
-            ctx.fillStyle = color;
-            ctx.fillRect(-width / 2, -height / 2, width, height);
-
-            // Window
-            ctx.fillStyle = '#FFFFFF';
-            ctx.fillRect(-width / 4, -height / 4, width / 2, height / 2);
-
-            // Name label
-            if (name) {
-              ctx.fillStyle = '#000';
-              ctx.font = '8px Arial';
-              ctx.textAlign = 'center';
-              ctx.fillText(name, 0, -1, width - 2);
-            }
-
-            // Wheels
-            ctx.fillStyle = '#333';
-            ctx.beginPath();
-            ctx.arc(-width / 4, height / 2, 4, 0, Math.PI * 2);
-            ctx.fill();
-            ctx.beginPath();
-            ctx.arc(width / 4, height / 2, 4, 0, Math.PI * 2);
-            ctx.fill();
-          }
-
-          ctx.restore();
-        });
-      }
-
-      // Initialize the simulation
-      init();
-    });
-  </script>
+      <div id="train-3" class="train"></div>
+
+      <div id="train-4" class="train"></div>
+      <div id="train-5" class="train"></div>
+      <div id="train-6" class="train"></div>
+  </main>
 </body>
 
 </html>
