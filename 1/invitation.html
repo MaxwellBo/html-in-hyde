@@ -36,13 +36,13 @@
       transform: translate3d(7em, 20em, -7em) rotateX(90deg);
     }
 
-    .train {
+    .carriage {
       position: absolute;
       width: 100px;
       height: 100px;
     }
 
-    .train::after {
+    .carriage::after {
       content: '';
       position: absolute;
       bottom: -10px;
@@ -54,7 +54,7 @@
       box-shadow: 40px 0 0 #333;
     }
 
-    .train:not(:first-child)::before {
+    .carriage:not(:first-child)::before {
       content: '';
       position: absolute;
       right: -20px;
@@ -65,60 +65,80 @@
     }
   </style>
 
-  <script>
+  <script type="module">
     const COLORS = ['red', 'blue', 'green', 'yellow', 'purple', 'orange', 'pink', 'brown', 'gray', 'black', 'white'];
     const NAMES = ["Max", "Hamish", "Annaliese", "Mia", "John", "Jane", "Jim"];
 
-    function animateTrain(index) {
+    const rsvps = await fetch("https://mbo-html_in_hyde_1.web.val.run/rsvps").then(res => res.json());
+
+    for (let i = 0; i < rsvps.length; i++) {
+      const rsvp = rsvps[i];
+      const { name, email, status, color, imageb64 } = rsvp;
+
+      const carriage = document.createElement('div');
+      carriage.id = 'carriage-' + i;
+      carriage.className = 'carriage';
+      carriage.style.backgroundColor = color;
+      carriage.innerHTML = name;
+      document.getElementById('scene').appendChild(carriage);
+
+      if (imageb64) {
+        const image = document.createElement('img');
+        image.src = imageb64;
+        image.style.width = '100px';
+        carriage.appendChild(image);
+      }
+
+      animateCarriage(i);
+    }
+
+    function animateCarriage(index) {
       let t = index;
       const tick = () => {
         requestAnimationFrame(() => {
-          t += 1 / 60;
+          t -= 1 / 60;
 
-          const train = document.getElementById('train-' + index);
+          const carriage = document.getElementById('carriage-' + index);
           const x = 25 + (20 * (Math.sin(t / 3)));
           const z = -7 + (20 * (Math.cos(t / 3)));
           const rotateY = (t * 57 / 3) % 360;
-          // const y = -6 * Math.cos(t);
-          // const rotateY = 183 + 10 * Math.sin(t);
-          train.style.transform = `translate3d(${x}em, 30em, ${z}em) rotateY(${rotateY}deg)`
-          train.style.backgroundColor = COLORS[index]
-          train.innerHTML = NAMES[index];
+          carriage.style.transform = `translate3d(${x}em, 30em, ${z}em) rotateY(${rotateY}deg)`
 
           tick();
         })
       }
       tick();
     }
-
-    animateTrain(0);
-    animateTrain(1);
-    animateTrain(2);
-    animateTrain(3);
-    animateTrain(4);
-    animateTrain(5);
-    animateTrain(6);
   </script>
 </head>
 
 <body>
   <main>
     <div id="scene">
-      <h1> HELLO WORLD</h1>
+      <h1>HTML in Hyde #1</h1>
       <img id="grass" src="../0/img/grass.avif" alt="grass" />
+      <form id="rsvp" action="https://mbo-html_in_hyde_1.web.val.run/rsvps" method="POST" enctype="multipart/form-data">
+        <input type="email" name="email" placeholder="Email (for reminder)" />
+        <input type="text" name="name" placeholder="Name" />
 
+        <label for="color">
+          Choose a color for your carriage
+          <input type="color" name="color" value="#ff0000" />
+        </label>
 
-      <div id="train-0" class="train"></div>
-      <div id="train-1" class="train"></div>
+        <button type="submit" name="status" value="going">Going</button>
+        <button type="submit" name="status" value="maybe">Maybe</button>
 
-      <div id="train-2" class="train">
-      </div>
+        <label for="color">
+          (Resubmit your RSVP to change your color)
+        </label>
 
-      <div id="train-3" class="train"></div>
+        <label for="file">
+          Upload a photo for your carriage (optional)
+          <input type="file" name="image" accept="image/*" />
+        </label>
 
-      <div id="train-4" class="train"></div>
-      <div id="train-5" class="train"></div>
-      <div id="train-6" class="train"></div>
+      </form>
   </main>
 </body>
 
