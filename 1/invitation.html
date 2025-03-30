@@ -72,9 +72,21 @@
 
     #grass {
       position: absolute;
-      width: 400px;
-      height: 400px;
-      transform: translate3d(16em, 26em, -7em) rotateX(90deg);
+      width: 600px;
+      height: 600px;
+      transform:translate3d(9em, 19.5em, -7em) rotateX(90deg);
+      border-radius: 50%;
+    }
+
+    #track {
+      position: absolute;
+      width: 500px;
+      height: 500px;
+      z-index: /* make it appear ontop of the grass */ 1;
+      transform: translate3d(12em, 22em, -7em) rotateX(90deg);
+      /* add a double border to make it look like train tracks */
+      border: double 10px #333;
+      border-radius: 50%;
     }
 
     #tree1 {
@@ -358,6 +370,7 @@
 
     <div id="scene">
       <img id="grass" src="../0/img/grass.avif" />
+      <div id="track"></div>
       <img id="tree1" src="../0/img/tree1.png" />
       <img id="table" src="wood.avif" />
       <img id="leg-tr" src="wood.avif" />
