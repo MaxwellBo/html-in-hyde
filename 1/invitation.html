@@ -213,11 +213,14 @@
       // add a space, then bold the name, then put the status in brackets
       li.appendChild(document.createTextNode(' '));
       const nameSpan = document.createElement('span');
-      nameSpan.style.fontWeight = 'bold';
       nameSpan.textContent = name;
       li.appendChild(nameSpan);
       if (status !== "going") {
-        li.appendChild(document.createTextNode(' (' + status + ')'));
+        li.appendChild(document.createTextNode(' ('));
+        const statusSpan = document.createElement('i');
+        statusSpan.textContent = status;
+        li.appendChild(statusSpan);
+        li.appendChild(document.createTextNode(')'));
       }
 
       document.getElementById('rsvps').appendChild(li);
