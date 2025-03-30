@@ -146,7 +146,7 @@
 
     for (let i = 0; i < rsvps.length; i++) {
       const rsvp = rsvps[i];
-      const { name, email, status, color } = rsvp;
+      const { name, status, color } = rsvp;
 
       const carriage = document.createElement('div');
       carriage.id = 'carriage-' + i;
@@ -154,6 +154,25 @@
       carriage.style.backgroundColor = color;
       carriage.innerHTML = name;
       document.getElementById('scene').appendChild(carriage);
+
+      // // create li element for rsvps list
+      const li = document.createElement('li');
+      const colorBox = document.createElement('span');
+      colorBox.style.display = 'inline-block';
+      colorBox.style.width = '1em';
+      colorBox.style.height = '1em';
+      colorBox.style.backgroundColor = color;
+      colorBox.style.marginLeft = '0.5em';
+      li.appendChild(colorBox);
+      // add a space, then bold the name, then put the status in brackets
+      li.appendChild(document.createTextNode(' '));
+      const nameSpan = document.createElement('span');
+      nameSpan.style.fontWeight = 'bold';
+      nameSpan.textContent = name;
+      li.appendChild(nameSpan);
+      li.appendChild(document.createTextNode(' (' + status + ')'));
+
+      document.getElementById('rsvps').appendChild(li);
 
       animateCarriage(i);
     }
@@ -293,6 +312,12 @@
         <i>(Resubmit your RSVP to change your color or photo)</i>
       </fieldset>
     </form>
+
+    <br />
+    <b>RSVPs</b>
+    <ul id="rsvps" style="margin: 0; columns: 3; column-gap: 1em;"></ul>
+    </ul>
+
   </main>
 </body>
 
