@@ -189,7 +189,9 @@
       nameSpan.style.fontWeight = 'bold';
       nameSpan.textContent = name;
       li.appendChild(nameSpan);
-      li.appendChild(document.createTextNode(' (' + status + ')'));
+      if (status !== "going") {
+        li.appendChild(document.createTextNode(' (' + status + ')'));
+      }
 
       document.getElementById('rsvps').appendChild(li);
 
@@ -236,7 +238,7 @@
     <h1>HTML in Hyde #1</h1>
 
     <p>
-      <b>What</b>
+      <b>What?</b>
       <br />
 
       HTML in Hyde is a <i>HTML Freewrite</i> - <a href="https://html.energy/events.html"><q>[an event] in
@@ -247,7 +249,7 @@
 
 
     <div>
-      <b>Where</b>
+      <b>Where?</b>
       <br />
       Hyde Park, near the Anzac memorial <a
         href="https://www.google.com/maps/place/33%C2%B052'32.3%22S+151%C2%B012'41.9%22E/@-33.8756429,151.2109979,19z/data=!3m1!4b1!4m4!3m3!8m2!3d-33.875644!4d151.211643?entry=ttu">(📍
@@ -265,7 +267,7 @@
       </details>
     </div>
     <p>
-      <b>When</b>
+      <b>When?</b>
 
       <br />
       TBA (likely June/July), 12pm (sharp) - 3:00, 2025 <a href="TODO">(📅 gcal?)</a>
@@ -313,7 +315,7 @@
 
     <br />
     <b>
-      Schedule
+      Schedule:
     </b>
     <ul>
       <li>
@@ -332,6 +334,8 @@
         3:00 - keep cooking (if you want)
       </li>
     </ul>
+    <br />
+    <br />
 
   </div>
   <div id="col2">
