@@ -390,6 +390,23 @@
       </fieldset>
     </form>
 
+    <script>
+      // set a random color with some minimum degree of lightness (using a naive lightness assessment)
+      const colorInput = document.getElementById('color')
+      const randomColor = () => {
+        const r = Math.floor(Math.random() * 256);
+        const g = Math.floor(Math.random() * 256);
+        const b = Math.floor(Math.random() * 256);
+        const lightness = (r + g + b) / 3;
+        if (lightness > 100) {
+          return '#' + r.toString(16).padStart(2, '0') + g.toString(16).padStart(2, '0') + b.toString(16).padStart(2, '0');
+        } else {
+          return randomColor();
+        }
+      }
+      colorInput.value = randomColor();
+    </script>
+
     <br />
     <b>RSVPs</b>
     <ul id="rsvps" style="margin: 0; columns: 3; column-gap: 1em;"></ul>
