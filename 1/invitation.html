@@ -68,7 +68,7 @@
 
     .carriage {
       position: absolute;
-      width: 100px;
+      width: 150px;
       height: 100px;
     }
 
@@ -152,14 +152,14 @@
     }
 
     function animateCarriage(index) {
-      let t = index;
+      let t = index * 2;
       const tick = () => {
         requestAnimationFrame(() => {
           t -= 1 / 60;
 
           const carriage = document.getElementById('carriage-' + index);
-          const x = 25 + (20 * (Math.sin(t / 3)));
-          const z = -5 + (20 * (Math.cos(t / 3)));
+          const x = 25 + (15 * (Math.sin(t / 3)));
+          const z = -5 + (15 * (Math.cos(t / 3)));
           const rotateY = (t * 57 / 3) % 360;
           carriage.style.transform = `translate3d(${x}em, 30em, ${z}em) rotateY(${rotateY}deg)`
 
