@@ -36,6 +36,12 @@
       }
     }
 
+    .avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 25%;
+    }
+
     #col1 {
       max-width: 80ch;
     }
@@ -94,8 +100,9 @@
 
     .carriage {
       position: absolute;
-      width: 150px;
-      height: 100px;
+      width: 100px;
+      height: 66px;
+      font-size: x-large;
     }
 
     .carriage::after {
@@ -199,16 +206,17 @@
     }
 
     function animateCarriage(index) {
-      let t = index * 2;
+      let t = index * 1.5; // cart seperation
       const tick = () => {
         requestAnimationFrame(() => {
           t -= 1 / 60;
 
           const carriage = document.getElementById('carriage-' + index);
-          const x = 25 + (15 * (Math.sin(t / 3)));
-          const z = -5 + (15 * (Math.cos(t / 3)));
+          const x = 17 /* across screen */ + (10 * (Math.sin(t / 3)));
+          const z = -4 /* toward from screen */ + (10 * (Math.cos(t / 3)));
           const rotateY = (t * 57 / 3) % 360;
-          carriage.style.transform = `translate3d(${x}em, 30em, ${z}em) rotateY(${rotateY}deg)`
+          const y = 22 /* down */
+          carriage.style.transform = `translate3d(${x}em, ${y}em, ${z}em) rotateY(${rotateY}deg)`
 
           tick();
         })
@@ -222,8 +230,8 @@
       if (!imageb64 || imageb64 == 'NULL') continue;
 
       const imageElement = document.createElement('img');
+      imageElement.className = 'avatar';
       imageElement.src = imageb64;
-      imageElement.style.width = '100px';
       document.getElementById('carriage-' + i).appendChild(imageElement);
     }
   </script>
