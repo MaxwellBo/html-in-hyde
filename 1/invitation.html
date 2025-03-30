@@ -29,9 +29,21 @@
 
 
   <style>
+    @media (min-width: 1000px) {
+      body {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    #col1 {
+      max-width: 80ch;
+    }
+
     body {
       background-color: rgb(245, 244, 230);
       cursor: url('cursor.png'), auto;
+      padding: 1em;
     }
 
     .border {
@@ -39,11 +51,6 @@
       border: 1px solid #aeaeae;
       padding: 0.5em;
 
-    }
-
-    main {
-      margin: 0 auto;
-      max-width: 80ch;
     }
 
     ul {
@@ -221,7 +228,7 @@
 </head>
 
 <body>
-  <main>
+  <div id="col1">
     <a href="../index.html">
       ← index, previous events, resources, motivation, etc
     </a>
@@ -290,13 +297,14 @@
         ask for help from others (no prior programming experience required)
       </li>
       <li>
-        do the <a href="https://extrapractice.space/computer-dance/#instructions">computer dance</a>
-      </li>
-      <li>
-        read the <a href="../index.html#why">overview, inspiration, resources →</a> page
+        read the <a href="../index.html#why"># Why?</a> and <a href="../index.html#resources"># Resources</a> sections
+        of the index page
       </li>
       <li>
         NOT use a bundler (JS is allowed)
+      </li>
+      <li>
+        the <a href="https://extrapractice.space/computer-dance/#instructions">computer dance</a>
       </li>
       <li>
         let the <a href="https://html.energy/goals.html">HTML energy</a> flow
@@ -325,6 +333,9 @@
       </li>
     </ul>
 
+  </div>
+  <div id="col2">
+
     <div id="scene">
       <img id="grass" src="../0/img/grass.avif" />
       <img id="tree1" src="../0/img/tree1.png" />
@@ -334,12 +345,10 @@
       <img id="leg-bl" src="wood.avif" />
       <img id="leg-br" src="wood.avif" />
       <img id="carpet" src="carpet.jpg" />
-      <img id="door" src="door.jpg" />
+      <!-- <img id="door" src="door.jpg" /> -->
       <img id="ant" src="ant.png" />
     </div>
 
-    <br />
-    <br />
     <form id="rsvp" action="https://mbo-html_in_hyde_1.web.val.run/rsvps" method="POST" enctype="multipart/form-data">
       <fieldset>
         <legend>RSVP</legend>
@@ -374,8 +383,7 @@
     <ul id="rsvps" style="margin: 0; columns: 3; column-gap: 1em;"></ul>
     </ul>
 
-
-  </main>
+  </div>
 </body>
 
 </html>
