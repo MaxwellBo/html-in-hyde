@@ -234,7 +234,7 @@
           const carriage = document.getElementById('carriage-' + index);
           const x = 17 /* across screen */ + (10 * (Math.sin(t / 3)));
           const z = -4 /* toward from screen */ + (10 * (Math.cos(t / 3)));
-          const rotateY = (t * 57 / 3) % 360;
+          const rotateY = (t * 57.5 / 3) % 360;
           const y = 22 /* down */
           carriage.style.transform = `translate3d(${x}em, ${y}em, ${z}em) rotateY(${rotateY}deg)`
 
