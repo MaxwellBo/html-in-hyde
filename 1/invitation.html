@@ -9,7 +9,7 @@
   <meta name="description" content="a HTML freewrite in a Sydney park">
   <meta name="keywords" content="HTML, Hyde Park, picnic, web development, fun">
   <meta name="author" content="Max Bo">
-  <link rel="icon" type="image/png" href="TODO"/>
+  <link rel="icon" type="image/png" href="TODO" />
   <meta property="og:title" content="HTML in Hyde #1" />
   <meta property="og:description" content="a HTML freewrite in a Sydney park" />
   <meta property="og:image" content="TODO" />
@@ -31,23 +31,19 @@
   <style>
     body {
       background-color: skyblue;
-      overflow: hidden;
-      height: 100vh;
-      width: 100vw;
       background-image: url('../0/img/clouds.jpg');
     }
 
     main {
       margin: 0 auto;
+      max-width: 80ch;
     }
 
     #scene {
+      position: relative;
       perspective: 40em;
       perspective-origin: 50% 10%;
       transform-style: preserve-3d;
-      height: 100vh;
-      width: 100vw;
-      max-width: 900px;
     }
 
     #grass {
@@ -146,61 +142,64 @@
 
 <body>
   <main>
+    <div id="copy1">
+      <h1>HTML in Hyde #1</h1>
+      <p><b>Where:</b> Hyde Park, near the Anzac memorial <a
+          href="https://www.google.com/maps/place/33%C2%B052'32.3%22S+151%C2%B012'41.9%22E/@-33.8756429,151.2109979,19z/data=!3m1!4b1!4m4!3m3!8m2!3d-33.875644!4d151.211643?entry=ttu">(📍
+          map?)</a>
+      <p><b>When:</b> TBA (likely June/July), 12pm (sharp) - 3:00, 2024 <a href="TODO">(📅 gcal?)</a>
+      <p>+1s welcome! just send them this link!</p>
+    </div>
+
     <div id="scene">
-      <div id="copy1">
-        <h1>HTML in Hyde #1</h1>
-        <p><b>Where:</b> Hyde Park, near the Anzac memorial <a href="https://www.google.com/maps/place/33%C2%B052'32.3%22S+151%C2%B012'41.9%22E/@-33.8756429,151.2109979,19z/data=!3m1!4b1!4m4!3m3!8m2!3d-33.875644!4d151.211643?entry=ttu">(📍 map?)</a>
-        <p><b>When:</b> TBA (likely June/July), 12pm (sharp) - 3:00, 2024 <a href="TODO">(📅 gcal?)</a>
-        <p>+1s welcome! just send them this link!</p>
-      </div>
-
-      <div id="copy2">
-        <p>Bring:</p>
-        <ul>
-          <li>a (charged) computer or HTML-writing device</li>
-          <li>snacks</li>
-          <li>arts and crafts equipment <br /> paper? pens? pencils? crayons? paints? (optional!)</li>
-          <li>picnic blankets (optional)</li>
-        </ul>
-      </div>
-      <div id="copy3">
-        <p>
-          build a fun website!!! for:
-          <br />
-          your dog? a poem? a recipe? a short story? a game? a gallery?
-          <br />
-          JS allowed but strictly NO BUNDLERS!!!
-          <br />
-          no prior programming experience needed (others will help you!)
-          <br />
-          <a href="overview.html">overview, inspiration, resources →</a>
-        </p>
-      </div>
-
       <img id="grass" src="../0/img/grass.avif" alt="grass" />
       <img id="tracks" src="circle.webp" />
-      <form id="rsvp" action="https://mbo-html_in_hyde_1.web.val.run/rsvps" method="POST" enctype="multipart/form-data">
-        <input type="email" name="email" placeholder="Email (for reminder)" />
-        <input type="text" name="name" placeholder="Name" />
+    </div>
 
-        <label for="color">
-          Choose a color for your carriage
-          <input type="color" name="color" value="#ff0000" />
-        </label>
+    <div id="copy2">
+      <p>Bring:</p>
+      <ul>
+        <li>a (charged) computer or HTML-writing device</li>
+        <li>snacks</li>
+        <li>arts and crafts equipment <br /> paper? pens? pencils? crayons? paints? (optional!)</li>
+        <li>picnic blankets (optional)</li>
+      </ul>
+    </div>
+    <div id="copy3">
+      <p>
+        build a fun website!!! for:
+        <br />
+        your dog? a poem? a recipe? a short story? a game? a gallery?
+        <br />
+        JS allowed but strictly NO BUNDLERS!!!
+        <br />
+        no prior programming experience needed (others will help you!)
+        <br />
+        <a href="overview.html">overview, inspiration, resources →</a>
+      </p>
+    </div>
+    <form id="rsvp" action="https://mbo-html_in_hyde_1.web.val.run/rsvps" method="POST" enctype="multipart/form-data">
+      <input type="email" name="email" placeholder="Email (for reminder)" />
+      <input type="text" name="name" placeholder="Name" />
 
-        <button type="submit" name="status" value="going">Going</button>
-        <button type="submit" name="status" value="maybe">Maybe</button>
+      <label for="color">
+        Choose a color for your carriage
+        <input type="color" name="color" value="#ff0000" />
+      </label>
 
-        <label for="color">
-          (Resubmit your RSVP to change your color)
-        </label>
+      <button type="submit" name="status" value="going">Going</button>
+      <button type="submit" name="status" value="maybe">Maybe</button>
 
-        <label for="file">
-          Upload a photo for your carriage (optional)
-          <input type="file" name="image" accept="image/*" />
-        </label>
+      <label for="color">
+        (Resubmit your RSVP to change your color)
+      </label>
 
-      </form>
+      <label for="file">
+        Upload a photo for your carriage (optional)
+        <input type="file" name="image" accept="image/*" />
+      </label>
+
+    </form>
   </main>
 </body>
 
