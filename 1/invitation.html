@@ -222,27 +222,29 @@
       <li>picnic blankets (optional)</li>
     </ul>
 
-    <p>
-      <b>What should I do?</b>
-    <p>
-      build a fun website!!! for:
-    <blockquote>dog? a poem? a recipe? a short story? a game? a gallery?
-    </blockquote>
-    </p>
 
-    <p>
+    <br />
+    <br />
+    <b>What should I do?</b>
+    <div style="columns: 3; column-gap: 1em;">
+      <p>
+      build a fun website!!! for:
+      <blockquote>your dog? a poem? a recipe? a short story? a game? a gallery?
+      </blockquote>
+      </p>
+      <p>
       JS allowed but strictly NO BUNDLERS!!!
-    </p>
-    <p>
+      </p>
+      <p>
       no prior programming experience needed (others will help you!)
-    </p>
-    <p>
+      </p>
+      <p>
       let the <a href="https://html.energy/goals.html">HTML energy</a> flow!!!
-    </p>
-    <p>
+      </p>
+      <p>
       <a href="overview.html">overview, inspiration, resources →</a>
-    </p>
-    </p>
+      </p>
+    </div>
 
     <div id="scene">
       <img id="grass" src="../0/img/grass.avif" />
@@ -258,31 +260,34 @@
     </div>
 
 
-
-
+    <br />
+    <br />
     <form id="rsvp" action="https://mbo-html_in_hyde_1.web.val.run/rsvps" method="POST" enctype="multipart/form-data">
       <fieldset>
         <legend>RSVP</legend>
-        <input type="email" name="email" placeholder="Email (for reminder)" />
-        <input type="text" name="name" placeholder="Name" />
+        <input type="email" name="email" placeholder="Email (for reminder)" required />
+        <input type="text" name="name" placeholder="Name" required/>
 
+        <br />
+        <br />
         <label for="color">
-          Choose a color for your carriage
-          <input type="color" name="color" value="#ff0000" />
+          Choose a color for your carriage:
+          <input id="color" type="color" name="color" value="#ff0000" required />
         </label>
+        <br />
+        <br />
 
-        <label for="file">
-          Upload a photo for your carriage (optional)
-          <input type="file" name="image" accept="image/*" />
+        <label for="image">
+          Upload a photo for your carriage <i>(optional)</i>:
+          <input id="image" type="file" name="image" accept="image/*" />
         </label>
 
         <br />
+        <br />
 
-        <button type="submit" name="status" value="going">Going</button>
+        <button id="going" type="submit" name="status" value="going">Going</button>
         <button type="submit" name="status" value="maybe">Maybe</button>
-        <label for="submit">
-          (Resubmit your RSVP to change your color)
-        </label>
+        <i>(Resubmit your RSVP to change your color or photo)</i>
       </fieldset>
     </form>
   </main>
