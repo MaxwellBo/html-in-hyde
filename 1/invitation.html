@@ -59,6 +59,13 @@
       transform: translate3d(19em, 26em, -3em);
     }
 
+    #ant {
+      position: absolute;
+      width: 2em;
+      height: 2em;
+      transform: translate3d(38em, 37em, 9em)
+    }
+
     #table {
       position: absolute;
       width: 700px;
@@ -184,13 +191,32 @@
 
 <body>
   <main>
+    <a href="../index.html">
+      ← index
+    </a>
+
     <div id="copy1">
       <h1>HTML in Hyde #1</h1>
+
+      <b>What:</b> HTML in Hyde is a <i>HTML Freewrite</i> - <a href="https://html.energy/events.html"><q>[an event] in which people get
+        together and write HTML documents</q></a>.
+      This one is in a park (like the Ontario based <a href="https://html.green/">HTML in the Park</a>)!
+      
+
       <p><b>Where:</b> Hyde Park, near the Anzac memorial <a
           href="https://www.google.com/maps/place/33%C2%B052'32.3%22S+151%C2%B012'41.9%22E/@-33.8756429,151.2109979,19z/data=!3m1!4b1!4m4!3m3!8m2!3d-33.875644!4d151.211643?entry=ttu">(📍
           map?)</a>
       <p><b>When:</b> TBA (likely June/July), 12pm (sharp) - 3:00, 2025 <a href="TODO">(📅 gcal?)</a>
-      <p>+1s welcome! just send them this link!</p>
+    </div>
+
+    <div id="copy2">
+      <b>Bring:</b>
+      <ul>
+        <li>a (charged) computer or HTML-writing device</li>
+        <li>snacks</li>
+        <li>arts and crafts equipment <br /> paper? pens? pencils? crayons? paints? (optional!)</li>
+        <li>picnic blankets (optional)</li>
+      </ul>
     </div>
 
     <div id="scene">
@@ -203,51 +229,58 @@
       <img id="leg-br" src="wood.avif" />
       <img id="carpet" src="carpet.jpg" />
       <img id="door" src="door.jpg" />
+      <img id="ant" src="ant.png" />
     </div>
 
-    <div id="copy2">
-      <p>Bring:</p>
-      <ul>
-        <li>a (charged) computer or HTML-writing device</li>
-        <li>snacks</li>
-        <li>arts and crafts equipment <br /> paper? pens? pencils? crayons? paints? (optional!)</li>
-        <li>picnic blankets (optional)</li>
-      </ul>
+
+    <div>
+      <b>What should I do?</b>
+      <br />
+      build a fun website!!! for:
+      <br />
+      your dog? a poem? a recipe? a short story? a game? a gallery?
+      <br />
+      JS allowed but strictly NO BUNDLERS!!!
+      <br />
+      no prior programming experience needed (others will help you!)
+      <br />
+      let the <a href="https://html.energy/goals.html">HTML energy</a> flow!!! 
+      <br />
+      <br />
+      <a href="overview.html">overview, inspiration, resources →</a>
     </div>
-    <div id="copy3">
-      <p>
-        build a fun website!!! for:
-        <br />
-        your dog? a poem? a recipe? a short story? a game? a gallery?
-        <br />
-        JS allowed but strictly NO BUNDLERS!!!
-        <br />
-        no prior programming experience needed (others will help you!)
-        <br />
-        <a href="overview.html">overview, inspiration, resources →</a>
-      </p>
-    </div>
+
+
+    <br />
+    <br />
+    <br />
+
+    
+
     <form id="rsvp" action="https://mbo-html_in_hyde_1.web.val.run/rsvps" method="POST" enctype="multipart/form-data">
-      <input type="email" name="email" placeholder="Email (for reminder)" />
-      <input type="text" name="name" placeholder="Name" />
+      <fieldset>
+        <legend>RSVP</legend>
+        <input type="email" name="email" placeholder="Email (for reminder)" />
+        <input type="text" name="name" placeholder="Name" />
 
-      <label for="color">
-        Choose a color for your carriage
-        <input type="color" name="color" value="#ff0000" />
-      </label>
+        <label for="color">
+          Choose a color for your carriage
+          <input type="color" name="color" value="#ff0000" />
+        </label>
 
-      <button type="submit" name="status" value="going">Going</button>
-      <button type="submit" name="status" value="maybe">Maybe</button>
+        <label for="file">
+          Upload a photo for your carriage (optional)
+          <input type="file" name="image" accept="image/*" />
+        </label>
 
-      <label for="color">
-        (Resubmit your RSVP to change your color)
-      </label>
+        <br />
 
-      <label for="file">
-        Upload a photo for your carriage (optional)
-        <input type="file" name="image" accept="image/*" />
-      </label>
-
+        <button type="submit" name="status" value="going">Going</button>
+        <button type="submit" name="status" value="maybe">Maybe</button>
+        <label for="submit">
+          (Resubmit your RSVP to change your color)
+        </label>
+      </fieldset>
     </form>
   </main>
 </body>
