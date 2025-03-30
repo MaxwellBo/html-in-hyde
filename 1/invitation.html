@@ -30,8 +30,7 @@
 
   <style>
     body {
-      background-color: skyblue;
-      background-image: url('../0/img/clouds.jpg');
+      background-color: rgb(245, 244, 230);
     }
 
     main {
@@ -41,19 +40,26 @@
 
     #scene {
       position: relative;
-      perspective: 40em;
-      perspective-origin: 50% 10%;
+      perspective: 50em;
+      perspective-origin: 50% -2em;
       transform-style: preserve-3d;
     }
 
     #grass {
       position: absolute;
-      width: 700px;
-      height: 600px;
-      transform: translate3d(7em, 20em, -7em) rotateX(90deg);
+      width: 400px;
+      height: 400px;
+      transform: translate3d(16em, 26em, -7em) rotateX(90deg);
     }
 
-    #tracks {
+    #tree1 {
+      position: absolute;
+      width: 10em;
+      height: 10em;
+      transform: translate3d(19em, 26em, -3em);
+    }
+
+    #table {
       position: absolute;
       width: 700px;
       height: 600px;
@@ -87,12 +93,48 @@
       height: 5px;
       background: #333;
     }
+
+
+    #leg-tr,
+    #leg-tl,
+    #leg-bl,
+    #leg-br {
+      position: absolute;
+      width: 3em;
+      height: 20em;
+      transform: rotateX(180deg) rotateY(180deg);
+    }
+
+    #leg-tl {
+      transform: translate3d(7em, 39em, -26em)
+    }
+
+    #leg-tr {
+      transform: translate3d(48em, 39em, -26em)
+    }
+
+    #leg-bl {
+      transform: translate3d(7em, 39em, 11em)
+    }
+    #leg-br {
+      transform: translate3d(48em, 39em, 11em)
+    }
+
+    #carpet {
+      width: 40em;
+      height: 68em;
+      position: absolute;
+      transform: translate3d(6em, 26em, -8em) rotateX(90deg) rotateZ(90deg)
+    }
+
+    #door {
+      position: absolute;
+      transform: translate3d(-16em, 20em, -3em) rotateY(90deg)
+    }
+
   </style>
 
   <script type="module">
-    const COLORS = ['red', 'blue', 'green', 'yellow', 'purple', 'orange', 'pink', 'brown', 'gray', 'black', 'white'];
-    const NAMES = ["Max", "Hamish", "Annaliese", "Mia", "John", "Jane", "Jim"];
-
     const rsvps = await fetch("https://mbo-html_in_hyde_1.web.val.run/rsvps").then(res => res.json());
 
     for (let i = 0; i < rsvps.length; i++) {
@@ -152,8 +194,15 @@
     </div>
 
     <div id="scene">
-      <img id="grass" src="../0/img/grass.avif" alt="grass" />
-      <img id="tracks" src="circle.webp" />
+      <img id="grass" src="../0/img/grass.avif" />
+      <img id="tree1" src="../0/img/tree1.png" />
+      <img id="table" src="wood.avif" />
+      <img id="leg-tr" src="wood.avif" />
+      <img id="leg-tl" src="wood.avif" />
+      <img id="leg-bl" src="wood.avif" />
+      <img id="leg-br" src="wood.avif" />
+      <img id="carpet" src="carpet.jpg" />
+      <img id="door" src="door.jpg" />
     </div>
 
     <div id="copy2">
