@@ -81,7 +81,7 @@
       background-color: green;
       width: 600px;
       height: 600px;
-      transform:translate3d(9em, 19.5em, -7em) rotateX(90deg);
+      transform: translate3d(9em, 19.5em, -7em) rotateX(90deg);
       border-radius: 50%;
     }
 
@@ -89,7 +89,9 @@
       position: absolute;
       width: 500px;
       height: 500px;
-      z-index: /* make it appear ontop of the grass */ 1;
+      z-index:
+        /* make it appear ontop of the grass */
+        1;
       transform: translate3d(12em, 22em, -7em) rotateX(90deg);
       /* add a double border to make it look like train tracks */
       border: double 10px #333;
@@ -239,13 +241,17 @@
       const tick = () => {
         requestAnimationFrame(() => {
           t -= 1 / 60;
-
           const carriage = document.getElementById('carriage-' + index);
-          const x = 17 /* across screen */ + (10 * (Math.sin(t / 3)));
-          const z = -4 /* toward from screen */ + (10 * (Math.cos(t / 3)));
-          const rotateY = (t * 57.5 / 3) % 360;
-          const y = 22 /* down */
-          carriage.style.transform = `translate3d(${x}em, ${y}em, ${z}em) rotateY(${rotateY}deg)`
+          // Normalize the phase so it stays within [0, 2π)
+          const phase = ((t / 3) % (2 * Math.PI) + (2 * Math.PI)) % (2 * Math.PI);
+          // Calculate x: 17 is the base x offset, adding the sinusoidal component
+          const x = 17 + 10 * Math.sin(phase);
+          // Calculate z: -4 is the base z offset, adding the cosinusoidal component
+          const z = -4 + 10 * Math.cos(phase);
+          // Calculate rotateY correctly using the normalized phase (convert from radians to degrees)
+          const rotateY = (phase * 180 / Math.PI) % 360;
+          const y = 22;
+          carriage.style.transform = `translate3d(${x}em, ${y}em, ${z}em) rotateY(${rotateY}deg)`;
 
           tick();
         })
