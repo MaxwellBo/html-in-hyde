@@ -240,18 +240,21 @@
       let t = index * 1.5; // cart seperation
       const tick = () => {
         requestAnimationFrame(() => {
-          t -= 1 / 60;
+          t -= 1 / 60; // assuming 60 fps, lets hope
+
           const carriage = document.getElementById('carriage-' + index);
-          // Normalize the phase so it stays within [0, 2π)
-          const phase = ((t / 3) % (2 * Math.PI) + (2 * Math.PI)) % (2 * Math.PI);
-          // Calculate x: 17 is the base x offset, adding the sinusoidal component
-          const x = 17 + 10 * Math.sin(phase);
-          // Calculate z: -4 is the base z offset, adding the cosinusoidal component
-          const z = -4 + 10 * Math.cos(phase);
-          // Calculate rotateY correctly using the normalized phase (convert from radians to degrees)
-          const rotateY = (phase * 180 / Math.PI) % 360;
-          const y = 22;
-          carriage.style.transform = `translate3d(${x}em, ${y}em, ${z}em) rotateY(${rotateY}deg)`;
+          // Division by 3 slows down the animation, making one full rotation take ~18.84 seconds (2π*3)
+          // instead of ~6.28 seconds (2π) if we used raw time value
+          const angle = t / 3;
+          // Using sine for x coordinate creates horizontal oscillation
+          const x = 17 /* across screen */ + (10 * (Math.sin(angle)));
+          // Using cosine for z coordinate creates depth oscillation
+          // Sine and cosine together create circular motion
+          const z = -4 /* toward from screen */ + (10 * (Math.cos(angle)));
+          // Convert angle from radians to degrees for rotation
+          const rotateY = (angle * 180 / Math.PI) % 360;
+          const y = 22 /* down */
+          carriage.style.transform = `translate3d(${x}em, ${y}em, ${z}em) rotateY(${rotateY}deg)`
 
           tick();
         })
