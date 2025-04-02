@@ -324,21 +324,24 @@
 
   </ul>
 
-    Here's some more links of some stuff I think is cool:
-      <ul class="comma-seperated">
-        <li><a href="https://www.cameronsworld.net/">Cameron's World</a></li>
-        <li><a href="https://chia.design/">Chia Amisola</a></li>
-        <li><a href="https://jisu.world/bag/index.html">What's in Jisu's bag?</a></li>
-        <li><a href="https://laurelschwulst.com/medium/website/">Laurel Schwulst</a></li>
-        <li><a href="https://internetour.com/">Internet Tour</a></li>
-        <li><a href="https://walky.space/">walky.space</a></li>
-        <li><a href="http://wrasse.pw/joel/icons/">icon zone</a></li>   
-        <li><a href="https://blog.jim-nielsen.com/2023/examples-of-great-urls/">Examples of Great URL Design</a></li>
-        <li><a href="https://www.robinsloan.com/notes/home-cooked-app/">An app can be a home-cooked meal</a></li>
-        <li><a href="https://a-website-is-a-room.net/">A website is a room</a></li>
-        <li><a href="https://clickclickclick.click/">Click</a></li>
-        <li><a href="https://bostonstupidhackathon.com/">Stupid Shit No One Needs & Terrible Ideas Hackathon</a></li>
-      </ul>
+    Here's some more links of some stuff I think is cool: <a href="https://www.are.na/max-bo/html-in-hyde-extra-resources">HTML in Hyde extra resources</a>:
+    <ul id="extra-resources">
+    </ul>
+
+    <script>
+      fetch('https://api.are.na/v2/channels/html-in-hyde-extra-resources/contents?per=50')
+      .then(response => response.json())
+      .then(data => {
+        data.contents.forEach(content => {
+        const li = document.createElement('li')
+        const a = document.createElement('a')
+        a.href = content.source?.url || content.attachment?.url
+        a.textContent = content.title
+        li.appendChild(a)
+        document.getElementById('extra-resources').appendChild(li)
+        })
+      })
+    </script>
 
    I've also compiled an <a href="https://www.are.na/">Are.na</a> channel of additional inspiration: <a
     href="https://www.are.na/max-bo/html-in-hyde-recommended-inspo-channels">HTML in Hyde recommended inspo
