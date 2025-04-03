@@ -198,16 +198,11 @@
   <script type="module">
     const rsvps = await fetch("https://mbo-html_in_hyde_1.web.val.run/rsvps").then(res => res.json());
 
+    let j = 0;
+
     for (let i = 0; i < rsvps.length; i++) {
       const rsvp = rsvps[i];
       const { name, status, color } = rsvp;
-
-      const carriage = document.createElement('div');
-      carriage.id = 'carriage-' + i;
-      carriage.className = 'carriage';
-      carriage.style.backgroundColor = color;
-      carriage.innerHTML = name;
-      document.getElementById('scene').appendChild(carriage);
 
       // // create li element for rsvps list
       const li = document.createElement('li');
@@ -233,7 +228,18 @@
 
       document.getElementById('rsvps').appendChild(li);
 
-      animateCarriage(i);
+      if (status === "going") {
+        const carriage = document.createElement('div');
+        carriage.id = 'carriage-' + j;
+        carriage.className = 'carriage';
+        carriage.style.backgroundColor = color;
+        carriage.innerHTML = name;
+        document.getElementById('scene').appendChild(carriage);
+
+        animateCarriage(j);
+
+        j++;
+      }
     }
 
     function animateCarriage(index) {
@@ -464,6 +470,8 @@
     <b>RSVPs</b>
     <ul id="rsvps" style="margin: 0; columns: 3; column-gap: 1em;"></ul>
     </ul>
+    <br />
+    <i>(you only get a carriage if you're marked going lol)</i>
 
   </div>
 </body>
