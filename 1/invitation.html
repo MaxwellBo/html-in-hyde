@@ -81,7 +81,7 @@
       background-color: green;
       width: 600px;
       height: 600px;
-      transform:translate3d(9em, 19.5em, -7em) rotateX(90deg);
+      transform: translate3d(9em, 19.5em, -7em) rotateX(90deg);
       border-radius: 50%;
     }
 
@@ -89,7 +89,9 @@
       position: absolute;
       width: 500px;
       height: 500px;
-      z-index: /* make it appear ontop of the grass */ 1;
+      z-index:
+        /* make it appear ontop of the grass */
+        1;
       transform: translate3d(12em, 22em, -7em) rotateX(90deg);
       /* add a double border to make it look like train tracks */
       border: double 10px #333;
@@ -238,12 +240,19 @@
       let t = index * 1.5; // cart seperation
       const tick = () => {
         requestAnimationFrame(() => {
-          t -= 1 / 60;
+          t -= 1 / 60; // assuming 60 fps, lets hope
 
           const carriage = document.getElementById('carriage-' + index);
-          const x = 17 /* across screen */ + (10 * (Math.sin(t / 3)));
-          const z = -4 /* toward from screen */ + (10 * (Math.cos(t / 3)));
-          const rotateY = (t * 57.5 / 3) % 360;
+          // Division by 3 slows down the animation, making one full rotation take ~18.84 seconds (2π*3)
+          // instead of ~6.28 seconds (2π) if we used raw time value
+          const angle = t / 3;
+          // Using sine for x coordinate creates horizontal oscillation
+          const x = 17 /* across screen */ + (10 * (Math.sin(angle)));
+          // Using cosine for z coordinate creates depth oscillation
+          // Sine and cosine together create circular motion
+          const z = -4 /* toward from screen */ + (10 * (Math.cos(angle)));
+          // Convert angle from radians to degrees for rotation
+          const rotateY = (angle * 180 / Math.PI) % 360;
           const y = 22 /* down */
           carriage.style.transform = `translate3d(${x}em, ${y}em, ${z}em) rotateY(${rotateY}deg)`
 
@@ -380,6 +389,10 @@
       <br />
       <a href="https://maxbo.me">
         ~mb
+      </a>
+      &nbsp;
+      <a href="https://hame.page">
+        ~hame
       </a>
     </div>
   </div>
