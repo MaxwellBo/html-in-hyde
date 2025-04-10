@@ -230,6 +230,7 @@
 
       if (status === "going") {
         const carriage = document.createElement('div');
+        carriage.dataset.index = i;
         carriage.id = 'carriage-' + j;
         carriage.className = 'carriage';
         carriage.style.backgroundColor = color;
@@ -276,7 +277,14 @@
       const imageElement = document.createElement('img');
       imageElement.className = 'avatar';
       imageElement.src = imageb64;
-      document.getElementById('carriage-' + i).appendChild(imageElement);
+
+      // find the carriage with the dataset.index that matches the current index
+      const carriage = document.querySelector(`[data-index="${i}"]`);
+      if (carriage) {
+        // append the image to the carriage
+        carriage.appendChild(imageElement);
+      }
+
     }
   </script>
 </head>
