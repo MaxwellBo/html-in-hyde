@@ -43,8 +43,8 @@
     }
 
     .avatar {
-      width: 32px;
-      height: 32px;
+      width: 24px;
+      height: 24px;
       border-radius: 25%;
     }
 
@@ -128,16 +128,16 @@
 
     .carriage {
       position: absolute;
-      width: 100px;
-      height: 66px;
-      font-size: x-large;
+      width: 66px;
+      height: 44px;
+      font-size: large;
     }
 
     .carriage::after {
       content: '';
       position: absolute;
       bottom: -10px;
-      left: 20px;
+      left: 0px;
       width: 20px;
       height: 20px;
       background: #333;
@@ -148,9 +148,9 @@
     .carriage:not(:first-child)::before {
       content: '';
       position: absolute;
-      right: -20px;
-      top: 40px;
-      width: 20px;
+      right: -5px;
+      top: 20px;
+      width: 5px;
       height: 5px;
       background: #333;
     }
@@ -252,15 +252,16 @@
           const carriage = document.getElementById('carriage-' + index);
           // Division by 3 slows down the animation, making one full rotation take ~18.84 seconds (2π*3)
           // instead of ~6.28 seconds (2π) if we used raw time value
-          const angle = t / 3;
+          const angle = t / 5.3; // incrementing this number changes the spacing between each carraige
+          const r = 13.8
           // Using sine for x coordinate creates horizontal oscillation
-          const x = 17 /* across screen */ + (10 * (Math.sin(angle)));
+          const x = 23 /* across screen */ + (r * (Math.sin(angle)));
           // Using cosine for z coordinate creates depth oscillation
           // Sine and cosine together create circular motion
-          const z = -4 /* toward from screen */ + (10 * (Math.cos(angle)));
+          const z = -5.5 /* toward from screen */ + (r * (Math.cos(angle)));
           // Convert angle from radians to degrees for rotation
           const rotateY = (angle * 180 / Math.PI) % 360;
-          const y = 22 /* down */
+          const y = 31 /* down */
           carriage.style.transform = `translate3d(${x}em, ${y}em, ${z}em) rotateY(${rotateY}deg)`
 
           tick();
