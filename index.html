@@ -348,13 +348,13 @@
     </script>
 
    I've also compiled an <a href="https://www.are.na/">Are.na</a> channel of additional inspiration: <a
-    href="https://www.are.na/max-bo/html-in-hyde-recommended-inspo-channels">HTML in Hyde recommended inspo
+    href="https://www.are.na/max-bo/html-in-hyde-inspo-channels">HTML in Hyde inspo
     channels</a>:
   <ul id="arena-channels">
   </ul>
 
   <script>
-    fetch('https://api.are.na/v2/channels/html-in-hyde-recommended-inspo-channels/contents?per=50')
+    fetch('https://api.are.na/v2/channels/html-in-hyde-inspo-channels/contents?per=50')
       .then(response => response.json())
       .then(data => {
         data.contents.forEach(content => {
