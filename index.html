@@ -320,7 +320,6 @@
     <li><a href="https://runyourown.social/">Run your own social</a></li>
     <li><a href="https://multidimensional.link/southland">Social Annotation</a></li>
     <li><a href="https://search.marginalia.nu/">Marginalia search</a></li>
-    <li><a href="https://pioneerworks.org/broadcast/gaslighting-your-boss">Digital Sabotage</a></li>
     <li><a href="https://woolgather.sh/issue/2">Internet Playgrounds</a></li>
     <li><a href="https://printedweb.org/">Printed Web</a></li>
     <li><a href="https://nowplaythis.net/">Experimental Games</a></li>
@@ -329,7 +328,6 @@
     <li><a href="https://re-coding.technology/">re-coding.technology</a></li>
 
   </ul>
-
     Here's some more links of some stuff I think is cool: <a href="https://www.are.na/max-bo/html-in-hyde-extra-resources">HTML in Hyde extra resources</a>:
     <ul id="extra-resources">
     </ul>
@@ -375,6 +373,28 @@
         })
       })
   </script>
+
+  Finally, web magazines are a great source of high quality curation: <a href="https://www.are.na/max-bo/outsider-web-magazines">outsider web magazines</a>:
+
+  <ul id="web-magazines">
+  </ul>
+
+  <script>
+    fetch('https://api.are.na/v2/channels/outsider-web-magazines/contents?per=50')
+      .then(response => response.json())
+      .then(data => {
+        data.contents.forEach(content => {
+          const li = document.createElement('li')
+          const a = document.createElement('a')
+          a.href = content.source?.url || content.attachment?.url
+          a.textContent = content.title
+          li.appendChild(a)
+          document.getElementById('web-magazines').appendChild(li)
+        })
+      })
+  </script>
+
+
 
 
   <img src="img/flowers.gif" alt="flowers" />
