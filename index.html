@@ -172,7 +172,30 @@
       <blockquote>
         playhtml is an open-source library for designing communal internet experiences by enhancing web elements with real-time, collaborative interactivity.
       </blockquote>
+
+      This goes crazy. You can just add import a script and add an attribute like <code>can-move</code> to any element:
+      <pre>
+        <code>
+            &lt;script
+              type=&quot;module&quot;
+              src=&quot;https://unpkg.com/playhtml@latest/dist/init.es.js&quot;
+            &gt;&lt;/script&gt;
+
+            &lt;div id=&quot;couch&quot; can-move style=&quot;font-size: 80px&quot;&gt;🛋&lt;/div&gt;
+        </code>
+      </pre>
     </li>
+
+    and you can click and drag it around and it will get synced! 
+
+    <script
+    type="module"
+    src="https://unpkg.com/playhtml@latest/dist/init.es.js"
+  ></script>
+
+    <div id="couch" can-move style="font-size: 80px">🛋</div>
+
+
     <li>
       <a href="https://maxbo.me/celine/">@celine/celine</a>
       <br />
