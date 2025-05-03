@@ -196,7 +196,7 @@
   </style>
 
   <script type="module">
-    const rsvps = await fetch("https://mbo-html_in_hyde_1.web.val.run/rsvps").then(res => res.json());
+    const rsvps = await fetch("https://mbo-html-in-hyde-1.val.run/rsvps").then(res => res.json());
 
     let j = 0;
 
@@ -270,7 +270,7 @@
       tick();
     }
 
-    const images = await fetch("https://mbo-html_in_hyde_1.web.val.run/images").then(res => res.json());
+    const images = await fetch("https://mbo-html-in-hyde-1.val.run/images").then(res => res.json());
     for (let i = 0; i < images.length; i++) {
       const imageb64 = images[i];
       if (!imageb64 || imageb64 == 'NULL') continue;
