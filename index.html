@@ -118,7 +118,12 @@
   </ul>
 
   <h3><a id="resources-for-nerds" href="#resources-for-nerds">#</a> for nerds</h3>
-  <ul>
+  <style>
+    ul.breathe li {
+      margin-bottom: 20px;
+    }
+  </style>
+  <ul class="breathe">
     <li>
       <a href="https://pages.github.com/">GitHub Pages</a>
       <br />GitHub Pages lets you host static websites directly from a canonical <code>username.github.io</code> repo,
@@ -132,9 +137,10 @@
         Val Town
       </a>
       <br />
-      <q>If GitHub Gists could run. And AWS Lambda was fun. Val Town is a social website to write and deploy TypeScript.
-        Build APIs and schedule functions from your browser.</q>
-      <br />
+      <blockquote>
+        If GitHub Gists could run. And AWS Lambda was fun. Val Town is a social website to write and deploy TypeScript.
+        Build APIs and schedule functions from your browser.
+      </blockquote>
       Val Town goes crazy. You can <a href="https://docs.val.town/types/http/jsx/">trivially server-side render dynamic HTML</a>
       hydrated from the <a href="https://docs.val.town/std/sqlite/usage/">built in SQLite DB</a> or <a href="https://docs.val.town/std/blob/">blob store</a>.
       It has an inbuilt <a href="https://docs.val.town/std/openai/">OpenAI API client</a>. It makes dealing with <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CORS">CORS</a>
@@ -151,12 +157,19 @@
         For quick and dirty rendering of simple dynamic content, you may not need the complexity of a templating language like Handlebars or a PHP backend.
         [...]
         You can write this directly in HTML—without IDs, classes, or querySelectors in your JS! Thanks to the <code>document.currentScript</code> property, we can refer to the currently running <code>&lt;script&gt;</code> element directly and go from there.
-
       </blockquote>
     </li>
     <li>
       <a href="https://htmx.org/docs/">htmx</a>, <a href="https://leanrada.com/htmz/">htmz</a>, or <a href="https://github.com/bigskysoftware/fixi">fixi</a>
-      <br />
+      <blockquote>
+        htmx is a library that allows you to access modern browser features directly from HTML, rather than using javascript.
+      </blockquote>
+      <blockquote>
+        htmz is a minimalist HTML microframework for creating interactive and modular web user interfaces with the familiar simplicity of plain HTML. 
+      </blockquote>
+      <blockquote>
+        fixi.js is an experimental, minimalist implementation of generalized hypermedia controls
+      </blockquote>
       All 3 of these make it much easier to sprinkle in interactivity to a static HTML page.
       <br />
       They both offer the same primitive, <a href="https://htmx.org/docs/#swapping"><i>swapping</i></a>, where a HTML
@@ -168,11 +181,9 @@
     </li>
     <li>
       <a href="https://spencer.place/creation/playhtml/">playhtml</a> (and <a href="https://github.com/spencerc99/playhtml">on GitHub</a>)
-      <br />
       <blockquote>
         playhtml is an open-source library for designing communal internet experiences by enhancing web elements with real-time, collaborative interactivity.
       </blockquote>
-
       This goes crazy. You can just add import a script and add an attribute like <code>can-move</code> to any element:
 <pre>
   <code>
@@ -184,7 +195,6 @@
 &lt;div id=&quot;couch&quot; can-move style=&quot;font-size: 80px&quot;&gt;🛋&lt;/div&gt;
   </code>
 </pre>
-    </li>
 
     and you can click and drag it around and it will get synced! 
     <script
@@ -232,11 +242,16 @@
       <a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_components/Using_custom_elements">HTML custom
         elements</a>
       <br />
+      <blockquote>
+        web components [give you] the ability to create custom elements: that is, HTML elements whose behavior is defined by the web developer, that extend the set of elements available in the browser.
+      </blockquote>
       React? No need. Use these instead. They're built into the browser. <br />
       Also good for <a href="https://www.keithcirkel.co.uk/css-classes-considered-harmful/">avoiding CSS Classes</a>.
     </li>
     <li><a href="https://github.com/observablehq/htl">htl</a>
-      <br />
+      <blockquote>
+        A tagged template literal that allows safe interpolation of values into HTML, following the HTML5 spec.
+      </blockquote>
       Heavier than HTML custom elements, but lighter than React. Just enough for some light JSON to DOM transformation.
     </li>
     <li>
