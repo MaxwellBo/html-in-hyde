@@ -174,16 +174,16 @@
       </blockquote>
 
       This goes crazy. You can just add import a script and add an attribute like <code>can-move</code> to any element:
-      <pre>
-        <code>
-            &lt;script
-              type=&quot;module&quot;
-              src=&quot;https://unpkg.com/playhtml@latest/dist/init.es.js&quot;
-            &gt;&lt;/script&gt;
+<pre>
+  <code>
+&lt;script
+  type=&quot;module&quot;
+  src=&quot;https://unpkg.com/playhtml@latest/dist/init.es.js&quot;&gt;
+&lt;/script&gt;
 
-            &lt;div id=&quot;couch&quot; can-move style=&quot;font-size: 80px&quot;&gt;🛋&lt;/div&gt;
-        </code>
-      </pre>
+&lt;div id=&quot;couch&quot; can-move style=&quot;font-size: 80px&quot;&gt;🛋&lt;/div&gt;
+  </code>
+</pre>
     </li>
 
     and you can click and drag it around and it will get synced! 
@@ -280,13 +280,16 @@
       <br />
 
       <pre style="overflow: scroll;">
-      &lt;script type=&quot;module&quot;&gt;
-        import confetti from &quot;https://esm.sh/canvas-confetti@1.6.0&quot;
+        <code>
+&lt;script type=&quot;module&quot;&gt;
+  import confetti from &quot;https://esm.sh/canvas-confetti@1.6.0&quot;
 
-        window.confetti = () => confetti.create(document.getElementById('confetti'))()
-      &lt;/script&gt;
-      &lt;button onclick=&quot;confetti()&quot;&gt;🎉&lt;/button&gt;
-      &lt;canvas id=&quot;confetti&quot; style=&quot;border: 1px solid #006400;&quot;&gt;&lt;/canvas&gt;
+  window.confetti = () => confetti.create(document.getElementById('confetti'))()
+&lt;/script&gt;
+
+&lt;button onclick=&quot;confetti()&quot;&gt;🎉&lt;/button&gt;
+&lt;canvas id=&quot;confetti&quot; style=&quot;border: 1px solid #006400;&quot;&gt;&lt;/canvas&gt;
+      </code>
       </pre>
 
       <script type="module">
@@ -299,6 +302,27 @@
       I use this a lot in <a href="https://maxbo.me/a-html-file-is-all-you-need.html">Can we build a reactive article in
         a single HTML file?</a> if you'd like more examples.
     </li>
+    <li>
+      I thought it might be worth mentioning about how to do HTML includes using
+      an <code>&lt;iframe&gt;</code>:
+
+      <pre>
+        <code>
+&lt;iframe 
+  src=&quot;/target.html&quot; 
+  onload=&quot;this.before((this.contentDocument.body||this.contentDocument).children[0]);this.remove()&quot;&gt;
+&lt;/iframe&gt;
+        </code>
+      </pre>
+
+      I found this at <a href="https://www.filamentgroup.com/lab/html-includes/#another-demo%3A-including-another-html-file">
+        HTML Includes That Work Today
+      </a> via <a href="https://frontendmasters.com/blog/seeking-an-answer-why-cant-html-alone-do-includes/">Seeking an Answer: Why can't HTML alone do includes?</a>
+
+
+    </li>
+
+
   </ul>
 
   <h3><a id="resources-for-inspiration" href="#resources-for-inspiration">#</a> for inspiration</h3>
