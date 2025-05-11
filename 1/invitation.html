@@ -435,7 +435,7 @@
       <br />
 
       <label for="image">
-        Upload a photo for your carriage <i>(optional, max 1MB)</i>:
+        Upload a photo for your carriage <i>(optional, max 512KiB)</i>:
         <input id="image" type="file" name="image" accept="image/*" />
       </label>
 
@@ -453,8 +453,8 @@
       fileInput.addEventListener('change', function () {
         if (fileInput.files.length > 0) {
           const file = fileInput.files[0];
-          if (file.size > 500 * 1024) { // 500KB
-            alert('Image must be less than 500KB in size. Yours was ' + (file.size / 1024).toFixed(2) + 'KB in size. Sorry!');
+          if (file.size > 512 * 1024) { // 512KB
+            alert('Image must be less than 512KiB in size. Yours was ' + (file.size / 1024).toFixed(2) + 'KB in size. Sorry!');
             fileInput.value = '';
           }
         }
