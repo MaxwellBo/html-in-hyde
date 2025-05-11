@@ -421,33 +421,45 @@
   <div id="col2">
     <form id="rsvp" action="https://mbo-html_in_hyde_1.web.val.run/rsvps" method="POST" enctype="multipart/form-data">
       <fieldset>
-        <legend>RSVP</legend>
-        <input type="email" name="email" placeholder="Email (for reminder)" required />
-        <input type="text" name="name" placeholder="Name" required />
+      <legend>RSVP</legend>
+      <input type="email" name="email" placeholder="Email (for reminder)" required />
+      <input type="text" name="name" placeholder="Name" required />
 
-        <br />
-        <br />
-        <label for="color">
-          Choose a color for your carriage:
-          <input id="color" type="color" name="color" value="#ff0000" required />
-        </label>
-        <br />
-        <br />
+      <br />
+      <br />
+      <label for="color">
+        Choose a color for your carriage:
+        <input id="color" type="color" name="color" value="#ff0000" required />
+      </label>
+      <br />
+      <br />
 
-        <label for="image">
-          Upload a photo for your carriage <i>(optional)</i>:
-          <input id="image" type="file" name="image" accept="image/*" />
-        </label>
+      <label for="image">
+        Upload a photo for your carriage <i>(optional, max 1MB)</i>:
+        <input id="image" type="file" name="image" accept="image/*" />
+      </label>
 
-        <br />
-        <br />
+      <br />
+      <br />
 
-        <button id="going" type="submit" name="status" value="going">Going</button>
-        <button type="submit" name="status" value="maybe">Maybe</button>
-        <button type="submit" name="status" value="can't come">Can't come</button>
-        <i>(Resubmit your RSVP with the same email to change status, color or photo)</i>
+      <button id="going" type="submit" name="status" value="going">Going</button>
+      <button type="submit" name="status" value="maybe">Maybe</button>
+      <button type="submit" name="status" value="can't come">Can't come</button>
+      <i>(Resubmit your RSVP with the same email to change status, color or photo)</i>
       </fieldset>
     </form>
+    <script>
+      const fileInput = document.getElementById('image');
+      fileInput.addEventListener('change', function () {
+        if (fileInput.files.length > 0) {
+          const file = fileInput.files[0];
+          if (file.size > 1024 * 1024) { // 1MB
+            alert('Image must be less than 1MB in size. Yours was ' + (file.size / 1024 / 1024).toFixed(2) + 'MB in size. Sorry!');
+            fileInput.value = '';
+          }
+        }
+      });
+    </script>
 
     <script>
       // set a random color with some minimum degree of lightness (using a naive lightness assessment)
