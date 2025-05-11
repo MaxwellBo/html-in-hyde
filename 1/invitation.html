@@ -453,8 +453,8 @@
       fileInput.addEventListener('change', function () {
         if (fileInput.files.length > 0) {
           const file = fileInput.files[0];
-          if (file.size > 1024 * 1024) { // 1MB
-            alert('Image must be less than 1MB in size. Yours was ' + (file.size / 1024 / 1024).toFixed(2) + 'MB in size. Sorry!');
+          if (file.size > 700 * 1024) { // 700KB
+            alert('Image must be less than 700KB in size. Yours was ' + (file.size / 1024).toFixed(2) + 'KB in size. Sorry!');
             fileInput.value = '';
           }
         }
