@@ -17,6 +17,13 @@ a:visited>img {
   border: purple 3px;
 }
 
+code {
+  background-color: #f5f5f5;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  padding: 2px 4px;
+}
+
 img {
   max-inline-size: 100%;
   block-size: auto;

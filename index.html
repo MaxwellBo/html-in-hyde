@@ -24,6 +24,9 @@
   <meta name="twitter:description" content="a HTML freewrite in a Sydney park" />
   <meta name="twitter:image" content="img/leaf.png" />
   <title>HTML in Hyde</title>
+  <link 
+    rel="stylesheet" 
+    href="https://esm.sh/jsr/@celine/celine@4.8.0/cell.css" />
 </head>
 
 <body>
@@ -199,14 +202,12 @@
       </blockquote>
       This goes crazy. You can just add import a script and add an attribute like <code>can-move</code> to any element:
 <pre>
-  <code>
-&lt;script
+<code class="echo">&lt;script
   type=&quot;module&quot;
   src=&quot;https://unpkg.com/playhtml@latest/dist/init.es.js&quot;&gt;
 &lt;/script&gt;
 
-&lt;div id=&quot;couch&quot; can-move style=&quot;font-size: 80px&quot;&gt;🛋&lt;/div&gt;
-  </code>
+&lt;div id=&quot;couch&quot; can-move style=&quot;font-size: 80px&quot;&gt;🛋&lt;/div&gt;</code>
 </pre>
 
     and you can click and drag it around and it will get synced! 
@@ -307,9 +308,8 @@
 
       <br />
 
-      <pre style="overflow: scroll;">
-        <code>
-&lt;script type=&quot;module&quot;&gt;
+<pre style="overflow: scroll;">
+<code class="echo">&lt;script type=&quot;module&quot;&gt;
   import confetti from &quot;https://esm.sh/canvas-confetti@1.6.0&quot;
 
   window.confetti = () => confetti.create(document.getElementById('confetti'))()
@@ -317,8 +317,8 @@
 
 &lt;button onclick=&quot;confetti()&quot;&gt;🎉&lt;/button&gt;
 &lt;canvas id=&quot;confetti&quot; style=&quot;border: 1px solid #006400;&quot;&gt;&lt;/canvas&gt;
-      </code>
-      </pre>
+</code>
+</pre>
 
       <script type="module">
         import confetti from "https://esm.sh/canvas-confetti@1.6.0"
@@ -334,14 +334,13 @@
       I thought it might be worth mentioning about how to do HTML includes using
       an <code>&lt;iframe&gt;</code>:
 
-      <pre>
-        <code>
-&lt;iframe 
+<pre style="overflow: scroll;">
+<code class="echo">&lt;iframe 
   src=&quot;/target.html&quot; 
   onload=&quot;this.before((this.contentDocument.body||this.contentDocument).children[0]);this.remove()&quot;&gt;
 &lt;/iframe&gt;
-        </code>
-      </pre>
+</code>
+</pre>
 
       I found this at <a href="https://www.filamentgroup.com/lab/html-includes/#another-demo%3A-including-another-html-file">
         HTML Includes That Work Today
@@ -369,6 +368,39 @@
       </ul>
       
     </li>
+
+      <li>
+        <a href="https://aframe.io/docs/">A-Frame</a>
+        <br />
+        <blockquote>
+          Make 3D worlds with HTML and Entity-Component
+          <br />
+          On any headset, mobile and desktop
+        </blockquote>
+
+        A-Frame can be developed from a plain HTML file without having to install anything
+
+<pre style="overflow: scroll;">
+<code class="echo">&lt;script src=&quot;https://aframe.io/releases/1.7.0/aframe.min.js&quot;&gt;&lt;/script&gt;
+&lt;a-scene embedded style=&quot;min-height: 300px&quot;&gt;
+  &lt;a-box position=&quot;-1 0.5 -3&quot; rotation=&quot;0 45 0&quot; color=&quot;#4CC3D9&quot;&gt;&lt;/a-box&gt;
+  &lt;a-sphere position=&quot;0 1.25 -5&quot; radius=&quot;1.25&quot; color=&quot;#EF2D5E&quot;&gt;&lt;/a-sphere&gt;
+  &lt;a-cylinder position=&quot;1 0.75 -3&quot; radius=&quot;0.5&quot; height=&quot;1.5&quot; color=&quot;#FFC65D&quot;&gt;&lt;/a-cylinder&gt;
+  &lt;a-plane position=&quot;0 0 -4&quot; rotation=&quot;-90 0 0&quot; width=&quot;4&quot; height=&quot;4&quot; color=&quot;#7BC8A4&quot;&gt;&lt;/a-plane&gt;
+  &lt;a-sky color=&quot;#ECECEC&quot;&gt;&lt;/a-sky&gt;
+&lt;/a-scene&gt;
+</code>
+</pre>
+      <script src="https://aframe.io/releases/1.7.0/aframe.min.js"></script>
+      <a-scene embedded style="min-height: 300px">
+        <a-box position="-1 0.5 -3" rotation="0 45 0" color="#4CC3D9"></a-box>
+        <a-sphere position="0 1.25 -5" radius="1.25" color="#EF2D5E"></a-sphere>
+        <a-cylinder position="1 0.75 -3" radius="0.5" height="1.5" color="#FFC65D"></a-cylinder>
+        <a-plane position="0 0 -4" rotation="-90 0 0" width="4" height="4" color="#7BC8A4"></a-plane>
+        <a-sky color="#ECECEC"></a-sky>
+      </a-scene>
+      
+      </li>
 
     <li>
       <a href="https://plainvanillaweb.com/index.html">Plain Vanilla</a>
