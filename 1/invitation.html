@@ -130,15 +130,14 @@
 
     .carriage {
       position: absolute;
-      width: 50px;
-      height: 44px;
+      width: 40px;
+      height: 40px;
       font-size: large;
     }
 
     .carriage .name {
-      font-size: small;
+      font-size: x-small;
     }
-
 
     /* wheels */
     .carriage::after {
@@ -150,7 +149,7 @@
       height: 15px;
       background: #333;
       border-radius: 50%;
-      box-shadow: 30px 0 0 #333; /* this affects the spacing between wheels */
+      box-shadow: 20px 0 0 #333; /* this affects the spacing between wheels */
     }
 
     .carriage:not(:first-child)::before {
@@ -161,6 +160,13 @@
       width: 5px;
       height: 5px;
       background: #333;
+    }
+
+    #schedule {
+      td {
+        border: 1px solid #aeaeae;
+        padding: 0.2ch;
+      }
     }
 
 
@@ -263,10 +269,10 @@
           const carriage = document.getElementById('carriage-' + index);
           // Division by 3 slows down the animation, making one full rotation take ~18.84 seconds (2π*3)
           // instead of ~6.28 seconds (2π) if we used raw time value
-          const angle = t / 6.6; // incrementing this number changes the decreases the spacing between each carraige
+          const angle = t / 8.2; // incrementing this number decreases the spacing between each carraige
           const r = 13.8
           // Using sine for x coordinate creates horizontal oscillation
-          const x = 23.5 /* across screen */ + (r * (Math.sin(angle)));
+          const x = 23.8 /* across screen */ + (r * (Math.sin(angle)));
           // Using cosine for z coordinate creates depth oscillation
           // Sine and cosine together create circular motion
           const z = -5.5 /* toward from screen */ + (r * (Math.cos(angle)));
@@ -387,23 +393,28 @@
     <b>
       Schedule:
     </b>
-    <ul>
-      <li>
-        12:00 - setup
-      </li>
-      <li>
-        12:15 - call to action
-      </li>
-      <li>
-        12:22 - build build build
-      </li>
-      <li>
-        2:45 - demos
-      </li>
-      <li>
-        3:00 - keep cooking (if you want)
-      </li>
-    </ul>
+    <table id="schedule">
+      <tr>
+      <td>12:00</td>
+      <td>setup</td>
+      </tr>
+      <tr>
+      <td>12:15</td>
+      <td>call to action</td>
+      </tr>
+      <tr>
+      <td>12:22</td>
+      <td>build build build</td>
+      </tr>
+      <tr>
+      <td>2:45</td>
+      <td>demos</td>
+      </tr>
+      <tr>
+      <td>3:00</td>
+      <td>keep cooking (if you want)</td>
+      </tr>
+    </table>
     <br />
     <br />
 
