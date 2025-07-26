@@ -243,17 +243,15 @@
       colorBox.style.backgroundColor = color;
       colorBox.style.marginLeft = '0.5em';
       li.appendChild(colorBox);
-      // add a space, then bold the name, then put the status in brackets
-      li.appendChild(document.createTextNode(' '));
-      const nameSpan = document.createElement('span');
-      nameSpan.textContent = name;
-      li.appendChild(nameSpan);
+      // add a no break space, then bold the name, then put the status in brackets
+      li.appendChild(document.createTextNode('\u00A0')); // no-break space
+      const nameNode = document.createTextNode(name);
+      li.appendChild(nameNode);
       if (status !== "going") {
-        li.appendChild(document.createTextNode(' ('));
         const statusSpan = document.createElement('i');
-        statusSpan.textContent = status;
+        statusSpan.appendChild(document.createTextNode(` (${status})`));
+        statusSpan.style.fontSize = 'smaller';
         li.appendChild(statusSpan);
-        li.appendChild(document.createTextNode(')'));
       }
 
       document.getElementById('rsvps').appendChild(li);
@@ -516,7 +514,7 @@
 
     <br />
     <b>RSVPs</b>
-    <ul id="rsvps" style="margin: 0; columns: 3; column-gap: 1em;"></ul>
+    <ul id="rsvps" style="margin: 0; columns: 4;"></ul>
     </ul>
     <br />
     <i>(you only get a carriage if you're marked going lol)</i>
