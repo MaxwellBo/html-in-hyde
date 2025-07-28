@@ -43,8 +43,8 @@
     }
 
     .avatar {
-      width: 24px;
-      height: 24px;
+      width: 16px;
+      height: 16px;
       border-radius: 25%;
     }
 
@@ -89,12 +89,12 @@
 
     #track {
       position: absolute;
-      width: 500px;
-      height: 500px;
+      width: 530px;
+      height: 530px;
       z-index:
         /* make it appear ontop of the grass */
         1;
-      transform: translate3d(12em, 22em, -7em) rotateX(90deg);
+      transform: translate3d(11em, 21em, -7em) rotateX(90deg);
       /* add a double border to make it look like train tracks */
       border: double 10px #333;
       border-radius: 50%;
@@ -130,8 +130,8 @@
 
     .carriage {
       position: absolute;
-      width: 30px;
-      height: 30px;
+      width: 28px;
+      height: 28px;
       font-size: large;
     }
 
@@ -152,28 +152,28 @@
     }
 
     .carriage .name {
-      font-size: x-small;
+      font-size: 0.3em;
     }
 
     /* wheels */
     .carriage::after {
       content: '';
       position: absolute;
-      bottom: -9px;
+      bottom: -5px;
       left: 0px;
       width: 10px;
       height: 10px;
       background: #333;
       border-radius: 50%;
-      box-shadow: 20px 0 0 #333; /* this affects the spacing between wheels */
+      box-shadow: 16px 0 0 #333; /* this affects the spacing between wheels */
     }
 
     .carriage > ::before {
       content: '';
       position: absolute;
-      right: -5px;
-      top: 20px;
-      width: 5px;
+      right: -3px;
+      top: 15px;
+      width: 4.5px;
       height: 5px;
       background: #333;
     }
@@ -227,6 +227,7 @@
 
   <script type="module">
     const rsvps = await fetch("https://mbo-html-in-hyde-1.val.run/rsvps").then(res => res.json());
+    // const rsvps = JSON.parse(`[{"name":"Max","status":"going","color":"#3ce41b"},{"name":"Hamish ","status":"going","color":"#0088ff"},{"name":"Annaliese","status":"going","color":"#f9b4c8"},{"name":"Charlie","status":"going","color":"#ffff00"},{"name":"Jeffrey","status":"can't come","color":"#de5760"},{"name":"anna","status":"going","color":"#c2ffeb"},{"name":"JT","status":"going","color":"#ffc7d2"},{"name":"Joseph","status":"going","color":"#00b1c9"},{"name":"sam","status":"maybe","color":"#ffa200"},{"name":"Davit","status":"going","color":"#61ff90"},{"name":"Anton","status":"going","color":"#00ffff"},{"name":"ali","status":"maybe","color":"#ee7cd5"},{"name":"Matt","status":"can't come","color":"#b0f406"},{"name":"ange","status":"maybe","color":"#dfc8ea"},{"name":"Nathan","status":"going","color":"#26a657"},{"name":"mahlen","status":"going","color":"#c892d3"},{"name":"Jennifer","status":"can't come","color":"#faecab"},{"name":"jamie","status":"going","color":"#bc8f8f"},{"name":"Hannah Jenkins","status":"going","color":"#00bd39"},{"name":"Francesca","status":"going","color":"#dc04b4"},{"name":"Maja","status":"going","color":"#864aff"},{"name":"Ryan","status":"going","color":"#4400ff"},{"name":"Lou Parry","status":"going","color":"#de6005"},{"name":"Tom","status":"going","color":"#31db87"},{"name":"Ray Zhu","status":"going","color":"#76bb40"},{"name":"Anubhav","status":"going","color":"#a8ffce"},{"name":"Nate","status":"going","color":"#ff0000"},{"name":"sam i","status":"going","color":"#a4b74f"},{"name":"reynolds","status":"going","color":"#ff8800"},{"name":"joey","status":"going","color":"#1191de"},{"name":"Bennett","status":"going","color":"#ffa348"},{"name":"Rory Green","status":"going","color":"#9afe86"},{"name":"Lean","status":"going","color":"#2ec27e"},{"name":"Annabelle","status":"going","color":"#e63b7a"},{"name":"Ryan Christensen","status":"maybe","color":"#b395e5"},{"name":"Uyen","status":"going","color":"#32c759"},{"name":"wilso","status":"going","color":"#4c74c6"},{"name":"josh","status":"going","color":"#6d06d0"},{"name":"Angus","status":"going","color":"#d47957"},{"name":"Rimini","status":"maybe","color":"#ffd500"},{"name":"daniel ding","status":"maybe","color":"#11ff00"},{"name":"Brendan Coughlan","status":"maybe","color":"#d3274a"},{"name":"Olivia","status":"maybe","color":"#d9f56c"},{"name":"Jamie D","status":"going","color":"#d357fe"},{"name":"Byron","status":"maybe","color":"#5fad47"},{"name":"WN","status":"going","color":"#344d3a"},{"name":"Tamsyn","status":"maybe","color":"#f5c2e7"},{"name":"Wing","status":"going","color":"#e0c9b3"},{"name":"Jasmine","status":"maybe","color":"#bed20d"},{"name":"claire","status":"going","color":"#9514d0"},{"name":"raiyan","status":"going","color":"#454545"},{"name":"Dani","status":"going","color":"#d73920"},{"name":"Justin","status":"going","color":"#ff94fa"},{"name":"Becky","status":"going","color":"#c9fa4f"},{"name":"Cameron","status":"going","color":"#102457"},{"name":"Eric","status":"going","color":"#cd0d0e"},{"name":"Fernando","status":"going","color":"#7cb65c"},{"name":"Eezu","status":"going","color":"#0379f4"},{"name":"haley","status":"going","color":"#ffffff"},{"name":"M","status":"going","color":"#261a00"},{"name":"Cool Sheng","status":"going","color":"#c72323"},{"name":"jo tay","status":"going","color":"#3ed4fd"},{"name":"Melody","status":"going","color":"#ffdce1"},{"name":"Toby","status":"going","color":"#a50ec4"}]`);
 
     let j = 0;
 
@@ -294,16 +295,16 @@
           const carriage = document.getElementById('carriage-' + index);
           // Division by 3 slows down the animation, making one full rotation take ~18.84 seconds (2π*3)
           // instead of ~6.28 seconds (2π) if we used raw time value
-          const angle = t / 11; // incrementing this number decreases the spacing between each carraige
-          const r = 13.8
+          const angle = t / 13; // incrementing this number decreases the spacing between each carraige
+          const r = 15
           // Using sine for x coordinate creates horizontal oscillation
           const x = 24.2 /* across screen */ + (r * (Math.sin(angle)));
           // Using cosine for z coordinate creates depth oscillation
           // Sine and cosine together create circular motion
-          const z = -5.0 /* toward from screen */ + (r * (Math.cos(angle)));
+          const z = -6.25 /* toward from screen */ + (r * (Math.cos(angle)));
           // Convert angle from radians to degrees for rotation
           const rotateY = (angle * 180 / Math.PI) % 360;
-          const y = 31 /* down */
+          const y = 32.2 /* down */
           carriage.style.transform = `translate3d(${x}em, ${y}em, ${z}em) rotateY(${rotateY}deg)`
 
           tick();
