@@ -130,8 +130,8 @@
 
     .carriage {
       position: absolute;
-      width: 28px;
-      height: 28px;
+      width: 26px;
+      height: 26px;
       font-size: large;
     }
 
@@ -152,7 +152,7 @@
     }
 
     .carriage .name {
-      font-size: 0.3em;
+      font-size: 0.27em;
     }
 
     /* wheels */
@@ -319,7 +319,7 @@
           const carriage = document.getElementById('carriage-' + index);
           // Division by 3 slows down the animation, making one full rotation take ~18.84 seconds (2π*3)
           // instead of ~6.28 seconds (2π) if we used raw time value
-          const angle = t / 13; // incrementing this number decreases the spacing between each carraige
+          const angle = t / 14; // incrementing this number decreases the spacing between each carraige
           const r = 15
           // Using sine for x coordinate creates horizontal oscillation
           const x = 24.2 /* across screen */ + (r * (Math.sin(angle)));
@@ -328,7 +328,7 @@
           const z = -6.25 /* toward from screen */ + (r * (Math.cos(angle)));
           // Convert angle from radians to degrees for rotation
           const rotateY = (angle * 180 / Math.PI) % 360;
-          const y = 32.2 /* down */
+          const y = 32.3 /* down */
           carriage.style.transform = `translate3d(${x}em, ${y}em, ${z}em) rotateY(${rotateY}deg)`
 
           tick();
