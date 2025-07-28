@@ -223,6 +223,30 @@
       position: absolute;
       transform: translate3d(-16em, 20em, -3em) rotateY(90deg)
     }
+
+    .alert-wrapper {
+      margin-top: 0.5ch;
+      margin-bottom: 0.5ch;
+      padding: 0.2ch;
+      background-color: darkred;
+    }
+    .alert {
+      background-color: darkred;
+      color: white;
+      padding: 0.5ch;
+      margin: 0.5ch;
+      border: 2px solid rgb(255 255 255);
+      font-family: monospace;
+    }
+
+    .blink {
+      animation: blink 1s infinite;
+    }
+
+    @keyframes blink {
+      0%, 50% { opacity: 1; }
+      51%, 100% { opacity: 0; }
+    }
   </style>
 
   <script type="module">
@@ -332,10 +356,17 @@
           together and write HTML documents</q></a>.
     </p>
 
+    <p>
+      <b>When?</b>
+
+      <br />
+      August 2 (Saturday), 12pm (sharp) - 3:00 <a href="https://calendar.google.com/calendar/event?action=TEMPLATE&tmeid=MzFpcWx2aHJscTJkc2ZxYWU3YWVxMDMyYnYgY183NWFkM2U5NzJiYzFhNzlkYjcwOThiMjQ5OTA1Zjc0ZDkzM2U5ZDUzMzIwNThkMDYwOTA5MWRjNzY0YmNjOGQ4QGc&tmsrc=c_75ad3e972bc1a79db7098b249905f74d933e9d5332058d0609091dc764bcc8d8%40group.calendar.google.com">(📅 gcal?)</a> (<a href="https://html.energy/html-day/2025/">HTML Day 2025</a>)
+    </p>
 
     <div>
       <b>Where?</b>
       <br />
+      <s>
       Hyde Park, north-east the Anzac Memorial <a
         href="https://www.google.com/maps/place/33%C2%B052'32.3%22S+151%C2%B012'41.9%22E/@-33.8756429,151.2109979,19z/data=!3m1!4b1!4m4!3m3!8m2!3d-33.875644!4d151.211643?entry=ttu">(📍
         map?)</a>
@@ -350,17 +381,17 @@
         <summary>🚾  Bathroom location?</summary>
         Bathrooms are available in Museum Station (like a 3 min walk away).
       </details>
-      <details>
-        <summary>☔ What if it looks like it's going to rain?</summary>
-        I live very close by so I will try and cram everyone into our flat.
-      </details>
+      </s>
+      <div class="alert-wrapper">
+        <div class="alert">
+          <!-- fuck me man i plan this event months in advance and the IT FUCKING RAINS FUUUCK-->
+          <b class="blink" style="font-size: large;">☔ WET WEATHER ALERT ☔</b>
+          <br />
+          Wet weather is forecast for Saturday. Contingency plans are being developed.
+          Please check this site and your email at Friday 6pm for confirmed location.
+        </div>
+      </div>
     </div>
-    <p>
-      <b>When?</b>
-
-      <br />
-      August 2 (Saturday), 12pm (sharp) - 3:00 <a href="https://calendar.google.com/calendar/event?action=TEMPLATE&tmeid=MzFpcWx2aHJscTJkc2ZxYWU3YWVxMDMyYnYgY183NWFkM2U5NzJiYzFhNzlkYjcwOThiMjQ5OTA1Zjc0ZDkzM2U5ZDUzMzIwNThkMDYwOTA5MWRjNzY0YmNjOGQ4QGc&tmsrc=c_75ad3e972bc1a79db7098b249905f74d933e9d5332058d0609091dc764bcc8d8%40group.calendar.google.com">(📅 gcal?)</a> (<a href="https://html.energy/html-day/2025/">HTML Day 2025</a>)
-    </p>
 
     <div>
       <b>Bring:</b>
@@ -369,7 +400,7 @@
         <li>charger for they phone (you'll be hotspotting internet)</li>
         <li>arts and crafts equipment (pencils, pens, paper, canvas, paint, etc). to make art for your website</li>
         <li>snacky snacks</li>
-        <li>sunscreen and/or sunnies</li>
+        <li><s>sunscreen and/or sunnies</s></li>
         <li>a picnic blanket, if you have one</li>
       </ul>
     </div>
