@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<style>
+        :focus-visible {
+                outline: 3px solid #fd0;
+                outline-offset: 0;
+                z-index: 10;
+        }
+        body {
+                background: linear-gradient(color(srgb 0.7563 0.6388 0.5538), color(srgb 0.4049 0.4807 0.5095));
+                height: 100vh;
+        }
+        summary {
+                width: fit-content; 
+                padding: 5px;
+                padding-right: 75px;
+                color: white;
+                border: solid black 1px;
+                position: relative;
+                border-top-left-radius: 5px;
+                border-bottom-left-radius: 5px;
+                margin: -1px 0 0 -1px;
+        }
+        summary::after {
+                top: 0px;
+                bottom: 0px;
+                right: 0px;
+                position: absolute;
+                content: "";
+                width: 50px;
+                outline: solid black 1px;
+                border-right-style: none;
+                background: #f6eee3;
+                background-image: linear-gradient(black, transparent 50%);
+                background-size: 10px 2px;
+                border-top-left-radius: 5px;
+                border-bottom-left-radius: 5px;
+                border-collapse: collapse;
+        }
+        img {
+                width: 100px;
+                background: #f6eee3;
+                border: solid black 1px;
+                border-radius: 4px;
+                align-self: flex-start;
+        }
+        div {
+                background: #f6eee3;
+                width: 300px;
+                border: solid black 1px;
+                border-radius: 5px;
+                padding: 10px;
+                margin: -1px 0 0 -1px;
+                display: flex;
+        }
+        
+        p {
+                padding-left: 15px;
+                margin: 0px;
+        }
+        form {
+                width: fit-content; 
+                padding: 5px;
+                border-radius: 5px;
+                background: #f6eee3;
+                border: solid black 1px;
+                margin-bottom: 15px;
+
+        }
+</style>
+
+</head>
+
+<body>
+
+<h1>My Digital Book Stack!</h1>
+
+<!--<form action="" method="get" class="form-example">
+        <label for="title">Title: </label>
+        <input type="text" name="name" id="name" required />
+        <label for="author">Author: </label>
+        <input type="text" name="name" id="author" required />
+        <label for="email">Blurb: </label>
+        <input type="email" name="email" id="email" required />
+        <label for="color">Color: </label>
+        <input type="color" id="body" name="body" value="#f6b73c" />
+        <label for="file">Cover: </label>
+        <input type="file" id="avatar" name="avatar" accept="image/*" />
+        <label for="white">White text: </label>
+        <input type="checkbox" id="white" accept="image/*" />
+        <input type="submit" value="Add book!" />
+</form>-->
+
+<details>
+  <summary style="background: dodgerblue">Invisible Cities, <i>Italo Calvino</i></summary>
+  <div>
+    <img src="assets/calvino.webp"/>
+    <p>In <i>Invisible Cities</i>, Marco Polo conjures up cities of magical times for his host, the Chinese ruler Kublai Khan, but gradually it becomes clear that he is actually describing one city: Venice. Calvino's metafictional travel guide is a captivating meditation on culture, language, time, memory and the nature of human experience.</p>
+  </div>
+</details>
+<details>
+  <summary style="background: white; color: black">Too Loud A Solitude, <i>Bhoumil Hrabal</i></summary>
+  <div style="display: flex">
+    <img src="assets/hrabal.webp"/>
+    <p>For thirty-three years now I've been in wastepaper, and it's my love story. For thirty-five years I've been compacting wastepaper and books, smearing myself with letters until I've come to look like my encyclopedias - and a good three tons of them I've compacted over the years...</p>
+  </div>
+</details>
+<details>
+  <summary style="background: crimson">The Wind Up Bird Chronicle, <i>Haruki Murakami</i></summary>
+  <div style="display: flex">
+    <img src="assets/murakami.webp"/>
+    <p>This wind-up bird is there every morning in the trees of the neighbourhood to wind things up.
+    Us, our quiet little world, everything.</p>
+  </div>
+</details>
+<details>
+  <summary style="background: yellow; color: black">The Design of Everyday Things, <i>Don Norman</i></summary>
+  <div style="display: flex">
+    <img src="assets/norman.webp"/>
+    <p>When <i>The Design of Everyday Things</i> was published in 1988, cognitive scientist Don Norman provocatively proposed that the fault lies not in ourselves but in design that ignores the needs and psychology of people.</p>
+  </div>
+</details>
+<details>
+  <summary style="background: grey">Make Something Wonderful, <i>Steve Jobs</i></summary>
+  <div style="display: flex">
+    <img src="assets/jobs.webp"/>
+    <p>There's lots of ways to be, as a person. And some people express their deep appreciation in different ways. But one of the ways that I believe people express their appreciation to the rest of humanity is to make something wonderful and put it out there.</p>
+  </div>
+</details>
+<details>
+        <summary style="background: hotpink">Walt Whitman, <i>Ellman Crasnow</i></summary>
+  <div>
+    <img src="assets/whitman.webp"/>
+    <p>Why should I be afraid to trust myself to you?
+I am not afraid, I have been well brought forward by you, I love the rich running day, but I do not desert her in whom I lay so long,
+I know not how I came of you and I know not where I go with you but I know I came well and shall go well.</p>
+  </div>
+</details>
+
+<span class="spanOne" id="spanOne"></span>
+
+</body>
+
+</html>
+
+</html>
