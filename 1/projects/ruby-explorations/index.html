@@ -133,37 +133,24 @@
   </p>
 
 
-<script data-display="viewof seed" type="module">
-  celine.viewof('seed', () => {
-    return Inputs.range([0, 100], {label: "seed", step: 1, value: 26 });
-  });
-</script>
-
-<script class="echo reflect" data-display="first" type="module" contenteditable="true">
-celine.cell('first', ['seed'], (seed) => {
-
-  const rules = {
-    "nonterminal": [
-      "<ruby> #terminal# <rt>#nonterminal# #nonterminal#  #terminal# </rt></ruby>",
-      "#terminal#"
-    ],
-    "terminal": ["a"],
-  }
-
-  const grammar = tracery.createGrammar(rules);
-  tracery._randomSeed = seed;
-
-  const output = grammar.flatten("#nonterminal#");
-  const outputElement = document.createElement('div');
-  outputElement.innerHTML = output;
-  return outputElement;
-})
-</script>
-
+  <p>
+    The following cell renders a simple grammar. Each part of the tree is either:
+    <ol>
+      <li>
+        A "terminal", in this case the letter "a"
+      </li>
+      <li>
+        A terminal, extended by a "non-terminal"
+      </li>
+      <li>
+        A terminal, and then a branch of 2 non-terminals
+      </li>
+    </ol>
+  </p>
 
 <script data-display="viewof seed2" type="module">
   celine.viewof('seed2', () => {
-    return Inputs.range([0, 100], {label: "seed", step: 1, value: 18 });
+    return Inputs.range([0, 100], {label: "seed", step: 1, value: 33 });
   });
 </script>
 
@@ -171,14 +158,14 @@ celine.cell('first', ['seed'], (seed) => {
 celine.cell('second', ['seed2'], (seed) => {
   const rules = {
     "nonterminal": [
-      "<ruby> #terminal# <rt>#nonterminal# #nonterminal#</rt></ruby>",
+      "#terminal#",
       "<ruby> #terminal# <rt>#nonterminal#</rt></ruby>",
-      "#terminal#"
+      "<ruby> #terminal# <rt>#nonterminal# #nonterminal#</rt></ruby>",
     ],
     "terminal": ["a"],
   }
   const grammar = tracery.createGrammar(rules);
-  tracery._randomSeed = seed + 10; // offset to get different results
+  tracery._randomSeed = seed
 
   const output = grammar.flatten("#nonterminal#");
   const outputElement = document.createElement('div');
@@ -186,6 +173,10 @@ celine.cell('second', ['seed2'], (seed) => {
   return outputElement;
 })
 </script>
+
+<p>
+  In this one I make a distinction beteween "branch" terminals and "leaf" terminals.
+</p>
 
 <script data-display="viewof seed3" type="module">
   celine.viewof('seed3', () => {
@@ -196,11 +187,6 @@ celine.cell('second', ['seed2'], (seed) => {
 <script class="echo reflect" data-display="third" type="module" contenteditable="true">
 celine.cell('third', ['seed3'], (seed) => {
   const rules = {
-    "root": [
-      "<ruby>#branch# <rt>#nonterminal#</rt></ruby>",
-      "<ruby>#branch# <rt>#nonterminal# #nonterminal#</rt></ruby>",
-      "#leaf#"
-    ],
     "nonterminal": [
       "<ruby>#branch# <rt>#nonterminal# #nonterminal#</rt></ruby>",
       "<ruby>#branch# <rt>#nonterminal#</rt></ruby>",
@@ -213,7 +199,7 @@ celine.cell('third', ['seed3'], (seed) => {
   const grammar = tracery.createGrammar(rules);
   tracery._randomSeed = seed + 20;
 
-  const output = grammar.flatten("#root#");
+  const output = grammar.flatten("#nonterminal#");
   const outputElement = document.createElement('div');
   outputElement.innerHTML = output;
   return outputElement;
@@ -229,15 +215,10 @@ celine.cell('third', ['seed3'], (seed) => {
 <script class="echo reflect" data-display="fourth" type="module" contenteditable="true">
 celine.cell('fourth', ['seed4'], (seed) => {
   const rules = {
-    "nonterminal": ["#left#", "#right#"],
     "left": [
       "<ruby>#branch# <rt>#nonterminal#</rt></ruby>",
-      "<ruby>#branch# <rt>#nonterminal# #nonterminal#</rt></ruby>",
-      "#leaf#"
-    ],
-    "right": [
-      "<ruby>#branch# <rt>#nonterminal# #nonterminal#</rt></ruby>",
-      "<ruby>#branch# <rt>#nonterminal#</rt></ruby>",
+      "<ruby>#branch# <rt>#nonterminal# #branch# #nonterminal#</rt></ruby>",
+      "<ruby>#branch# <rt>#branch# #nonterminal#  #nonterminal#</rt></ruby>",
       "#leaf#"
     ],
     "branch": ["枝"],
@@ -271,6 +252,34 @@ celine.cell('fourth', ['seed4'], (seed) => {
     });
   });
 </script>
+
+<script data-display="viewof seed" type="module">
+  celine.viewof('seed', () => {
+    return Inputs.range([0, 100], {label: "seed", step: 1, value: 26 });
+  });
+</script>
+
+<script class="echo reflect" data-display="first" type="module" contenteditable="true">
+celine.cell('first', ['seed'], (seed) => {
+
+  const rules = {
+    "nonterminal": [
+      "<ruby> #terminal# <rt>#nonterminal# #nonterminal#  #terminal# </rt></ruby>",
+      "#terminal#"
+    ],
+    "terminal": ["a"],
+  }
+
+  const grammar = tracery.createGrammar(rules);
+  tracery._randomSeed = seed;
+
+  const output = grammar.flatten("#nonterminal#");
+  const outputElement = document.createElement('div');
+  outputElement.innerHTML = output;
+  return outputElement;
+})
+</script>
+
 
 <p>
   Built with <a href="https://maxbo.me/celine">@celine/celine v6.0.0</a>
