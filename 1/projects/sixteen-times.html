@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>sixteen times</title>
+  <meta name="author" content="leo@ldgrp.me">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style type="text/css">
+    .canvas {
+      border: 1px solid black;
+      width: 150px;
+      height: 150px;
+      background-color: white;
+      position: relative;
+      touch-action: none;
+      user-select: none;
+    }
+
+    .cursor,
+    .ghost {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background-color: red;
+      border-radius: 50%;
+    }
+
+    .ghost {
+      transition: opacity 1s ease-out;
+    }
+
+    span {
+      background-color: rgb(0, 255, 0);
+    }
+
+    body {
+      background-image: url(data:image/jpeg;base64,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)
+    }
+
+    @media (min-width: 900px) {
+      body {
+        display: grid;
+        grid-template-columns: 600px auto 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div>
+    <table>
+      <tbody>
+        <tr>
+          <td class="canvas" id="canvas-16">
+            <div class="cursor" id="cursor-16"></div>
+          </td>
+          <td class="canvas" id="canvas-15">
+            <div class="cursor" id="cursor-15"></div>
+          </td>
+          <td class="canvas" id="canvas-14">
+            <div class="cursor" id="cursor-14"></div>
+          </td>
+          <td class="canvas" id="canvas-13">
+            <div class="cursor" id="cursor-13"></div>
+          </td>
+        </tr>
+        <tr>
+          <td class="canvas" id="canvas-12">
+            <div class="cursor" id="cursor-12"></div>
+          </td>
+          <td class="canvas" id="canvas-11">
+            <div class="cursor" id="cursor-11"></div>
+          </td>
+          <td class="canvas" id="canvas-10">
+            <div class="cursor" id="cursor-10"></div>
+          </td>
+          <td class="canvas" id="canvas-9">
+            <div class="cursor" id="cursor-9"></div>
+          </td>
+        </tr>
+        <tr>
+          <td class="canvas" id="canvas-8">
+            <div class="cursor" id="cursor-8"></div>
+          </td>
+          <td class="canvas" id="canvas-7">
+            <div class="cursor" id="cursor-7"></div>
+          </td>
+          <td class="canvas" id="canvas-6">
+            <div class="cursor" id="cursor-6"></div>
+          </td>
+          <td class="canvas" id="canvas-5">
+            <div class="cursor" id="cursor-5"></div>
+          </td>
+        </tr>
+        <tr>
+          <td class="canvas" id="canvas-4">
+            <div class="cursor" id="cursor-4"></div>
+          </td>
+          <td class="canvas" id="canvas-3">
+            <div class="cursor" id="cursor-3"></div>
+          </td>
+          <td class="canvas" id="canvas-2">
+            <div class="cursor" id="cursor-2"></div>
+          </td>
+          <td class="canvas" id="canvas-1">
+            <div class="cursor" id="cursor-1"></div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div style="align-self: end; margin-bottom: 3px;">
+    <div>
+      <p>
+        <span>move inside the box</span><br />
+        <span>your pattern will be recorded</span>
+      </p>
+      <p>
+        <span>just the movement of your mouse</span><br />
+        <span>not even a name</span>
+      </p>
+      <p>
+        <span>sixteen times</span><br />
+        <span>your pattern will be played</span>
+      </p>
+      <p>
+        <span>then it fades</span><br />
+        <span>not erased</span><br />
+        <span>just replaced</span>
+      </p>
+    </div>
+
+    <div>
+      <progress id="timer" value="0" max="10000"></progress>
+      <button id="startDrawingButton" onclick="startDrawing()">Start drawing</button>
+      <input type="color" id="colorPicker" value="#ff0000" title="Choose cursor color">
+      <div class="canvas" id="drawArea">
+        <div class="cursor" id="cursor"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const url = 'https://ldgrp--58faeb246f8611f0b42c0224a6c84d84.web.val.run/';
+    const timerMeter = document.getElementById("timer")
+    const startDrawingButton = document.getElementById("startDrawingButton")
+    const drawArea = document.getElementById("drawArea")
+    const cursor = document.getElementById("cursor")
+    const colorPicker = document.getElementById("colorPicker")
+
+    let startDrawingInterval;
+    let isActive = false;
+    const START_TIMER_VALUE = 10000;
+    const TIMER_INTERVAL = 10;
+    const CURSOR_OFFSET = 5;
+
+    let canvasTime = 0;
+
+    let temp = Array(START_TIMER_VALUE / TIMER_INTERVAL).fill(null)
+    let cursorPositions = [];
+    let isMouseDown = false;
+
+    function getTimeIndex(t) {
+      return Math.floor(t / TIMER_INTERVAL);
+    }
+
+    function setCursorPosition(element, x, y) {
+      element.style.left = (x - CURSOR_OFFSET) + 'px';
+      element.style.top = (y - CURSOR_OFFSET) + 'px';
+    }
+
+    function getCursorsPos() {
+      fetch(url)
+        .then(response => response.json())
+        .then(data => cursorPositions = data);
+    }
+
+    function putCursorPos() {
+      fetch(url, {
+        method: 'PUT',
+        body: JSON.stringify(temp),
+      });
+    }
+
+    drawArea.onmousedown = () => isMouseDown = true;
+    drawArea.onmouseup = () => isMouseDown = false;
+
+    // Color picker event handler
+    colorPicker.onchange = () => {
+      cursor.style.backgroundColor = colorPicker.value;
+    };
+
+    // Initialize cursor color
+    cursor.style.backgroundColor = colorPicker.value;
+
+    /**
+     * Mouse/touch events
+     */
+    drawArea.ontouchstart = (event) => {
+      event.preventDefault();
+      isMouseDown = true;
+    };
+
+    drawArea.ontouchend = (event) => {
+      event.preventDefault();
+      isMouseDown = false;
+    };
+
+    drawArea.onmousemove = (event) => {
+      handleMove(event.clientX, event.clientY);
+    };
+
+    drawArea.ontouchmove = (event) => {
+      event.preventDefault();
+      if (event.touches.length > 0) {
+        handleMove(event.touches[0].clientX, event.touches[0].clientY);
+      }
+    };
+
+    function handleMove(clientX, clientY) {
+      if (!isActive) return;
+
+      const index = getTimeIndex(START_TIMER_VALUE - timerMeter.value);
+      const rect = drawArea.getBoundingClientRect();
+      const x = clientX - rect.left;
+      const y = clientY - rect.top;
+
+      temp[index] = { x, y, isMouseDown, color: colorPicker.value };
+      setCursorPosition(cursor, x, y);
+
+      if (isMouseDown) {
+        createGhost(drawArea, x, y, colorPicker.value);
+      }
+    }
+
+    function createGhost(parent, x, y, color) {
+      const ghost = document.createElement('div');
+      ghost.className = 'ghost';
+      ghost.style.backgroundColor = color;
+      setCursorPosition(ghost, x, y);
+      parent.appendChild(ghost);
+
+      setTimeout(() => {
+        ghost.style.opacity = '0';
+        setTimeout(() => ghost.parentNode?.removeChild(ghost), 1000);
+      }, 1000);
+    }
+
+    function tickDrawArea() {
+      timerMeter.value -= TIMER_INTERVAL;
+      if (timerMeter.value <= 0) {
+        isActive = false;
+        clearInterval(startDrawingInterval);
+        startDrawingButton.disabled = false;
+
+        if (temp.length) {
+          cursorPositions.unshift(temp);
+          putCursorPos();
+        }
+      }
+    }
+
+    function tickCanvas() {
+      if (cursorPositions.length === 0) return;
+
+      const index = getTimeIndex(canvasTime);
+
+      for (let i = 0; i < Math.min(16, cursorPositions.length); i++) {
+        const positions = cursorPositions[i];
+        const pos = positions[index];
+
+        if (pos) {
+          const cursor = document.getElementById(`cursor-${i + 1}`);
+          const canvas = document.getElementById(`canvas-${i + 1}`);
+
+          setCursorPosition(cursor, pos.x, pos.y);
+          if (pos.color) {
+            cursor.style.backgroundColor = pos.color;
+          }
+
+          if (pos.isMouseDown) {
+            createGhost(canvas, pos.x, pos.y, pos.color);
+          }
+        }
+      }
+
+      canvasTime = (canvasTime + TIMER_INTERVAL) % START_TIMER_VALUE;
+    }
+
+    function startDrawing() {
+      temp = [];
+      isActive = true;
+      timerMeter.value = START_TIMER_VALUE;
+      startDrawingButton.disabled = true;
+      startDrawingInterval = setInterval(tickDrawArea, TIMER_INTERVAL);
+    }
+
+    setInterval(tickCanvas, TIMER_INTERVAL);
+    getCursorsPos();
+  </script>
+</body>
+
+</html>
