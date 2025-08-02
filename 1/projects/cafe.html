@@ -1,0 +1,688 @@
+<html>
+    <head>
+        <title>
+            Cafe
+        </title>
+    </head>
+    <style>
+        #cafe {
+            height: 450px;
+            width: 800px;
+            background-color: rgb(172, 163, 147);
+            position: relative;
+            z-index: -1000;
+        }
+
+        #anz-blanket {
+            position: absolute;
+            top: 300px;
+            left: 420px;
+            rotate: -3deg;
+            z-index: -10;
+            border-radius: 3px;
+            width: 70;
+            height: 130;
+            background-color: rgb(0, 195, 255);
+        }
+
+        #flower-blanket {
+            position: absolute;
+            top: 335px;
+            left: 319px;
+            rotate: -0deg;
+            z-index: -9;
+            border-width: 0.5px;
+            border-style: solid;
+            border-color: black;
+            border-radius: 4px;
+            width: 110;
+            height: 80;
+            background-color: rgb(245, 215, 116);
+        }
+
+        #jungle-blanket {
+            position: absolute;
+            top: 215px;
+            left: 375px;
+            rotate: 2deg;
+            z-index: -11;
+            border-width: 0.5px;
+            border-style: solid;
+            border-color: black;
+            border-radius: 4px;
+            width: 100;
+            height: 100;
+            background-color: rgb(88, 189, 130);
+        }
+
+        #grey-blanket {
+            position: absolute;
+            top: 215px;
+            left: 270px;
+            rotate: -2deg;
+            z-index: -11;
+            border-width: 0.5px;
+            border-style: solid;
+            border-color: black;
+            border-radius: 4px;
+            width: 90;
+            height: 90;
+            background-color: rgb(74, 74, 74);
+        }
+
+        #plant-blanket {
+            position: absolute;
+            top: 155px;
+            left: 350px;
+            rotate: 0deg;
+            z-index: -11;
+            border-width: 0.5px;
+            border-style: solid;
+            border-color: black;
+            border-radius: 4px;
+            width: 90;
+            height: 90;
+            background-color: rgb(179, 30, 177);
+        }
+
+        #green-blanket {
+            position: absolute;
+            top: 85px;
+            left: 340px;
+            rotate: 1deg;
+            z-index: -8;
+            border-width: 0.5px;
+            border-style: solid;
+            border-color: black;
+            border-radius: 4px;
+            width: 110;
+            height: 85;
+            background-color: rgb(90, 233, 95);
+        }
+
+        #pink-blanket {
+            position: absolute;
+            top: 85px;
+            left: 260px;
+            rotate: -3deg;
+            z-index: -11;
+            border-width: 0.5px;
+            border-style: solid;
+            border-color: black;
+            border-radius: 4px;
+            width: 90;
+            height: 90;
+            background-color: rgb(255, 187, 234);
+        }
+
+        #table {
+            position: absolute;
+            top: 300px;
+            left: 500px;
+            rotate: 0deg;
+            z-index: -11;
+            border-width: 0px;
+            border-style: solid;
+            border-color: black;
+            border-radius: 0px;
+            width: 20;
+            height: 60;
+            background-color: rgb(202, 169, 131);
+        }
+
+        #table-side-1 {
+            position: absolute;
+            top: 300px;
+            left: 500px;
+            rotate: 0deg;
+            z-index: -10;
+            border-width: 0px;
+            border-style: solid;
+            border-color: black;
+            border-radius: 0px;
+            width: 20;
+            height: 17;
+            background-color: rgb(188, 159, 126);
+        }
+
+        #table-side-2 {
+            position: absolute;
+            top: 343px;
+            left: 500px;
+            rotate: 0deg;
+            z-index: -10;
+            border-width: 0px;
+            border-style: solid;
+            border-color: black;
+            border-radius: 0px;
+            width: 20;
+            height: 17;
+            background-color: rgb(188, 159, 126);
+        }
+
+        #bench-cushion {
+            position: absolute;
+            top: 285px;
+            left: 535px;
+            rotate: -0deg;
+            z-index: -11;
+            border-width: 0px;
+            border-style: solid;
+            border-color: black;
+            border-radius: 3px;
+            width: 40;
+            height: 90;
+            background-color: rgb(131, 131, 131);
+        }
+
+        #bench-back {
+            position: absolute;
+            top: 281px;
+            left: 575px;
+            rotate: -0deg;
+            z-index: -11;
+            border-width: 0px;
+            border-style: solid;
+            border-color: black;
+            border-radius: 0px;
+            width: 6;
+            height: 98;
+            background-color: rgb(202, 169, 131);
+        }
+
+        #bench-top {
+            position: absolute;
+            top: 281px;
+            left: 535px;
+            rotate: -0deg;
+            z-index: -9;
+            border-width: 0px;
+            border-style: solid;
+            border-color: black;
+            border-radius: 0px;
+            width: 40;
+            height: 6;
+            background-color: rgb(202, 169, 131);
+        }
+
+        #bench-bottom {
+            position: absolute;
+            top: 375px;
+            left: 535px;
+            rotate: -0deg;
+            z-index: -11;
+            border-width: 0px;
+            border-style: solid;
+            border-color: black;
+            border-radius: 0px;
+            width: 46;
+            height: 6;
+            background-color: rgb(202, 169, 131);
+        }
+
+        #stool-1 {
+            position: absolute;
+            top: 275px;
+            left: 500px;
+            rotate: -0deg;
+            z-index: -11;
+            border-width: 0px;
+            border-style: solid;
+            border-color: black;
+            border-radius: 3px;
+            width: 17;
+            height: 17;
+            background-color: rgb(41, 41, 41);
+        }
+
+        #camping-chair-1 {
+            position: absolute;
+            top: 85px;
+            left: 200px;
+            rotate: -40deg;
+            z-index: -10;
+            border-width: 0.7px;
+            border-style: solid;
+            border-color: black;
+            border-radius: 3px;
+            width: 30;
+            height: 25;
+            background-color: rgb(1, 162, 138);
+        }
+
+        #camping-chair-1-left {
+            position: absolute;
+            top: 97px;
+            left: 199px;
+            rotate: -30deg;
+            z-index: -9;
+            border-width: 0.7px;
+            border-style: solid;
+            border-color: black;
+            border-radius: 3px;
+            width: 4;
+            height: 27;
+            background-color: rgb(1, 162, 138);
+        }
+
+        #camping-chair-1-right {
+            position: absolute;
+            top: 73px;
+            left: 228px;
+            rotate: -50deg;
+            z-index: -9;
+            border-width: 0.7px;
+            border-style: solid;
+            border-color: black;
+            border-radius: 3px;
+            width: 4;
+            height: 27;
+            background-color: rgb(1, 162, 138);
+        }
+
+        #camping-chair-2 {
+            position: absolute;
+            top: 45px;
+            left: 260px;
+            rotate: -10deg;
+            z-index: -10;
+            border-width: 0.7px;
+            border-style: solid;
+            border-color: black;
+            border-radius: 3px;
+            width: 33;
+            height: 25;
+            background-color: rgb(101, 103, 206);
+        }
+
+        #camping-chair-2-left {
+            position: absolute;
+            top: 48px;
+            left: 257px;
+            rotate: -10deg;
+            z-index: -9;
+            border-width: 0.7px;
+            border-style: solid;
+            border-color: black;
+            border-radius: 3px;
+            width: 4;
+            height: 27;
+            background-color: rgb(181, 181, 181);
+        }
+
+        #camping-chair-2-right {
+            position: absolute;
+            top: 42px;
+            left: 290px;
+            rotate: -10deg;
+            z-index: -9;
+            border-width: 0.7px;
+            border-style: solid;
+            border-color: black;
+            border-radius: 3px;
+            width: 4;
+            height: 27;
+            background-color: rgb(181, 181, 181);
+        }
+
+        #stool-2 {
+            position: absolute;
+            top: 144px;
+            left: 210px;
+            rotate: -35deg;
+            z-index: -11;
+            border-width: 0px;
+            border-style: solid;
+            border-color: black;
+            border-radius: 3px;
+            width: 20;
+            height: 20;
+            background-color: rgb(89, 89, 89);
+        }
+
+        #stool-3 {
+            position: absolute;
+            top: 150px;
+            left: 500px;
+            rotate: 40deg;
+            z-index: -11;
+            border-width: 0px;
+            border-style: solid;
+            border-color: black;
+            border-radius: 3px;
+            width: 17;
+            height: 17;
+            background-color: rgb(41, 41, 41);
+        }
+
+        #stool-4 {
+            position: absolute;
+            top: 195px;
+            left: 520px;
+            rotate: 80deg;
+            z-index: -11;
+            border-width: 0px;
+            border-style: solid;
+            border-color: black;
+            border-radius: 3px;
+            width: 22;
+            height: 22;
+            background-color: rgb(216, 181, 140);
+        }
+
+        #stool-5 {
+            position: absolute;
+            top: 50px;
+            left: 370px;
+            rotate: -80deg;
+            z-index: -11;
+            border-width: 0px;
+            border-style: solid;
+            border-color: black;
+            border-radius: 3px;
+            width: 17;
+            height: 17;
+            background-color: rgb(41, 41, 41);
+        }
+
+        #bag-input-box {
+            position: absolute;
+            top: 460px;
+            z-index: 0;
+        }
+
+        #bag-input {
+            position: absolute;
+            top: 462px;
+            left: 25px;
+            z-index: 0;
+        }
+
+        #bag-input-box:checked {
+            color: red;
+        }
+
+        input[type="checkbox"]:checked ~ .bag {
+            visibility: hidden;
+        }
+
+        #bag-1 {
+            position: absolute;
+            top: 320px;
+            left: 410px;
+            rotate: -30deg;
+            z-index: -7;
+            border-width: 0.5px 0.5px 2px 0.5px;
+            border-style: solid;
+            border-color: black;
+            border-radius: 5px;
+            width: 15;
+            height: 20;
+            background-color: rgb(148, 148, 148);
+        }
+
+        #bag-2 {
+            position: absolute;
+            top: 329px;
+            left: 350px;
+            rotate: 70deg;
+            z-index: -7;
+            border-width: 0;
+            border-style: solid;
+            border-color: black;
+            border-radius: 5px;
+            width: 20;
+            height: 30;
+            background-color: rgb(68, 68, 68);
+        }
+
+        #bag-3 {
+            position: absolute;
+            top: 345px;
+            left: 330px;
+            rotate: 80deg;
+            z-index: -7;
+            border-width: 0;
+            border-style: solid;
+            border-color: black;
+            border-radius: 5px;
+            width: 15;
+            height: 15;
+            background-color: rgb(249, 14, 57);
+        }
+
+        #bag-4 {
+            position: absolute;
+            top: 430px;
+            left: 400px;
+            rotate: 0deg;
+            z-index: -7;
+            border-width: 0;
+            border-style: solid;
+            border-color: black;
+            border-radius: 2px;
+            width: 20;
+            height: 20;
+            background-color: rgb(23, 23, 23);
+        }
+
+        #bag-5 {
+            position: absolute;
+            top: 440px;
+            left: 430px;
+            rotate: 0deg;
+            z-index: -7;
+            border-width: 0;
+            border-style: solid;
+            border-color: black;
+            border-radius: 2px;
+            width: 30;
+            height: 10;
+            background-color: rgb(63, 63, 63);
+        }
+
+        #bag-6 {
+            position: absolute;
+            top: 430px;
+            left: 490px;
+            rotate: 0deg;
+            z-index: -7;
+            border-width: 2px;
+            border-style: solid;
+            border-color: rgb(0, 41, 153);
+            border-radius: 1.5px;
+            width: 25;
+            height: 15;
+            background-color: rgb(175, 175, 175);
+        }
+
+        #bag-7 {
+            position: absolute;
+            top: 433px;
+            left: 540px;
+            rotate: 5deg;
+            z-index: -7;
+            border-width: 0.5px;
+            border-style: solid;
+            border-color: rgb(178, 130, 60);
+            border-radius: 3px;
+            width: 25;
+            height: 15;
+            background-color: rgb(238, 193, 115);
+        }
+
+        #bag-8 {
+            position: absolute;
+            top: 230px;
+            left: 340px;
+            rotate: -20deg;
+            z-index: -7;
+            border-width: 0.5px;
+            border-style: solid;
+            border-color: rgb(67, 67, 67);
+            border-radius: 3px;
+            width: 25;
+            height: 20;
+            background-color: rgb(180, 180, 180);
+        }
+
+        #bag-9 {
+            position: absolute;
+            top: 225px;
+            left: 335px;
+            rotate: -10deg;
+            z-index: -7;
+            border-width: 0.5px;
+            border-style: solid;
+            border-color: rgb(175, 175, 175);
+            border-radius: 3px;
+            width: 20;
+            height: 15;
+            background-color: rgb(252, 232, 226);
+        }
+
+        #bag-10 {
+            position: absolute;
+            top: 225px;
+            left: 230px;
+            rotate: -10deg;
+            z-index: -7;
+            border-width: 0.5px;
+            border-style: solid;
+            border-color: rgb(0, 0, 0);
+            border-radius: 3px;
+            width: 20;
+            height: 25;
+            background-color: rgb(42, 42, 42);
+        }
+
+        #bag-11 {
+            position: absolute;
+            top: 205px;
+            left: 180px;
+            rotate: -50deg;
+            z-index: -7;
+            border-width: 0.5px;
+            border-style: solid;
+            border-color: rgb(0, 0, 0);
+            border-radius: 3px;
+            width: 20;
+            height: 25;
+            background-color: rgb(5, 140, 0);
+        }
+
+        #bag-12 {
+            position: absolute;
+            top: 210px;
+            left: 210px;
+            rotate: 15deg;
+            z-index: -7;
+            border-width: 0.5px;
+            border-style: solid;
+            border-color: rgb(0, 0, 0);
+            border-radius: 1px;
+            width: 15;
+            height: 15;
+            background-color: rgb(68, 68, 68);
+        }
+
+        #bag-13 {
+            position: absolute;
+            top: 220px;
+            left: 530px;
+            rotate: -15deg;
+            z-index: -7;
+            border-width: 0.5px;
+            border-style: solid;
+            border-color: rgb(0, 0, 0);
+            border-radius: 1px;
+            width: 15;
+            height: 15;
+            background-color: rgb(68, 68, 68);
+        }
+
+        #bag-14 {
+            position: absolute;
+            top: 230px;
+            left: 520px;
+            rotate: 20deg;
+            z-index: -8;
+            border-width: 0.5px;
+            border-style: solid;
+            border-color: rgb(0, 0, 0);
+            border-radius: 1px;
+            width: 15;
+            height: 15;
+            background-color: rgb(32, 32, 32);
+        }
+
+        #bag-15 {
+            position: absolute;
+            top: 200px;
+            left: 360px;
+            rotate: 30deg;
+            z-index: -8;
+            border-width: 0.5px;
+            border-style: solid;
+            border-color: rgb(0, 0, 0);
+            border-radius: 1px;
+            width: 25;
+            height: 15;
+            background-color: rgb(32, 32, 32);
+        }
+
+        #name {
+            font-size: 30px;
+            position: absolute;
+            top: 500px;
+            left: 250px;
+        }
+    </style>
+    <body>
+        <div id="cafe">
+            <div id="anz-blanket"></div>
+            <div id="flower-blanket"></div>
+            <div id="jungle-blanket"></div>
+            <div id="grey-blanket"></div>
+            <div id="plant-blanket"></div>
+            <div id="green-blanket"></div>
+            <div id="pink-blanket"></div>
+            <div id="table"></div>
+            <div id="table-side-1"></div>
+            <div id="table-side-2"></div>
+            <div id="bench-cushion"></div>
+            <div id="bench-back"></div>
+            <div id="bench-top"></div>
+            <div id="bench-bottom"></div>
+            <div id="stool-1"></div>
+            <div id="camping-chair-1"></div>
+            <div id="camping-chair-1-left"></div>
+            <div id="camping-chair-1-right"></div>
+            <div id="camping-chair-2"></div>
+            <div id="camping-chair-2-left"></div>
+            <div id="camping-chair-2-right"></div>
+            <div id="stool-2"></div>
+            <div id="stool-3"></div>
+            <div id="stool-4"></div>
+            <div id="stool-5"></div>
+            <input id="bag-input-box" type="checkbox"></input>
+            <label for="bag-input-box" id="bag-input">No bags</label>
+            <div class="bag" id="bag-1"></div>
+            <div class="bag" id="bag-2"></div>
+            <div class="bag" id="bag-3"></div>
+            <div class="bag" id="bag-4"></div>
+            <div class="bag" id="bag-5"></div>
+            <div class="bag" id="bag-6"></div>
+            <div class="bag" id="bag-7"></div>
+            <div class="bag" id="bag-8"></div>
+            <div class="bag" id="bag-9"></div>
+            <div class="bag" id="bag-10"></div>
+            <div class="bag" id="bag-11"></div>
+            <div class="bag" id="bag-12"></div>
+            <div class="bag" id="bag-13"></div>
+            <div class="bag" id="bag-14"></div>
+            <div class="bag" id="bag-15"></div>
+            <div id="name">HTML in <s>Hyde</s> Cafe</div>
+        </div>
+    </body>
+</html>
