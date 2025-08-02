@@ -8,6 +8,14 @@ body {
   margin: 1em 2em;
 }
 
+img.favicon {
+  border: unset !important;
+  padding: unset !important;
+  display: inline;
+  width: 1.6ch;
+  height: 1.6ch;
+}
+
 a>img {
   border: blue 3px dashed;
   padding: 1px;

@@ -39,6 +39,25 @@
     }
   </style>
 
+<!-- <script>
+  document.addEventListener('DOMContentLoaded', async function() {
+    await new Promise(resolve => setTimeout(resolve, 1000));
+
+    const links = document.querySelectorAll('a[href]');
+    links.forEach(link => {
+      const url = link.href;
+      const faviconUrl = `https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&size=64&url=${encodeURIComponent(url)}`;
+      
+      const img = document.createElement('img');
+      img.src = faviconUrl;
+      img.className = 'favicon';
+
+      link.insertBefore(img, link.firstChild);
+      link.insertBefore(document.createTextNode(' '), link.firstChild.nextSibling);
+    });
+  });
+</script> -->
+
 </head>
 
 <body>
@@ -398,7 +417,7 @@
          <a href="https://preactjs.com/guide/v10/getting-started#alternatives-to-jsx">Preact + htm</a>
         </li>
         <li>
-          <a href="https://preactjs.com/guide/v10/getting-started#alternatives-to-jsx">React + htm</a>
+          <a href="https://github.com/developit/htm?tab=readme-ov-file#usage">React + htm</a>
         </li>
         <li>
           <a href="https://vuejs.org/guide/quick-start.html#using-vue-from-cdn">Vue.js</a>
@@ -650,3 +669,4 @@
 
 </body>
 </html>
+
