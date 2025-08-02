@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Gingerbread Human</title>
+    
+</head>
+<body>
+    <style>
+        .col-grid-12 {
+            display: grid;
+            grid-template-columns: repeat(12, minmax(0, 1fr));
+            grid-auto-rows: min-content;
+            max-width: 1920px;
+            width: 100vw;
+            height: 100vh;
+            margin: auto;
+        }
+        h1, p {
+            grid-column: 2/12;
+            text-align: center;
+        }
+        ginger-breadhuman {
+            grid-column-start: 4;
+            grid-column-end: 10;
+            margin-top: 4rem;
+        }
+        .button-left {
+            height: fit-content;
+            margin-top: 14vw;
+            width: 100%;
+            padding: 1vw;
+            font-size: 2rem;
+            grid-column: 2/3;
+        }
+        .button-right {
+            height: fit-content;
+            margin-top: 14vw;
+            width: 100%;
+            padding: 1vw;
+            font-size: 2rem;
+            grid-column: 11/12;
+        }
+        .bread-colour-div {
+            grid-column: 2/12;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 2rem;
+            gap: 1rem;
+        }
+    </style>
+    <div class="col-grid-12">
+        <h1>Gingerbread Human</h1>
+        <p>
+            Just a gbread human by <a href="https://wingpang.com/notes">Wing</a>
+            <br/>
+            Try changing the bread colour and mouth expression!
+        </p>
+        <div class="bread-colour-div flex">
+            <label for="bread-colour">Bread colour: </label>
+            <input class="colour-picker" id="bread-colour" type="color" value="#deb887"/>
+        </div>
+        <button class="button-left" id="prev"><</button>
+        <ginger-breadhuman id="gb" mouth="default" fillColour="#deb887"></ginger-breadhuman>
+        <button class="button-right" id="next">></button>
+    </div>
+    <script type="module" src="./webcomponents/GingerbreadHuman.js"></script>
+    <script type="module"> //mouth expressions 
+        const expressions = ['default', 'smile', 'surprised', 'frown'];
+        let index = 0;
+
+        const gb = document.getElementById('gb');
+        const prev = document.getElementById('prev');
+        const next = document.getElementById('next');
+        
+
+        function updateMouth() {
+            gb.setAttribute('mouth', expressions[index]);
+        }
+
+        prev.addEventListener('click', () => {
+            index = (index - 1 + expressions.length) % expressions.length;
+            updateMouth();
+        });
+
+        next.addEventListener('click', () => {
+            index = (index + 1) % expressions.length;
+            updateMouth();
+        });
+
+        const colourPicker = document.getElementById('bread-colour');
+
+        colourPicker.addEventListener('input', (e) => {
+            gb.setAttribute('fill-colour', e.target.value);
+        });
+
+    </script>
+</body>
+</html>
