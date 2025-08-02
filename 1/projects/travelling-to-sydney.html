@@ -1,0 +1,46 @@
+<html>
+  <head>
+    <meta charset='UTF-8'>
+    <meta http-equiv='refresh' content='10'>
+    <!--<meta name='author' content='Tamsyn'>-->
+    <style>
+      body {
+        margin-left: 15vw;
+        margin-right: 15vw;
+        margin-top: 10vh;
+        margin-bottom: 10vh;
+    </style>
+    <title>Travelling to Sydney</title>
+  </head>
+
+  <body>
+    <p>Every journey starts the same way as</p>
+    <p>the bus leaves the filthy, tiny, jolimont under <span id='rWeather'></span>, passes through what passes for a main road in my home city <span id='rCanberra'></span> out and skirting the <span id='rGeorge'></span> into open countryside, past the small town that had to stop running its annual pumpkin festival after a hundred thousand people descended on it, several years in a row, past the roadside McDonalds that every single school trip stopped at, which was more often than not the highlight of the trip, past the roadside Hungry Jacks I stopped at once, driving this way, at 10:00 pm, once and never again, over the three gorges that I will one day explore, and into</p>
+    <p>the underpass, what would it be like to walk through if there were no cars, how long it would take to get from one side to the other, which spits you out directly in the centre of the city. The bus weaves through streets that were never built for buses, <span id='rAccess_1'></span>, <span id='rAccess_2'></span>, <span id='rAccess_3'></span>, arriving eventually at central, and into</p>
+    <p>the city itself, <span id='rChaos_1'></span>, <span id='rChaos_2'></span>, <span id='rChaos_3'></span></p>
+    <p><span id='rChaos_4'></span>... <span id='rChaos_5'></span>...</p>
+    <p><span id='rChaos_6'></span></p>
+    <p>this city has always felt a lttle bit ruinous to me, like the whole lot of it is about to crumble into pieces, like the moss and creeping vines are just about to engulf the whole place</p>
+    <p>but it has felt that way for decades and it still hasn't fallen apart</p>
+
+   <script>
+     var aWeather = ['rainy skies', 'clearblue winter skies', 'a summer sky drained of color', 'clearblue summer skies.'];
+     var aCanberra = ['past the sign for DOWNER with the graffitied sad face in the O', 'underneath the mountain with the rotating radar', 'but somehow getting stuck in traffic regardless, eventually'];
+     var aGeorge = ['empty lakebed', 'wide flat lake'];
+     var aAccess = ['plane trees on either side of the street whose branches reach and tangle overhead', 'a building with a mural of a... lizard... fish... and no panes in its arched stone windows', 'a billboard that in times past asked in bright pink and yellow if you had SEX PROBLEMS', 'Build Your Dreams showroom, Tesla showroom, Harley Davidson showroom', 'bleak modern apartments', 'apartment with multicoloured glass panels', 'brick walls covered in moss and ivy and ghostly remnants of old signage', 'immense tendinous fig trees lining the parks', 'brick walls'];
+     var aChaos = ['zine fairs held in great sandstone town halls', 'a lawfirm whose signage still bears the remnants of the word PIZZA', 'trains rattling the entire night comfortingly underneath the hostel', 'electric hire scooters covered in vandalism and stickers and even seemingly something stuck on with wheatpaste', 'tiny hotel rooms', 'grimy pubs! how i missed the grimy pubs', 'everyone putting up their umbrellas as they step out from under cover, then putting them back down as they get back under cover', 'terrace house with a FREE SHOES sign out the front and no shoes remaining', 'kinokuniya', 'narrow alleys full of flowers', 'HTML day', 'an amateur performance of A New Brain', 'wandering for hours from one side to the other', 'art deco brick apartment blocks whose entrances proclaim the year in which they were built', 'telephone poles', 'telephone wires', 'stickers and graffiti', 'stickers and graffiti EVERYWHERE'];
+     document.getElementById('rWeather').textContent = aWeather[Math.floor(Math.random()*aWeather.length)];
+     document.getElementById('rCanberra').textContent = aCanberra[Math.floor(Math.random()*aCanberra.length)];
+     document.getElementById('rGeorge').textContent = aGeorge[Math.floor(Math.random()*aGeorge.length)];
+     document.getElementById('rAccess_1').textContent = aAccess[Math.floor(Math.random()*aAccess.length)];
+     document.getElementById('rAccess_2').textContent = aAccess[Math.floor(Math.random()*aAccess.length)];
+     document.getElementById('rAccess_3').textContent = aAccess[Math.floor(Math.random()*aAccess.length)];
+     document.getElementById('rChaos_1').textContent = aChaos[Math.floor(Math.random()*aChaos.length)];
+     document.getElementById('rChaos_2').textContent = aChaos[Math.floor(Math.random()*aChaos.length)];
+     document.getElementById('rChaos_3').textContent = aChaos[Math.floor(Math.random()*aChaos.length)];
+     document.getElementById('rChaos_4').textContent = aChaos[Math.floor(Math.random()*aChaos.length)];
+     document.getElementById('rChaos_5').textContent = aChaos[Math.floor(Math.random()*aChaos.length)];
+     document.getElementById('rChaos_6').textContent = aChaos[Math.floor(Math.random()*aChaos.length)];
+   </script>
+  </body>             
+</html>

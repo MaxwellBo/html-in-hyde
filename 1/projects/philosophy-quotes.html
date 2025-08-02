@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Philosophy Quotes - Wisdom Through the Ages</title>
+    <style>
+        @font-face {
+            font-family: 'Bianzhidai-Base';
+            src: url('fonts/bianzhidai-Base.otf') format('opentype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'Bianzhidai-COLR';
+            src: url('fonts/bianzhidai_COLR-RGB.otf') format('opentype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'Bianzhidai-Cloud';
+            src: url('fonts/bianzhidai-Cloud.otf') format('opentype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: #f8f6f0;
+            min-height: 100vh;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            padding-top: 5rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #2c3e50;
+        }
+
+        .header h1 {
+            font-family: 'Bianzhidai-COLR', Georgia, serif;
+            font-size: 5rem;
+            font-weight: 300;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            font-style: italic;
+        }
+
+        .quote-card {
+            background: none;
+            padding: 0;
+            margin: 1rem 0;
+            max-width: 100%;
+            text-align: center;
+            height: 200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            transition: transform 0.3s ease;
+        }
+
+        /* Floating animation for quotes */
+        .quote-card[play-float] {
+            animation: gentle-float 6s ease-in-out infinite;
+        }
+
+        @keyframes gentle-float {
+            0%, 100% { transform: translateY(0px) translateX(0px); }
+            25% { transform: translateY(-8px) translateX(3px); }
+            50% { transform: translateY(-5px) translateX(-2px); }
+            75% { transform: translateY(-10px) translateX(1px); }
+        }
+
+        .quote-text {
+            font-family: Arial, sans-serif;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-bottom: 1rem;
+            color: #2c3e50;
+            font-style: normal;
+        }
+
+        .quote-author {
+            font-family: Arial, sans-serif;
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: #34495e;
+            margin-bottom: 0.25rem;
+        }
+
+        .quote-details {
+            font-family: Arial, sans-serif;
+            font-size: 0.7rem;
+            color: #7f8c8d;
+            font-style: italic;
+        }
+
+        .controls {
+            display: flex;
+            gap: 1rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .btn {
+            background: linear-gradient(145deg, #c5d1c0, #b3c4ad);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-family: Arial, sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn.loading {
+            background: linear-gradient(145deg, #d3d3d3, #a8a8a8);
+        }
+
+        .loading-text {
+            color: #666;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+            font-family: Arial, sans-serif;
+            display: none;
+        }
+
+        .search-container {
+            display: flex;
+            gap: 1rem;
+            margin: 1rem 0;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .search-input {
+            padding: 1rem;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 25px;
+            background: rgba(255,255,255,0.9);
+            font-size: 1rem;
+            min-width: 250px;
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            color: #2c3e50;
+            font-size: 1.2rem;
+            margin: 2rem 0;
+        }
+
+        .spinner {
+            border: 3px solid rgba(44, 62, 80, 0.3);
+            border-radius: 50%;
+            border-top: 3px solid #2c3e50;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        .error {
+            background: rgba(231, 76, 60, 0.9);
+            color: white;
+            padding: 1rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+            text-align: center;
+            display: none;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .header h1 {
+                font-size: 3.5rem;
+            }
+            
+            .quote-card {
+                padding: 2rem;
+            }
+            
+            .quote-text {
+                font-size: 1.2rem;
+            }
+            
+            .controls {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .search-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .search-input {
+                min-width: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Feeling existential?</h1>
+        </div>
+
+        <div class="controls">
+            <button class="btn" id="meditateBtn" onclick="getRandomQuote()" 
+                    play-hover="scale(1.1)" 
+                    play-click="pulse">
+                let's meditate
+            </button>
+        </div>
+
+        <div class="error" id="error"></div>
+
+        <div id="quoteContainer"></div>
+    </div>
+
+    <!-- Load playhtml AFTER all HTML elements -->
+    <script src="https://unpkg.com/playhtml@latest/dist/playhtml.js"></script>
+    <script>
+        const API_BASE = 'https://philosophersapi.com/api';
+        let allQuotes = [];
+        let currentQuoteIndex = 0;
+
+        // Show loading state
+        function showLoading() {
+            const btn = document.getElementById('meditateBtn');
+            btn.classList.add('loading');
+            document.getElementById('error').style.display = 'none';
+        }
+
+        // Hide loading state
+        function hideLoading() {
+            const btn = document.getElementById('meditateBtn');
+            btn.classList.remove('loading');
+        }
+
+        // Show error message
+        function showError(message) {
+            const errorEl = document.getElementById('error');
+            errorEl.textContent = message;
+            errorEl.style.display = 'block';
+            hideLoading();
+        }
+
+        // Display a quote in a card
+        function displayQuote(quote, philosopher = null) {
+            const container = document.getElementById('quoteContainer');
+            
+            // If philosopher is provided separately (from search results)
+            const authorName = philosopher ? philosopher.name : 
+                              (quote.philosopher ? quote.philosopher.name : 'Unknown');
+            
+            const work = quote.work ? `from "${quote.work}"` : '';
+            const year = quote.year ? `(${quote.year})` : '';
+            const details = [work, year].filter(Boolean).join(' ');
+
+            const card = document.createElement('div');
+            card.className = 'quote-card';
+            card.id = 'currentQuote';
+            card.setAttribute('play-float', '');
+            card.innerHTML = `
+                <div class="quote-text">${quote.quote}</div>
+                <div class="quote-author">— ${authorName}</div>
+                ${details ? `<div class="quote-details">${details}</div>` : ''}
+            `;
+
+            // Clear only the quote container, not the entire page
+            container.innerHTML = '';
+            container.appendChild(card);
+
+            // Re-initialize playhtml for the new element
+            if (window.playhtml) {
+                window.playhtml.init();
+            }
+
+            hideLoading();
+        }
+
+        // Get a random quote from all quotes
+        async function getRandomQuote() {
+            showLoading();
+            try {
+                if (allQuotes.length === 0) {
+                    await getAllQuotes();
+                }
+                
+                if (allQuotes.length > 0) {
+                    const randomIndex = Math.floor(Math.random() * allQuotes.length);
+                    const quote = allQuotes[randomIndex];
+                    
+                    // Get full quote details
+                    const response = await fetch(`${API_BASE}/quotes/${quote.id}`);
+                    if (!response.ok) throw new Error('Failed to fetch quote details');
+                    
+                    const quoteDetails = await response.json();
+                    displayQuote(quoteDetails);
+                } else {
+                    showError('No quotes available');
+                }
+            } catch (error) {
+                showError('Failed to load random quote. Please try again.');
+                console.error('Error:', error);
+            }
+        }
+
+        // Get all quotes
+        async function getAllQuotes() {
+            if (allQuotes.length > 0) {
+                displayNextQuote();
+                return;
+            }
+
+            showLoading();
+            try {
+                const response = await fetch(`${API_BASE}/quotes`);
+                if (!response.ok) throw new Error('Failed to fetch quotes');
+                
+                allQuotes = await response.json();
+                
+                if (allQuotes.length > 0) {
+                    currentQuoteIndex = 0;
+                    displayNextQuote();
+                } else {
+                    showError('No quotes found');
+                }
+            } catch (error) {
+                showError('Failed to load quotes. Please check your internet connection.');
+                console.error('Error:', error);
+            }
+        }
+
+        // Display next quote from all quotes
+        async function displayNextQuote() {
+            if (allQuotes.length === 0) return;
+            
+            showLoading();
+            try {
+                const quote = allQuotes[currentQuoteIndex];
+                
+                // Get full quote details
+                const response = await fetch(`${API_BASE}/quotes/${quote.id}`);
+                if (!response.ok) throw new Error('Failed to fetch quote details');
+                
+                const quoteDetails = await response.json();
+                displayQuote(quoteDetails);
+                
+            } catch (error) {
+                showError('Failed to load quote details');
+                console.error('Error:', error);
+            }
+        }
+
+        // Add navigation controls for browsing quotes
+        function addNavigationControls() {
+            const container = document.getElementById('quoteContainer');
+            const existingNav = container.querySelector('.navigation');
+            if (existingNav) existingNav.remove();
+
+            const nav = document.createElement('div');
+            nav.className = 'navigation';
+            nav.style.marginTop = '2rem';
+            nav.style.textAlign = 'center';
+            
+            nav.innerHTML = `
+                <button class="btn" onclick="previousQuote()" ${currentQuoteIndex === 0 ? 'disabled' : ''}>Previous</button>
+                <span style="color: white; margin: 0 1rem; font-size: 1.1rem;">${currentQuoteIndex + 1} of ${allQuotes.length}</span>
+                <button class="btn" onclick="nextQuote()" ${currentQuoteIndex === allQuotes.length - 1 ? 'disabled' : ''}>Next</button>
+            `;
+            
+            container.appendChild(nav);
+        }
+
+        // Navigate to previous quote
+        function previousQuote() {
+            if (currentQuoteIndex > 0) {
+                currentQuoteIndex--;
+                displayNextQuote();
+            }
+        }
+
+        // Navigate to next quote
+        function nextQuote() {
+            if (currentQuoteIndex < allQuotes.length - 1) {
+                currentQuoteIndex++;
+                displayNextQuote();
+            }
+        }
+
+        // Search quotes by keyword
+        async function searchQuotes() {
+            const keyword = document.getElementById('searchInput').value.trim();
+            if (!keyword) {
+                showError('Please enter a search keyword');
+                return;
+            }
+
+            showLoading();
+            try {
+                const response = await fetch(`${API_BASE}/quotes/search?keyword=${encodeURIComponent(keyword)}`);
+                if (!response.ok) throw new Error('Failed to search quotes');
+                
+                const results = await response.json();
+                
+                if (results.length > 0) {
+                    // Display first result
+                    const firstResult = results[0];
+                    displayQuote(firstResult.quote, firstResult.philosopher);
+                    
+                    // If multiple results, add navigation
+                    if (results.length > 1) {
+                        addSearchNavigation(results, 0);
+                    }
+                } else {
+                    showError(`No quotes found for "${keyword}"`);
+                }
+            } catch (error) {
+                showError('Search failed. Please try again.');
+                console.error('Error:', error);
+            }
+        }
+
+        // Add navigation for search results
+        function addSearchNavigation(results, currentIndex) {
+            const container = document.getElementById('quoteContainer');
+            const existingNav = container.querySelector('.navigation');
+            if (existingNav) existingNav.remove();
+
+            const nav = document.createElement('div');
+            nav.className = 'navigation';
+            nav.style.marginTop = '2rem';
+            nav.style.textAlign = 'center';
+            
+            nav.innerHTML = `
+                <button class="btn" onclick="showSearchResult(${currentIndex - 1}, ${JSON.stringify(results).replace(/"/g, '&quot;')})" ${currentIndex === 0 ? 'disabled' : ''}>Previous</button>
+                <span style="color: white; margin: 0 1rem; font-size: 1.1rem;">${currentIndex + 1} of ${results.length} results</span>
+                <button class="btn" onclick="showSearchResult(${currentIndex + 1}, ${JSON.stringify(results).replace(/"/g, '&quot;')})" ${currentIndex === results.length - 1 ? 'disabled' : ''}>Next</button>
+            `;
+            
+            container.appendChild(nav);
+        }
+
+        // Show specific search result
+        function showSearchResult(index, resultsJson) {
+            const results = JSON.parse(resultsJson.replace(/&quot;/g, '"'));
+            const result = results[index];
+            displayQuote(result.quote, result.philosopher);
+            addSearchNavigation(results, index);
+        }
+
+        // Allow Enter key to trigger search
+        document.getElementById('searchInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                searchQuotes();
+            }
+        });
+
+        // Load a random quote on page load
+        window.addEventListener('load', function() {
+            setTimeout(getRandomQuote, 500);
+        });
+    </script>
+</body>
+</html>
