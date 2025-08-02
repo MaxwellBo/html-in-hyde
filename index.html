@@ -27,6 +27,18 @@
   <link 
     rel="stylesheet" 
     href="https://esm.sh/jsr/@celine/celine@4.8.0/cell.css" />
+  <style>
+    #past-events-container {
+      display: flex;
+      flex-direction: row;
+      gap: 20px;
+    }
+
+    #past-events-container * {
+      max-width: 80ch;
+    }
+  </style>
+
 </head>
 
 <body>
@@ -43,33 +55,40 @@
 
   <h2>Past events</h2>
 
-  <h3>HTML in Hyde #1 (<i>August 2 2025</i>)</h3>
-  <figure>
-    <a href="1/invitation.html"><img src="1/screenshot.jpg" width="400px"></a>
-    <figcaption>
-      <a href="1/invitation.html">Invitation</a>
-    </figcaption>
-      <a href="1/gallery.html">Gallery (projects and photos)</a>
-      <!-- iframe the gallery-->
-      <iframe src="1/gallery.html" width="100%" height="400px" loading="lazy"></iframe>
-  </figure>
+  <div id="past-events-container">
+    <div>
+      <h3>HTML in Hyde #1 (<i>August 2 2025</i>)</h3>
+      <figure>
+        <a href="1/invitation.html"><img src="1/screenshot.jpg" width="400px"></a>
+        <figcaption>
+          <a href="1/invitation.html">Invitation</a>
+        </figcaption>
+          <a href="1/gallery.html">Gallery (projects and photos)</a>
+          <!-- iframe the gallery-->
+          <iframe src="1/gallery.html" width="100%" height="400px" loading="lazy"></iframe>
+      </figure>
+    </div>
 
+    <div>
+    <h3>HTML in Hyde #0 (<i>21st July 2024</i>)</h3>
 
-  <h3>HTML in Hyde #0 (<i>21st July 2024</i>)</h3>
+      <figure>
+        <a href="0/invitation.html"><img src="0/invitation.png" width="400px"></a>
+        <figcaption>
+          <a href="0/invitation.html">Invitation</a>
+          <br />
+          <a href="0/overview.html">Overview / resources / inspiration</a>
+          <br />
+          <a href="0/gallery.html">Gallery (projects and photos)</a>
+          <!-- iframe the gallery-->
+          <iframe src="0/gallery.html" width="100%" height="400px" loading="lazy"></iframe>
+        </figcaption>
+      </figure>
 
-  <figure>
-    <a href="0/invitation.html"><img src="0/invitation.png" width="400px"></a>
-    <figcaption>
-      <a href="0/invitation.html">Invitation</a>
-      <br />
-      <a href="0/overview.html">Overview / resources / inspiration</a>
-      <br />
-      <a href="0/gallery.html">Gallery (projects and photos)</a>
-      <!-- iframe the gallery-->
-      <iframe src="0/gallery.html" width="100%" height="400px" loading="lazy"></iframe>
-    </figcaption>
-  </figure>
+    </div>
+  </div>
 
+  <div style="max-width: 80ch;">
   <h2><a id="why" href="#why">#</a> Why?</h2>
   Ask a mid-20s software engineer "why did you start coding?" - a non-trivial number will say "I was trying to make my
   Tumblr look cool".
@@ -506,7 +525,7 @@
     <li><a href="https://sfpc.study/">Poetic Computation</a></li>
     <li><a href="https://www.inkandswitch.com/local-first/">Local-first software</a></li>
     <li><a href="https://www.robinsloan.com/lab/specifying-spring-83/">Spring ’83</a></li>
-    <li><a href="https://hub.xpub.nl/networksofcare/mediawiki/index.php?title=Main_Page">Networks of Care</a></li>
+    <li><a href="https://hub.xpub.nl/networksofcare/mediawiki/index.php?title=div_ style="max-width: 80ch;">;"Page">Networks of Care</a></li>
     <li><a href="http://osp.kitchen/">Open Source Publishing</a></li>
     <li><a href="http://solarprotocol.net/">Solar Protocol</a></li>
     <li><a href="https://ooh.directory/">ooh.directory</a></li>
@@ -618,6 +637,9 @@
   <p>
     We acknowledge the Traditional Owners of the land on which this event takes place, the Gadigal of the Eora Nation and pay our respects to Elders past and present.
   </p>
+
+  </div style="max-width: 80ch;">>
+
 
 </footer>
 
