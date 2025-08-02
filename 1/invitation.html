@@ -301,8 +301,390 @@
   </style>
 
   <script type="module">
-    const rsvps = await fetch("https://mbo-html-in-hyde-1.val.run/rsvps").then(res => res.json());
-    // const rsvps = JSON.parse(`[{"name":"Max","status":"going","color":"#3ce41b"},{"name":"Hamish ","status":"going","color":"#0088ff"},{"name":"Annaliese","status":"going","color":"#f9b4c8"},{"name":"Charlie","status":"going","color":"#ffff00"},{"name":"Jeffrey","status":"can't come","color":"#de5760"},{"name":"anna","status":"going","color":"#c2ffeb"},{"name":"JT","status":"going","color":"#ffc7d2"},{"name":"Joseph","status":"going","color":"#00b1c9"},{"name":"sam","status":"maybe","color":"#ffa200"},{"name":"Davit","status":"going","color":"#61ff90"},{"name":"Anton","status":"going","color":"#00ffff"},{"name":"ali","status":"maybe","color":"#ee7cd5"},{"name":"Matt","status":"can't come","color":"#b0f406"},{"name":"ange","status":"maybe","color":"#dfc8ea"},{"name":"Nathan","status":"going","color":"#26a657"},{"name":"mahlen","status":"going","color":"#c892d3"},{"name":"Jennifer","status":"can't come","color":"#faecab"},{"name":"jamie","status":"going","color":"#bc8f8f"},{"name":"Hannah Jenkins","status":"going","color":"#00bd39"},{"name":"Francesca","status":"going","color":"#dc04b4"},{"name":"Maja","status":"going","color":"#864aff"},{"name":"Ryan","status":"going","color":"#4400ff"},{"name":"Lou Parry","status":"going","color":"#de6005"},{"name":"Tom","status":"going","color":"#31db87"},{"name":"Ray Zhu","status":"going","color":"#76bb40"},{"name":"Anubhav","status":"going","color":"#a8ffce"},{"name":"Nate","status":"going","color":"#ff0000"},{"name":"sam i","status":"going","color":"#a4b74f"},{"name":"reynolds","status":"going","color":"#ff8800"},{"name":"joey","status":"going","color":"#1191de"},{"name":"Bennett","status":"going","color":"#ffa348"},{"name":"Rory Green","status":"going","color":"#9afe86"},{"name":"Lean","status":"going","color":"#2ec27e"},{"name":"Annabelle","status":"going","color":"#e63b7a"},{"name":"Ryan Christensen","status":"maybe","color":"#b395e5"},{"name":"Uyen","status":"going","color":"#32c759"},{"name":"wilso","status":"going","color":"#4c74c6"},{"name":"josh","status":"going","color":"#6d06d0"},{"name":"Angus","status":"going","color":"#d47957"},{"name":"Rimini","status":"maybe","color":"#ffd500"},{"name":"daniel ding","status":"maybe","color":"#11ff00"},{"name":"Brendan Coughlan","status":"maybe","color":"#d3274a"},{"name":"Olivia","status":"maybe","color":"#d9f56c"},{"name":"Jamie D","status":"going","color":"#d357fe"},{"name":"Byron","status":"maybe","color":"#5fad47"},{"name":"WN","status":"going","color":"#344d3a"},{"name":"Tamsyn","status":"maybe","color":"#f5c2e7"},{"name":"Wing","status":"going","color":"#e0c9b3"},{"name":"Jasmine","status":"maybe","color":"#bed20d"},{"name":"claire","status":"going","color":"#9514d0"},{"name":"raiyan","status":"going","color":"#454545"},{"name":"Dani","status":"going","color":"#d73920"},{"name":"Justin","status":"going","color":"#ff94fa"},{"name":"Becky","status":"going","color":"#c9fa4f"},{"name":"Cameron","status":"going","color":"#102457"},{"name":"Eric","status":"going","color":"#cd0d0e"},{"name":"Fernando","status":"going","color":"#7cb65c"},{"name":"Eezu","status":"going","color":"#0379f4"},{"name":"haley","status":"going","color":"#ffffff"},{"name":"M","status":"going","color":"#261a00"},{"name":"Cool Sheng","status":"going","color":"#c72323"},{"name":"jo tay","status":"going","color":"#3ed4fd"},{"name":"Melody","status":"going","color":"#ffdce1"},{"name":"Toby","status":"going","color":"#a50ec4"}]`);
+    // const rsvps = await fetch("https://mbo-html-in-hyde-1.val.run/rsvps").then(res => res.json());
+    // ARCHIVED TO PREVENT BITROT
+    const rsvps = JSON.parse(`[
+    {
+        "name": "Max",
+        "status": "going",
+        "color": "#3ce41b"
+    },
+    {
+        "name": "Hamish ",
+        "status": "going",
+        "color": "#0088ff"
+    },
+    {
+        "name": "Annaliese",
+        "status": "going",
+        "color": "#f9b4c8"
+    },
+    {
+        "name": "Charlie",
+        "status": "going",
+        "color": "#ffff00"
+    },
+    {
+        "name": "Jeffrey",
+        "status": "can't come",
+        "color": "#de5760"
+    },
+    {
+        "name": "anna",
+        "status": "going",
+        "color": "#c2ffeb"
+    },
+    {
+        "name": "JT",
+        "status": "going",
+        "color": "#ffc7d2"
+    },
+    {
+        "name": "Joseph",
+        "status": "going",
+        "color": "#00b1c9"
+    },
+    {
+        "name": "sam o",
+        "status": "can't come",
+        "color": "#1f8c18"
+    },
+    {
+        "name": "Davit",
+        "status": "going",
+        "color": "#61ff90"
+    },
+    {
+        "name": "Anton",
+        "status": "going",
+        "color": "#00ffff"
+    },
+    {
+        "name": "ali",
+        "status": "maybe",
+        "color": "#ee7cd5"
+    },
+    {
+        "name": "Matt",
+        "status": "can't come",
+        "color": "#b0f406"
+    },
+    {
+        "name": "ange",
+        "status": "can't come",
+        "color": "#57f915"
+    },
+    {
+        "name": "Nathan",
+        "status": "going",
+        "color": "#26a657"
+    },
+    {
+        "name": "mahlen",
+        "status": "going",
+        "color": "#c892d3"
+    },
+    {
+        "name": "Jennifer",
+        "status": "can't come",
+        "color": "#faecab"
+    },
+    {
+        "name": "jamie",
+        "status": "going",
+        "color": "#bc8f8f"
+    },
+    {
+        "name": "Hannah Jenkins",
+        "status": "going",
+        "color": "#00bd39"
+    },
+    {
+        "name": "Francesca ",
+        "status": "can't come",
+        "color": "#60f8ac"
+    },
+    {
+        "name": "Maja",
+        "status": "going",
+        "color": "#864aff"
+    },
+    {
+        "name": "Ryan",
+        "status": "going",
+        "color": "#4400ff"
+    },
+    {
+        "name": "Lou Parry",
+        "status": "going",
+        "color": "#de6005"
+    },
+    {
+        "name": "Tom",
+        "status": "going",
+        "color": "#31db87"
+    },
+    {
+        "name": "Ray Zhu",
+        "status": "going",
+        "color": "#76bb40"
+    },
+    {
+        "name": "Anubhav",
+        "status": "going",
+        "color": "#a8ffce"
+    },
+    {
+        "name": "Nate",
+        "status": "going",
+        "color": "#ff0000"
+    },
+    {
+        "name": "sam i",
+        "status": "going",
+        "color": "#a4b74f"
+    },
+    {
+        "name": "reynolds",
+        "status": "going",
+        "color": "#ff8800"
+    },
+    {
+        "name": "joey",
+        "status": "going",
+        "color": "#1191de"
+    },
+    {
+        "name": "Bennett",
+        "status": "going",
+        "color": "#ffa348"
+    },
+    {
+        "name": "Rory Green",
+        "status": "going",
+        "color": "#9afe86"
+    },
+    {
+        "name": "Lean",
+        "status": "can't come",
+        "color": "#cbbade"
+    },
+    {
+        "name": "Annabelle",
+        "status": "going",
+        "color": "#e63b7a"
+    },
+    {
+        "name": "Ryan Christensen",
+        "status": "maybe",
+        "color": "#b395e5"
+    },
+    {
+        "name": "Uyen",
+        "status": "can't come",
+        "color": "#1ec85c"
+    },
+    {
+        "name": "wilso",
+        "status": "going",
+        "color": "#4c74c6"
+    },
+    {
+        "name": "josh",
+        "status": "can't come",
+        "color": "#82cdaa"
+    },
+    {
+        "name": "Angus",
+        "status": "going",
+        "color": "#d47957"
+    },
+    {
+        "name": "Rimini",
+        "status": "maybe",
+        "color": "#ffd500"
+    },
+    {
+        "name": "daniel ding",
+        "status": "maybe",
+        "color": "#11ff00"
+    },
+    {
+        "name": "Brendan Coughlan",
+        "status": "maybe",
+        "color": "#d3274a"
+    },
+    {
+        "name": "Olivia",
+        "status": "maybe",
+        "color": "#d9f56c"
+    },
+    {
+        "name": "Jamie D",
+        "status": "going",
+        "color": "#d357fe"
+    },
+    {
+        "name": "Byron",
+        "status": "maybe",
+        "color": "#5fad47"
+    },
+    {
+        "name": "WN",
+        "status": "going",
+        "color": "#344d3a"
+    },
+    {
+        "name": "Tamsyn",
+        "status": "maybe",
+        "color": "#f5c2e7"
+    },
+    {
+        "name": "Wing",
+        "status": "going",
+        "color": "#e0c9b3"
+    },
+    {
+        "name": "Jasmine",
+        "status": "going",
+        "color": "#0bd4f3"
+    },
+    {
+        "name": "claire",
+        "status": "going",
+        "color": "#9514d0"
+    },
+    {
+        "name": "raiyan",
+        "status": "going",
+        "color": "#454545"
+    },
+    {
+        "name": "Dani",
+        "status": "going",
+        "color": "#d73920"
+    },
+    {
+        "name": "Justin",
+        "status": "going",
+        "color": "#ff94fa"
+    },
+    {
+        "name": "Becky",
+        "status": "going",
+        "color": "#c9fa4f"
+    },
+    {
+        "name": "Cameron",
+        "status": "going",
+        "color": "#102457"
+    },
+    {
+        "name": "Eric",
+        "status": "going",
+        "color": "#cd0d0e"
+    },
+    {
+        "name": "Fernando",
+        "status": "going",
+        "color": "#7cb65c"
+    },
+    {
+        "name": "Eezu",
+        "status": "going",
+        "color": "#0379f4"
+    },
+    {
+        "name": "haley",
+        "status": "going",
+        "color": "#ffffff"
+    },
+    {
+        "name": "M",
+        "status": "going",
+        "color": "#261a00"
+    },
+    {
+        "name": "Cool Sheng",
+        "status": "going",
+        "color": "#c72323"
+    },
+    {
+        "name": "jo tay",
+        "status": "going",
+        "color": "#3ed4fd"
+    },
+    {
+        "name": "Melody",
+        "status": "going",
+        "color": "#ffdce1"
+    },
+    {
+        "name": "Toby",
+        "status": "going",
+        "color": "#a50ec4"
+    },
+    {
+        "name": "Thomas Horsey",
+        "status": "going",
+        "color": "#2e7a3d"
+    },
+    {
+        "name": "Abby",
+        "status": "going",
+        "color": "#fdc700"
+    },
+    {
+        "name": "Dave",
+        "status": "going",
+        "color": "#c42d4e"
+    },
+    {
+        "name": "Carmen",
+        "status": "maybe",
+        "color": "#e63b7a"
+    },
+    {
+        "name": "Jen",
+        "status": "going",
+        "color": "#1fa17f"
+    },
+    {
+        "name": "Darren",
+        "status": "going",
+        "color": "#f59df4"
+    },
+    {
+        "name": "Devika",
+        "status": "going",
+        "color": "#bb7312"
+    },
+    {
+        "name": "Leo Orpilla",
+        "status": "going",
+        "color": "#c8f032"
+    },
+    {
+        "name": "Tony",
+        "status": "going",
+        "color": "#61c391"
+    },
+    {
+        "name": "Harrison ",
+        "status": "can't come",
+        "color": "#f511ac"
+    },
+    {
+        "name": "Tom",
+        "status": "going",
+        "color": "#ff00f7"
+    },
+    {
+        "name": "Arni Mittal",
+        "status": "can't come",
+        "color": "#6164ca"
+    }
+    ]`);
 
     let j = 0;
 
