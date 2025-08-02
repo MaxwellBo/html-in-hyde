@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="/icon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="interactive, collaborative html elements with a single attribute"
+    />
+    <meta name="og:image" content="https://playhtml.fun/playhtml.png" />
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Carter+One&family=Play:wght@400;700&family=Rubik+Pixels&family=Yellowtail&display=swap"
+      rel="stylesheet"
+    />
+
+    <title>playhtml</title>
+    <script
+      defer
+      data-domain="playhtml.fun"
+      data-api="https://sharingan.spencerc99.workers.dev/genjutsu/event"
+      src="https://sharingan.spencerc99.workers.dev/genjutsu/script.js"
+    ></script>
+  </head>
+  <body>
+    <div id="app">
+      <!-- <div class="example">
+        <p id="helloDescription"></p>
+        <input can-mirror id="hello" />
+      </div> -->
+      <div
+        style="width: 400px; height: 400px; border: 1px red solid"
+        id="confettiZone"
+      >
+        <h1>CONFETTI ZONE</h1>
+      </div>
+      <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+      <script>
+        confettiZone.addEventListener("click", onClickConfettiZone);
+        function onClickConfettiZone(e) {
+          playhtml.dispatchPlayEvent({
+            type: "confetti",
+            eventPayload: {
+              particleCount: 100,
+              spread: 70,
+              origin: { y: 0.6 },
+            },
+          });
+        }
+      </script>
+      <h1>Tasks</h1>
+      <div can-mirror id="tasks" style="display: flex; flex-direction: column">
+        <button onclick="addTask()">Add</button>
+        <button onclick="removeTask()">Delete</button>
+      </div>
+      <br />
+      <hr />
+      <br />
+      <div can-mirror id="t5">red or blue</div>
+      <button onclick="changeText()">red or blue</button>
+      <div can-mirror id="contentEditable" contenteditable="true">
+        CONTENT EDITABLE
+      </div>
+      <div can-mirror id="textChildren2">
+        <h1>IM A TITLE</h1>
+        <p>CONTENT EDITABLE WITH CHILDREN</p>
+      </div>
+      <script>
+        function addTask() {
+          const task = document.createElement("div");
+          task.innerText = `New Task ${tasks.children.length + 1}`;
+          tasks.appendChild(task);
+        }
+
+        function removeTask() {
+          tasks.removeChild(tasks.lastChild);
+        }
+
+        function changeText() {
+          t5.textContent = t5.textContent === "red" ? "blue" : "red";
+        }
+      </script>
+    </div>
+    <footer>
+      <div>
+        an open-source library created and maintained by
+        <a href="https://spencer.place/">spencer</a>
+      </div>
+    </footer>
+
+    <script type="module" src="./playground.ts"></script>
+    <style>
+      #tasks button {
+        width: 120px;
+        background: burlywood;
+        font-size: 16px;
+      }
+    </style>
+    <!-- import cursor chat -->
+    <script src="https://cursor-party.spencerc99.partykit.dev/cursors.js"></script>
+  </body>
+</html>

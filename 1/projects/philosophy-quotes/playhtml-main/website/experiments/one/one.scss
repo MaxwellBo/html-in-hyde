@@ -1,0 +1,76 @@
+@import "../../base.scss";
+
+#main {
+  color: var(--background-inverted);
+  background: var(--background);
+  padding-top: 6em;
+}
+
+table {
+  border: 1px solid;
+
+  th {
+    border: 1px solid;
+  }
+
+  tr {
+    border: 1px solid;
+
+    td {
+      border: 1px solid;
+      padding: 0.5em;
+    }
+  }
+}
+
+details {
+  width: 300px;
+}
+
+.colorController {
+  position: absolute;
+  max-width: 800px;
+  width: 100%;
+  top: 4em;
+  padding-top: 6em;
+  input {
+    transform: scale(5);
+    margin-bottom: 3.5em;
+    border-color: var(--background-inverted);
+  }
+  button {
+    width: 240px;
+    height: 40px;
+    transition: box-shadow 0.2s, background 0.2s, color 0.2s, opacity 0.3s;
+    background: var(--background);
+    border: 2px solid;
+    border-color: var(--background-inverted);
+    color: var(--background-inverted);
+    border-radius: 8px;
+    padding: 0.25em 0.5em;
+    cursor: pointer;
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    &:hover {
+      background: var(--color);
+      color: var(--color-inverted);
+      // box-shadow: 0 0 12px 8px var(--color);
+    }
+  }
+}
+
+#awareness {
+  display: flex;
+  gap: 0.5em;
+}
+
+footer {
+  color: var(--background-inverted);
+  a {
+    color: var(--background-inverted);
+  }
+}
