@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Circle</title>
+  <style>
+    #outer {
+      width: 100%;
+      height: 300px;
+      background-color: turquoise;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+
+    #track {
+      position: relative;
+      width: 10em;
+      height: 10em;
+      border-radius: 50%;
+      background: conic-gradient(from 0deg at 50% 50%, red 0deg 162deg, green 162deg 360deg);
+    }
+
+    .tick {
+      top: -3px;
+      z-index: 100;
+      display: inline-block;
+      position: relative;
+    }
+
+  </style>
+</head>
+<body>
+  <div id="outer">
+      <div id="track-container">
+        <div class="tick">X</div>
+        <div class="tick">X</div>
+        <div class="tick">X</div>
+        <div class="tick">X</div>
+        <div class="tick">X</div>
+        <div id="track"></div>
+      </div>
+  </div>
+</body>
+
+<script>
+  const ticks = document.querySelectorAll('.tick');
+  const numTicks = ticks.length;
+  const radius = 5; // em, half of track's width/height
+
+  ticks.forEach((tick, i) => {
+    const angle = 162 * (i / numTicks) - 90; // spread over 162deg, start at top
+    const rad = angle * (Math.PI / 180);
+    const x = radius * Math.cos(rad);
+    const y = radius * Math.sin(rad);
+    tick.style.position = 'absolute';
+    tick.style.left = '50%';
+    tick.style.top = '50%';
+    tick.style.transform = `translate(-50%, -50%) translate(${x}em, ${y}em)`;
+  });
+
+  // Make sure #track-container is positioned relative for absolute ticks
+  document.getElementById('track-container').style.position = 'relative';
+</script>
+</html>

@@ -1,0 +1,213 @@
+/* General body and background */
+body {
+    background: radial-gradient(ellipse at top, #2d0036 0%, #0d001a 100%);
+    color: #f3e6ff;
+    font-family: 'Cinzel Decorative', 'Papyrus', cursive, serif;
+    margin: 0;
+    min-height: 100vh;
+    cursor: url('./images/tarot_cards.png') 32 32, auto;
+}
+
+/* Tarot container */
+.container {
+    max-width: 600px;
+    margin: 40px auto;
+    background: rgba(44, 0, 60, 0.92);
+    border-radius: 24px;
+    box-shadow: 0 0 32px 8px #a259ff88, 0 0 0 4px #fff2;
+    padding: 2.5rem 2rem 2rem 2rem;
+    border: 2px solid #a259ff;
+    position: relative;
+    z-index: 1;
+}
+
+/* Title */
+h1 {
+    font-family: 'Cinzel Decorative', cursive, serif;
+    font-size: 2.5rem;
+    letter-spacing: 2px;
+    text-align: center;
+    color: #ffd700;
+    text-shadow: 0 0 12px #a259ff, 0 0 2px #fff;
+    margin-bottom: 1.5rem;
+}
+
+h2 {
+    font-family: 'Cinzel Decorative', cursive, serif;
+    text-align: center;
+}
+
+/* Button 
+#drawCards {
+    display: block;
+    margin: 0 auto 2rem auto;
+    padding: 0.75rem 2.5rem;
+    font-size: 1.2rem;
+    font-family: inherit;
+    background: linear-gradient(90deg, #a259ff 0%, #ffd700 100%);
+    color: #2d0036;
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px #a259ff55;
+    cursor: pointer;
+    transition: transform 0.1s, box-shadow 0.2s;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+#drawCards:hover {
+    transform: scale(1.07) rotate(-2deg);
+    box-shadow: 0 0 32px #ffd70088, 0 0 8px #a259ff;
+}
+*/
+
+/* Tarot reading section */
+#reading {
+    margin-top: 1.5rem;
+    background: rgba(20, 0, 30, 0.7);
+    border-radius: 16px;
+    padding: 1.5rem 1rem 1rem 1rem;
+    box-shadow: 0 0 24px #ffd70033;
+    border: 1.5px solid #ffd70077;
+}
+
+/* Card sections */
+.card {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    background: linear-gradient(135deg, #a259ff33 0%, #ffd70022 100%);
+    border-radius: 16px;
+    margin: 1.2rem 0;
+    padding: 1.2rem 1rem 1rem 1rem;
+    box-shadow: 0 2px 16px #a259ff33;
+    border: 1.5px solid #a259ff77;
+    position: relative;
+    transition: transform 0.15s;
+    gap: 1.5rem;
+}
+.card:hover {
+    transform: scale(1.03) rotate(1deg);
+    box-shadow: 0 0 24px #ffd70099, 0 0 8px #a259ff;
+    z-index: 2;
+}
+
+/* Card headings */
+.card h3 {
+    font-family: 'Cinzel Decorative', cursive, serif;
+    color: #ffd700;
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    letter-spacing: 1px;
+    text-shadow: 0 0 8px #a259ff;
+    width: 100%;
+    margin-bottom: 0.5rem;
+}
+
+/* Card text */
+.card p {
+    font-size: 1.1rem;
+    color: #f3e6ff;
+    text-shadow: 0 0 2px #000, 0 0 8px #a259ff44;
+    margin: 0;
+}
+
+/* Tarot border and mystical glow */
+.container:before {
+    content: "";
+    position: absolute;
+    inset: -10px;
+    border-radius: 28px;
+    border: 3px double #ffd700;
+    box-shadow: 0 0 32px 8px #a259ff55, 0 0 0 8px #ffd70022;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.card .tarot-img {
+    margin: 0 0 0 1rem;
+    width: 90px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 10px;
+    box-shadow: 0 0 16px #a259ff77, 0 0 4px #ffd70099;
+    border: 2px solid #ffd700;
+    background: #fff2;
+    flex-shrink: 0;
+    align-self: flex-start;
+}
+
+.card-content {
+    flex: 1 1 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.card p {
+    margin-top: 0.5rem;
+}
+
+.card-title {
+    font-weight: bold;
+    color: #ffd700; 
+}
+
+/* Add a subtle star background effect */
+body:after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    background: url('https://www.transparenttextures.com/patterns/stardust.png');
+    opacity: 0.18;
+    mix-blend-mode: lighten;
+}
+
+/* Sparkly magical reveal animation */
+@keyframes tarot-reveal {
+    0% {
+        opacity: 0;
+        filter: blur(8px) brightness(2) drop-shadow(0 0 16px #ffd700cc);
+        transform: scale(0.8) rotate(-8deg);
+    }
+    60% {
+        opacity: 1;
+        filter: blur(2px) brightness(1.5) drop-shadow(0 0 32px #a259ffcc);
+        transform: scale(1.05) rotate(2deg);
+    }
+    80% {
+        filter: blur(0.5px) brightness(1.2) drop-shadow(0 0 16px #ffd700cc);
+        transform: scale(1) rotate(-1deg);
+    }
+    100% {
+        opacity: 1;
+        filter: none;
+        transform: scale(1) rotate(0deg);
+    }
+}
+
+.card.reveal {
+    animation: tarot-reveal 1.2s cubic-bezier(.7,0,.3,1);
+    position: relative;
+    z-index: 1;
+}
+
+/* Responsive */
+@media (max-width: 700px) {
+    .container {
+        max-width: 98vw;
+        padding: 1rem 0.5rem;
+    }
+    .card {
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    h1 {
+        font-size: 2rem;
+    }
+    .card .tarot-img {
+        margin: 0.5rem 0 0 0;
+    }
+}
