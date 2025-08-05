@@ -1,0 +1,180 @@
+.clouds {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.cloud {
+    position: absolute;
+    width: 500px;
+    height: auto;
+    opacity: 0.8;
+    filter: brightness(1.1) contrast(0.9);
+    border: none;
+    outline: none;
+    box-shadow: none;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+}
+
+.cloud1 {
+    top: 5%;
+    left: -200px;
+    animation: moveCloud 20s linear infinite;
+}
+
+.cloud2 {
+    top: 20%;
+    left: -400px;
+    animation: moveCloud 25s linear infinite;
+}
+
+.cloud3 {
+    top: 40%;
+    left: -600px;
+    animation: moveCloud 40s linear infinite;
+}
+
+.cloud4 {
+    top: 80%;
+    left: -800px;
+    animation: moveCloud 35s linear infinite;
+}
+
+@keyframes moveCloud {
+    0% { left: -500px; }
+    100% { left: 100%; }
+}
+
+/* Reset and base styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-image: url('background.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    position: relative;
+    z-index: 2;
+}
+
+h1 {
+    color: white;
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+    font-family: 'Courier New', monospace;
+    font-weight: 300;
+}
+
+.container {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    text-align: center;
+    max-width: 600px;
+    width: 100%;
+}
+
+.slot-machine {
+    display: flex;
+    justify-content: center;
+    gap: 26px;
+    margin-bottom: 30px;
+    padding: 20px;
+    background: linear-gradient(145deg, #DCE8E0, #D2D8D6);
+    border-radius: 15px;
+}
+
+.slot-reel {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(145deg, #ffffff, #ededed);
+    /* border: 2px solid #9cb3ab; */
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    transition: all 0.3s ease;
+}
+
+.slot-reel:hover {
+    transform: scale(1.05);
+    box-shadow: 
+        inset 0 2px 5px rgba(255, 255, 255, 0.811),
+        0 8px 25px rgba(0,0,0,0.3);
+}
+
+img {
+    max-width: 300px;
+    height: auto;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    margin-bottom: 30px;
+    transition: transform 0.3s ease;
+}
+
+img:hover {
+    transform: scale(1.05);
+}
+
+button {
+    background-color: #6a5acd;
+    background-image: linear-gradient(319deg, #aea4f2 0%, #f174b7 37%, #dfabec 100%);
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    font-size: 1.2rem;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    margin-bottom: 20px;
+}
+
+button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+    background-image: linear-gradient(319deg, #4c4095 0%, #933869 37%, #7c5e84 100%);
+}
+
+button:active {
+    transform: translateY(-1px);
+}
+
+#your-new-hobby-button {
+    font-size: 1.5rem;
+    color: #333;
+    margin-top: 20px;
+    padding: 15px;
+    background: rgba(255,255,255,0.8);
+    border-radius: 10px;
+    min-height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgb(104, 124, 126);
+    text-shadow: 
+        0 0 10px rgba(255, 230, 107, 0.8),
+        0 0 20px rgba(255, 243, 172, 0.6),
+        0 0 30px rgba(246, 234, 171, 0.4),
+        0 0 40px rgba(253, 240, 161, 0.2);
+}
