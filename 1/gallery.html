@@ -52,73 +52,120 @@
 
     <h2>Projects</h2>
     <p>also <a href="https://www.are.na/max-bo/html-in-hyde-1-websites">on are.na</a>!</p>
-    <ul>
-      <li>
+    <ul id="project-list">
+      <li data-preview="photos/DO01210212.webp">
         <a href="./projects/ruby-explorations/index.html"><i><code>&lt;ruby&gt;</code> explorations</i></a> by <a
           href="https://maxbo.me">Max</a>
       </li>
       <li>
         <a href="https://codepen.io/Josephine-Tay/pen/wBKJoLE"><i>Let's write a story together</i></a> by Josephine
       </li>
-      <li>
+      <li data-preview="photos/DO01210252.webp">
         <a href="https://codepen.io/Eezu-Tan/full/MYapJgN"><i>welcome to meow city</i></a> by Eezu
       </li>
-      <li>
+      <li data-preview="photos/DO01210260.webp">
         <a href="https://grave.rayzhu.me/"><i>Garden of Memories</i></a> by <a href="https://home.rayzhu.me/">Ray</a>
       </li>
       <li>
         <a href="./projects/philosophy-quotes/index.html"><i>Philosophy Quotes</i></a> by Abby (<a
           href="https://github.com/abigail2-yee/philosophy-quotes">source</a>)
       </li>
-      <li>
+      <li data-preview="photos/DO01210280.webp">
         <a href="./projects/travelling-to-sydney.html"><i>Travelling to Sydney</i></a> by Tamsyn (<a
           href="https://gist.github.com/tamsynkw/ebe67f6b580643ab08ae141b9a0a2ce5">source</a>)
       </li>
-      <li>
+      <li data-preview="photos/DO01210279.webp">
         <a href="./projects/matcha-search/index.html"><i>matcha monday webring search</i></a> by <a
           href="https://tomlister.net">Tom L</a>
       </li>
-      <li>
+      <li data-preview="photos/DO01210247.webp">
         <a href="./projects/cafe.html"><i>cafe</i></a> by Justin
       </li>
-      <li>
+      <li data-preview="photos/DO01210250.webp">
         <a href="https://mindfield.davitg.com"><i>MIND FIELD (3D Project Gallery)</i></a> by <a
             href="https://davitg.com">Davit G</a>
       </li>
       <li>
         <a href="./projects/tabby-cat/index.html"><i>Tabby Cat</i></a> by <a href="https://t.me/antseadon">Anton</a>
       </li>
-      <li>
+      <li data-preview="photos/DO01210225.webp">
         <a href="https://htmlinhyde25.spearritt.dev"><i>Choose Your Own HTMLventure</i></a> by <a href="https://spearritt.dev">Joseph</a>
       </li>
       <li>
         <a href="./projects/gingerbread-person/interface.html"><i>gingerbread person</i></a> by <a href="https://wingpang.com/notes">Wing</a>
       </li>
-      <li>
+      <li data-preview="photos/DO01210244.webp">
         <a href="./projects/sixteen-times.html"><i>sixteen times</i></a> by <a href="https://ldgrp.me/">Leo</a> (<a href="https://gist.github.com/ldgrp/df0b90dd8f9a5d19bf199f2c9253e99a">source</a>)
       </li>
-      <li>
+      <li data-preview="photos/DO01210304.webp">
         <a href="https://hyde.bennett.dev/birds.html"><i>My Bird Scrapbook</i></a> &amp; <a href="https://hyde.bennett.dev/scrapbook.html"><i>My Fun Scrapbook</i></a> by <a href="https://bennett.dev">Bennett</a>
       </li>
       <li>
         <a href="./projects/nyan-party/index.html"><i>the nyan party</i></a> by toan
       </li>
-      <li>
+      <li data-preview="photos/DO01210275.webp">
         <a href="./projects/bookstack/index.html"><i>Book Stack</i></a> by <a href="https://nathancspencer.com/about">Nathan</a>
       </li>
       <li>
         <a href="./projects/tarot-reader-game/index.html"><i>Tarot Reader Game</i></a> by Toby</a>
       </li>
-      <li>
+      <li data-preview="photos/DO01210256.webp">
         <a href="https://cgco.vercel.app/"><i>Community Garden for the Chronically Online</i></a> by <a>Wanning</a> (<a href="https://github.com/incalescence/cgco">source</a>)
       </li>
-      <li>
+      <li data-preview="photos/DO01210248.webp">
         <a href="./projects/hobby-finder/index.html"><i>✨ Hobby Finder ✨</i></a> by <a href="https://github.com/jasttran">Jasmine Tran</a>
       </li>
-      <li>
+      <li data-preview="photos/DO01210219.webp">
         <a href="https://rayahhhmed.github.io/"><i>How to train your AI</i></a> by <a href="https://www.linkedin.com/in/rayahhhmed/">Raiyan</a>
       </li>
     </ul>
+
+    <style>
+      .preview-img {
+        position: absolute;
+        left: 0;
+        top: 100%;
+        max-width: 480px;
+        max-height: 480px;
+        z-index: 10;
+      }
+      ul#project-list {
+        position: relative;
+        z-index: 1;
+      }
+    </style>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        const ul = document.getElementById('project-list');
+        ul.classList.add('project-list');
+        let previewImg = null;
+
+        const lis = ul.querySelectorAll('li[data-preview]');
+        lis.forEach(function (li) {
+          li.addEventListener('mouseover', function () {
+            if (previewImg) {
+              previewImg.remove();
+            }
+            previewImg = document.createElement('img');
+            previewImg.className = 'preview-img';
+            previewImg.src = li.getAttribute('data-preview');
+            document.body.appendChild(previewImg);
+            const rect = li.getBoundingClientRect();
+            previewImg.style.position = 'absolute';
+            previewImg.style.left = rect.left + window.scrollX + 'px';
+            previewImg.style.top = rect.bottom + window.scrollY + 8 + 'px';
+            previewImg.style.display = 'block';
+          });
+
+          li.addEventListener('mouseout', function () {
+            if (previewImg) {
+              previewImg.remove();
+              previewImg = null;
+            }
+          });
+        });
+      });
+    </script>
 
     <p>
       More coming soon! Either reply back to the invitation emails with your files attached or add your project files to
