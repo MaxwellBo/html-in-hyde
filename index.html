@@ -237,90 +237,6 @@
         href="https://www.val.town/v/mbo/htmlinhydeRSVPs">val.town/v/mbo/htmlinhydeRSVPs</a> and <a href="https://www.val.town/v/mbo/html_in_hyde_1">https://www.val.town/v/mbo/html_in_hyde_1</a>.
     </li>
   </ul>
-  <h4>JavaScript stuff</h4>
-  <ul class="breathe">
-    <li>
-      <a href="https://leanrada.com/notes/inline-rendering-currentscript/">
-        Inline rendering with <code>document.currentScript</code>
-      </a>
-      <blockquote>
-        For quick and dirty rendering of simple dynamic content, you may not need the complexity of a templating language like Handlebars or a PHP backend.
-        [...]
-        You can write this directly in HTML—without IDs, classes, or querySelectors in your JS! Thanks to the <code>document.currentScript</code> property, we can refer to the currently running <code>&lt;script&gt;</code> element directly and go from there.
-      </blockquote>
-    </li>
-    <li>
-      <a href="https://esm.sh/">esm.sh</a>, <a href="https://www.skypack.dev/">Skypack</a>, <a
-        href="https://unpkg.com/">UNPKG</a>
-      <br />
-      Remember when I said NO BUNDLERS ALLOWED in the invitation?
-      <br />
-      Well you might need some way of importing JS libraries, right?
-      <br />
-      With the services linked above, you can import libraries directly from a CDN,
-      in a <a
-        href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules#applying_the_module_to_your_html">module
-        script</a>,
-      using <a
-        href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import"><code>import</code>
-        syntax</a>. As an example:
-
-      <br />
-
-<pre style="overflow: scroll;">
-<code class="echo">&lt;script type=&quot;module&quot;&gt;
-  import confetti from &quot;https://esm.sh/canvas-confetti@1.6.0&quot;
-
-  window.confetti = () => confetti.create(document.getElementById('confetti'))()
-&lt;/script&gt;
-
-&lt;button onclick=&quot;confetti()&quot;&gt;🎉&lt;/button&gt;
-&lt;canvas id=&quot;confetti&quot; style=&quot;border: 1px solid #006400;&quot;&gt;&lt;/canvas&gt;
-</code>
-</pre>
-
-      <script type="module">
-        import confetti from "https://esm.sh/canvas-confetti@1.6.0"
-        window.confetti = () => confetti.create(document.getElementById('confetti'))()
-      </script>
-      <button onclick="confetti()">🎉</button>
-      <canvas id="confetti" style="border: 1px solid #006400"></canvas>
-      <br />
-      I use this a lot in <a href="https://maxbo.me/a-html-file-is-all-you-need.html">Can we build a reactive article in
-        a single HTML file?</a> if you'd like more examples.
-
-      <br />
-
-      Note that some JavaScript frameworks have paved roads for using them directly from a CDN:
-
-      <ul >
-        <li>
-         <a href="https://preactjs.com/guide/v10/getting-started#alternatives-to-jsx">Preact + htm</a>
-        </li>
-        <li>
-          <a href="https://github.com/developit/htm?tab=readme-ov-file#usage">React + htm</a>
-        </li>
-        <li>
-          <a href="https://vuejs.org/guide/quick-start.html#using-vue-from-cdn">Vue.js</a>
-        </li>
-        <li>
-          <a href="https://alpinejs.dev/start-here">Alpine.js</a>
-        </li>
-      </ul>
-      
-    </li>
-    <li>
-      <a href="https://maxbo.me/celine/">@celine/celine</a>
-      <br />
-      A microlibrary for building reactive HTML notebooks - by me (o˘◡˘o) 
-    </li>
-    <li><a href="https://github.com/observablehq/htl">htl</a>
-      <blockquote>
-        A tagged template literal that allows safe interpolation of values into HTML, following the HTML5 spec.
-      </blockquote>
-      Heavier than HTML custom elements, but lighter than React. Just enough for some light JSON to DOM transformation.
-    </li>
-  </ul>
   <h4>HTML extensions</h4>
   <ul class="breathe">
     <li>
@@ -424,6 +340,91 @@
     </li>
   </ul>
 
+  <h4>JavaScript stuff</h4>
+  <ul class="breathe">
+    <li>
+      <a href="https://leanrada.com/notes/inline-rendering-currentscript/">
+        Inline rendering with <code>document.currentScript</code>
+      </a>
+      <blockquote>
+        For quick and dirty rendering of simple dynamic content, you may not need the complexity of a templating language like Handlebars or a PHP backend.
+        [...]
+        You can write this directly in HTML—without IDs, classes, or querySelectors in your JS! Thanks to the <code>document.currentScript</code> property, we can refer to the currently running <code>&lt;script&gt;</code> element directly and go from there.
+      </blockquote>
+    </li>
+    <li>
+      <a href="https://esm.sh/">esm.sh</a>, <a href="https://www.skypack.dev/">Skypack</a>, <a
+        href="https://unpkg.com/">UNPKG</a>
+      <br />
+      Remember when I said NO BUNDLERS ALLOWED in the invitation?
+      <br />
+      Well you might need some way of importing JS libraries, right?
+      <br />
+      With the services linked above, you can import libraries directly from a CDN,
+      in a <a
+        href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules#applying_the_module_to_your_html">module
+        script</a>,
+      using <a
+        href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import"><code>import</code>
+        syntax</a>. As an example:
+
+      <br />
+
+<pre style="overflow: scroll;">
+<code class="echo">&lt;script type=&quot;module&quot;&gt;
+  import confetti from &quot;https://esm.sh/canvas-confetti@1.6.0&quot;
+
+  window.confetti = () => confetti.create(document.getElementById('confetti'))()
+&lt;/script&gt;
+
+&lt;button onclick=&quot;confetti()&quot;&gt;🎉&lt;/button&gt;
+&lt;canvas id=&quot;confetti&quot; style=&quot;border: 1px solid #006400;&quot;&gt;&lt;/canvas&gt;
+</code>
+</pre>
+
+      <script type="module">
+        import confetti from "https://esm.sh/canvas-confetti@1.6.0"
+        window.confetti = () => confetti.create(document.getElementById('confetti'))()
+      </script>
+      <button onclick="confetti()">🎉</button>
+      <canvas id="confetti" style="border: 1px solid #006400"></canvas>
+      <br />
+      I use this a lot in <a href="https://maxbo.me/a-html-file-is-all-you-need.html">Can we build a reactive article in
+        a single HTML file?</a> if you'd like more examples.
+
+      <br />
+
+      Note that some JavaScript frameworks have paved roads for using them directly from a CDN:
+
+      <ul >
+        <li>
+         <a href="https://preactjs.com/guide/v10/getting-started#alternatives-to-jsx">Preact + htm</a>
+        </li>
+        <li>
+          <a href="https://github.com/developit/htm?tab=readme-ov-file#usage">React + htm</a>
+        </li>
+        <li>
+          <a href="https://vuejs.org/guide/quick-start.html#using-vue-from-cdn">Vue.js</a>
+        </li>
+        <li>
+          <a href="https://alpinejs.dev/start-here">Alpine.js</a>
+        </li>
+      </ul>
+      
+    </li>
+    <li>
+      <a href="https://maxbo.me/celine/">@celine/celine</a>
+      <br />
+      A microlibrary for building reactive HTML notebooks - by me (o˘◡˘o) 
+    </li>
+    <li><a href="https://github.com/observablehq/htl">htl</a>
+      <blockquote>
+        A tagged template literal that allows safe interpolation of values into HTML, following the HTML5 spec.
+      </blockquote>
+      Heavier than HTML custom elements, but lighter than React. Just enough for some light JSON to DOM transformation.
+    </li>
+  </ul>
+
   <h4>CSS extensions</h4>
   <ul class="breathe">
     <li>
@@ -467,6 +468,15 @@
       <a href="https://raphaelbastide.com/cascade/">Cascade</a>
       <br />
       Cascade is a live-coding environment that turns CSS rules into sound.
+    </li>
+
+    <li>
+      <a href="https://github.com/galaxykate/tracery">tracery</a>
+      <blockquote>
+        Tracery: a story-grammar generation library for javascript
+      </blockquote>
+
+      I've vendored this at <a href="1/projects/ruby-explorations/tracery.js">1/projects/ruby-explorations/tracery.js</a>
     </li>
 
     <li>
@@ -523,15 +533,6 @@
       <a-sky color="#ECECEC"></a-sky>
     </a-scene>
     
-    </li>
-
-    <li>
-      <a href="https://github.com/galaxykate/tracery">tracery</a>
-      <blockquote>
-        Tracery: a story-grammar generation library for javascript
-      </blockquote>
-
-      I've vendored this at <a href="1/projects/ruby-explorations/tracery.js">1/projects/ruby-explorations/tracery.js</a>
     </li>
 
   </ul>
