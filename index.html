@@ -201,11 +201,15 @@
   <h3><a id="resources-for-nerds" href="#resources-for-nerds">#</a> for nerds</h3>
 
   There's a lot of cool stuff going on in the pure HTML space!
+
   <style>
     ul.breathe > li {
       margin-bottom: 20px;
     }
   </style>
+
+  <h4>Hosting</h4>
+  
   <ul class="breathe">
     <li>
       <a href="https://pages.github.com/">GitHub Pages</a>
@@ -232,6 +236,9 @@
       I used Val Town to power the RSVP forms, with the code hosted at <a
         href="https://www.val.town/v/mbo/htmlinhydeRSVPs">val.town/v/mbo/htmlinhydeRSVPs</a> and <a href="https://www.val.town/v/mbo/html_in_hyde_1">https://www.val.town/v/mbo/html_in_hyde_1</a>.
     </li>
+  </ul>
+  <h4>JavaScript stuff</h4>
+  <ul class="breathe">
     <li>
       <a href="https://leanrada.com/notes/inline-rendering-currentscript/">
         Inline rendering with <code>document.currentScript</code>
@@ -242,6 +249,80 @@
         You can write this directly in HTML—without IDs, classes, or querySelectors in your JS! Thanks to the <code>document.currentScript</code> property, we can refer to the currently running <code>&lt;script&gt;</code> element directly and go from there.
       </blockquote>
     </li>
+    <li>
+      <a href="https://esm.sh/">esm.sh</a>, <a href="https://www.skypack.dev/">Skypack</a>, <a
+        href="https://unpkg.com/">UNPKG</a>
+      <br />
+      Remember when I said NO BUNDLERS ALLOWED in the invitation?
+      <br />
+      Well you might need some way of importing JS libraries, right?
+      <br />
+      With the services linked above, you can import libraries directly from a CDN,
+      in a <a
+        href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules#applying_the_module_to_your_html">module
+        script</a>,
+      using <a
+        href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import"><code>import</code>
+        syntax</a>. As an example:
+
+      <br />
+
+<pre style="overflow: scroll;">
+<code class="echo">&lt;script type=&quot;module&quot;&gt;
+  import confetti from &quot;https://esm.sh/canvas-confetti@1.6.0&quot;
+
+  window.confetti = () => confetti.create(document.getElementById('confetti'))()
+&lt;/script&gt;
+
+&lt;button onclick=&quot;confetti()&quot;&gt;🎉&lt;/button&gt;
+&lt;canvas id=&quot;confetti&quot; style=&quot;border: 1px solid #006400;&quot;&gt;&lt;/canvas&gt;
+</code>
+</pre>
+
+      <script type="module">
+        import confetti from "https://esm.sh/canvas-confetti@1.6.0"
+        window.confetti = () => confetti.create(document.getElementById('confetti'))()
+      </script>
+      <button onclick="confetti()">🎉</button>
+      <canvas id="confetti" style="border: 1px solid #006400"></canvas>
+      <br />
+      I use this a lot in <a href="https://maxbo.me/a-html-file-is-all-you-need.html">Can we build a reactive article in
+        a single HTML file?</a> if you'd like more examples.
+
+      <br />
+
+      Note that some JavaScript frameworks have paved roads for using them directly from a CDN:
+
+      <ul >
+        <li>
+         <a href="https://preactjs.com/guide/v10/getting-started#alternatives-to-jsx">Preact + htm</a>
+        </li>
+        <li>
+          <a href="https://github.com/developit/htm?tab=readme-ov-file#usage">React + htm</a>
+        </li>
+        <li>
+          <a href="https://vuejs.org/guide/quick-start.html#using-vue-from-cdn">Vue.js</a>
+        </li>
+        <li>
+          <a href="https://alpinejs.dev/start-here">Alpine.js</a>
+        </li>
+      </ul>
+      
+    </li>
+    <li>
+      <a href="https://maxbo.me/celine/">@celine/celine</a>
+      <br />
+      A microlibrary for building reactive HTML notebooks - by me (o˘◡˘o) 
+    </li>
+    <li><a href="https://github.com/observablehq/htl">htl</a>
+      <blockquote>
+        A tagged template literal that allows safe interpolation of values into HTML, following the HTML5 spec.
+      </blockquote>
+      Heavier than HTML custom elements, but lighter than React. Just enough for some light JSON to DOM transformation.
+    </li>
+  </ul>
+  <h4>HTML extensions</h4>
+  <ul class="breathe">
     <li>
       <a href="https://htmx.org/docs/">htmx</a>, <a href="https://leanrada.com/htmz/">htmz</a>, or <a href="https://github.com/bigskysoftware/fixi">fixi</a>
       <blockquote>
@@ -289,12 +370,62 @@
     <br />
 
     playhtml wraps <a href="https://www.partykit.io/">PartyKit</a> which might be a better option if playhtml is insufficient.
+  </li>
 
     <li>
-      <a href="https://maxbo.me/celine/">@celine/celine</a>
+      <a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_components/Using_custom_elements">HTML custom
+        elements</a>
       <br />
-      A microlibrary for building reactive HTML notebooks - by me (o˘◡˘o) 
+      <blockquote>
+        web components [give you] the ability to create custom elements: that is, HTML elements whose behavior is defined by the web developer, that extend the set of elements available in the browser.
+      </blockquote>
+      React? No need. Use these instead. They're built into the browser. <br />
+      Also good for <a href="https://www.keithcirkel.co.uk/css-classes-considered-harmful/">avoiding CSS Classes</a>.
     </li>
+    <li>
+      <a href="https://meyerweb.com/eric/thoughts/2023/11/01/blinded-by-the-light-dom/">Blinded by the Light DOM</a>
+      <br />
+      But Web Components are shit if you use the <a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_components/Using_shadow_DOM">
+        Shadow DOM
+      </a> but they're good if you use the standard DOM (<q>the Light DOM</q>). <a href="https://en.wikipedia.org/wiki/Eric_A._Meyer">Eric Meyer</a> explains in detail.
+    </li>
+    <li>
+      <a href="https://github.com/kgscialdone/facet">facet</a>
+      <br />
+      <blockquote>
+        Facet is a single-file web library that allows for the easy, declarative definition of web components. By making use of <code>&lt;template&gt;</code> elements with special attributes, Facet makes it possible to define useful and effective web components with no Javascript boilerplate, so you can focus entirely on the structure and behavior of your component.
+      </blockquote>
+    </li>
+    <li>
+      <a href="https://github.com/justinfagnani/stampino">stampino</a>
+      <br />
+      <blockquote>
+        Stampino is a fast and flexible HTML template system, where you write dynamic templates using real HTML &lt;template&gt; tags.
+      </blockquote>
+
+    </li>
+    <li>
+      I thought it might be worth mentioning about how to do HTML includes using
+      an <code>&lt;iframe&gt;</code>:
+
+<pre style="overflow: scroll;">
+<code class="echo">&lt;iframe 
+  src=&quot;/target.html&quot; 
+  onload=&quot;this.before((this.contentDocument.body||this.contentDocument).children[0]);this.remove()&quot;&gt;
+&lt;/iframe&gt;
+</code>
+</pre>
+
+      I found this at <a href="https://www.filamentgroup.com/lab/html-includes/#another-demo%3A-including-another-html-file">
+        HTML Includes That Work Today
+      </a> via <a href="https://frontendmasters.com/blog/seeking-an-answer-why-cant-html-alone-do-includes/">Seeking an Answer: Why can't HTML alone do includes?</a>
+
+
+    </li>
+  </ul>
+
+  <h4>CSS extensions</h4>
+  <ul class="breathe">
     <li>
       <a href="https://github.com/gnat/surreal">surreal</a>
       <br />
@@ -319,36 +450,6 @@
       So before creating a new CSS class, think about whether the composition of styled semantic HTML elements could
       achieve the same effect.
     </li> -->
-    <li>
-      <a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_components/Using_custom_elements">HTML custom
-        elements</a>
-      <br />
-      <blockquote>
-        web components [give you] the ability to create custom elements: that is, HTML elements whose behavior is defined by the web developer, that extend the set of elements available in the browser.
-      </blockquote>
-      React? No need. Use these instead. They're built into the browser. <br />
-      Also good for <a href="https://www.keithcirkel.co.uk/css-classes-considered-harmful/">avoiding CSS Classes</a>.
-    </li>
-    <li>
-      <a href="https://meyerweb.com/eric/thoughts/2023/11/01/blinded-by-the-light-dom/">Blinded by the Light DOM</a>
-      <br />
-      But Web Components are shit if you use the <a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_components/Using_shadow_DOM">
-        Shadow DOM
-      </a> but they're good if you use the standard DOM (<q>the Light DOM</q>). <a href="https://en.wikipedia.org/wiki/Eric_A._Meyer">Eric Meyer</a> explains in detail.
-    </li>
-    <li><a href="https://github.com/observablehq/htl">htl</a>
-      <blockquote>
-        A tagged template literal that allows safe interpolation of values into HTML, following the HTML5 spec.
-      </blockquote>
-      Heavier than HTML custom elements, but lighter than React. Just enough for some light JSON to DOM transformation.
-    </li>
-    <li>
-      <a href="https://github.com/kgscialdone/facet">facet</a>
-      <br />
-      <blockquote>
-        Facet is a single-file web library that allows for the easy, declarative definition of web components. By making use of <code>&lt;template&gt;</code> elements with special attributes, Facet makes it possible to define useful and effective web components with no Javascript boilerplate, so you can focus entirely on the structure and behavior of your component.
-      </blockquote>
-    </li>
     <!-- <li> -->
     <!--   <a href="https://github.com/justinfagnani/html-include-element">html-include-element</a>, from <a href="https://mxb.dev/blog/buildless/">Going Buildless</a> -->
     <!--   <br /> -->
@@ -356,92 +457,12 @@
     <!--     <code>&#38;lt;html-include&#38;gt;</code> is a web component that fetches HTML and includes it into your page. -->
     <!--   </blockquote> -->
     <!-- </li> -->
-    <li>
-      <a href="https://github.com/justinfagnani/stampino">stampino</a>
-      <br />
-      <blockquote>
-        Stampino is a fast and flexible HTML template system, where you write dynamic templates using real HTML &lt;template&gt; tags.
-      </blockquote>
 
-    </li>
-    <li>
-      <a href="https://esm.sh/">esm.sh</a>, <a href="https://www.skypack.dev/">Skypack</a>, <a
-        href="https://unpkg.com/">UNPKG</a>
-      <br />
-      Remember when I said NO BUNDLERS ALLOWED in the invitation?
-      <br />
-      Well you might need some way of importing JS libraries, right?
-      <br />
-      With the services linked above, you can import libraries directly from a CDN,
-      in a <a
-        href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules#applying_the_module_to_your_html">module
-        script</a>,
-      using <a
-        href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import"><code>import</code>
-        syntax</a>. As an example:
+  </ul>
+  
+  <h4>Weird libraries</h4>
 
-      <br />
-
-<pre style="overflow: scroll;">
-<code class="echo">&lt;script type=&quot;module&quot;&gt;
-  import confetti from &quot;https://esm.sh/canvas-confetti@1.6.0&quot;
-
-  window.confetti = () => confetti.create(document.getElementById('confetti'))()
-&lt;/script&gt;
-
-&lt;button onclick=&quot;confetti()&quot;&gt;🎉&lt;/button&gt;
-&lt;canvas id=&quot;confetti&quot; style=&quot;border: 1px solid #006400;&quot;&gt;&lt;/canvas&gt;
-</code>
-</pre>
-
-      <script type="module">
-        import confetti from "https://esm.sh/canvas-confetti@1.6.0"
-        window.confetti = () => confetti.create(document.getElementById('confetti'))()
-      </script>
-      <button onclick="confetti()">🎉</button>
-      <canvas id="confetti" style="border: 1px solid #006400"></canvas>
-      <br />
-      I use this a lot in <a href="https://maxbo.me/a-html-file-is-all-you-need.html">Can we build a reactive article in
-        a single HTML file?</a> if you'd like more examples.
-    </li>
-    <li>
-      I thought it might be worth mentioning about how to do HTML includes using
-      an <code>&lt;iframe&gt;</code>:
-
-<pre style="overflow: scroll;">
-<code class="echo">&lt;iframe 
-  src=&quot;/target.html&quot; 
-  onload=&quot;this.before((this.contentDocument.body||this.contentDocument).children[0]);this.remove()&quot;&gt;
-&lt;/iframe&gt;
-</code>
-</pre>
-
-      I found this at <a href="https://www.filamentgroup.com/lab/html-includes/#another-demo%3A-including-another-html-file">
-        HTML Includes That Work Today
-      </a> via <a href="https://frontendmasters.com/blog/seeking-an-answer-why-cant-html-alone-do-includes/">Seeking an Answer: Why can't HTML alone do includes?</a>
-
-
-    </li>
-
-    <li>
-      I thought I might mention that some JavaScript frameworks have paved roads for using them directly from a CDN:
-
-      <ul >
-        <li>
-         <a href="https://preactjs.com/guide/v10/getting-started#alternatives-to-jsx">Preact + htm</a>
-        </li>
-        <li>
-          <a href="https://github.com/developit/htm?tab=readme-ov-file#usage">React + htm</a>
-        </li>
-        <li>
-          <a href="https://vuejs.org/guide/quick-start.html#using-vue-from-cdn">Vue.js</a>
-        </li>
-        <li>
-          <a href="https://alpinejs.dev/start-here">Alpine.js</a>
-        </li>
-      </ul>
-      
-    </li>
+  <ul class="breathe">
     <li>
       <a href="https://raphaelbastide.com/cascade/">Cascade</a>
       <br />
@@ -505,6 +526,21 @@
     </li>
 
     <li>
+      <a href="https://github.com/galaxykate/tracery">tracery</a>
+      <blockquote>
+        Tracery: a story-grammar generation library for javascript
+      </blockquote>
+
+      I've vendored this at <a href="1/projects/ruby-explorations/tracery.js">1/projects/ruby-explorations/tracery.js</a>
+    </li>
+
+  </ul>
+
+  <h4>Other stuff</h4>
+
+  <ul class="breathe">
+
+    <li>
       Did you know you can use Chrome as an IDE? And that you can save changes you make in DevTools back to source files?
       All you have to do is <a href="https://developer.chrome.com/docs/devtools/workspaces">set up a <i>workspace</i> by defining a <i>workspace location</i></a>.
     </li>
@@ -516,15 +552,6 @@
       structured site, plus some cool stuff about <a href="https://plainvanillaweb.com/pages/applications.html#routing">hash-based routing</a> that I don't think I've covered so far.
     </li>
 
-
-    <li>
-      <a href="https://github.com/galaxykate/tracery">tracery</a>
-      <blockquote>
-        Tracery: a story-grammar generation library for javascript
-      </blockquote>
-
-      I've vendored this at <a href="1/projects/ruby-explorations/tracery.js">1/projects/ruby-explorations/tracery.js</a>
-    </li>
 
     <li>
       <a href="https://blog.jim-nielsen.com/2023/examples-of-great-urls/">Examples of Great URL Design</a>
