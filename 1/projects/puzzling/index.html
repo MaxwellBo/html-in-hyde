@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>puzzling</title>
+        <link rel="icon" type="image/x-icon" href="./images/favicon.png">
+        <link href="https://fonts.googleapis.com/css2?family=Jost&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <svg>
+            <defs>
+                <mask id="tl" maskContentUnits="objectBoundingBox">
+                    <rect x="0.125" y="0.125" width="0.75" height="0.75" fill="white"></rect>
+                    <circle cx="0.875" cy="0.5" r="0.125" fill="black"></circle>
+                    <circle cx="0.5" cy="0.875" r="0.125" fill="white"></circle>
+                </mask>
+                <mask id="tr" maskContentUnits="objectBoundingBox">
+                    <rect x="0.125" y="0.125" width="0.75" height="0.75" fill="white"></rect>
+                    <circle cx="0.5" cy="0.875" r="0.125" fill="white"></circle>
+                    <circle cx="0.125" cy="0.5" r="0.125" fill="white"></circle>
+                </mask>
+                <mask id="t" maskContentUnits="objectBoundingBox">
+                    <rect x="0.125" y="0.125" width="0.75" height="0.75" fill="white"></rect>
+                    <circle cx="0.875" cy="0.5" r="0.125" fill="black"></circle>
+                    <circle cx="0.5" cy="0.875" r="0.125" fill="white"></circle>
+                    <circle cx="0.125" cy="0.5" r="0.125" fill="white"></circle>
+                </mask>
+                <mask id="bl" maskContentUnits="objectBoundingBox">
+                    <rect x="0.125" y="0.125" width="0.75" height="0.75" fill="white"></rect>
+                    <circle cx="0.5" cy="0.125" r="0.125" fill="black"></circle>
+                    <circle cx="0.875" cy="0.5" r="0.125" fill="black"></circle>
+                </mask>
+                <mask id="br" maskContentUnits="objectBoundingBox">
+                    <rect x="0.125" y="0.125" width="0.75" height="0.75" fill="white"></rect>
+                    <circle cx="0.5" cy="0.125" r="0.125" fill="black"></circle>
+                    <circle cx="0.125" cy="0.5" r="0.125" fill="white"></circle>
+                </mask>
+                <mask id="b" maskContentUnits="objectBoundingBox">
+                    <rect x="0.125" y="0.125" width="0.75" height="0.75" fill="white"></rect>
+                    <circle cx="0.5" cy="0.125" r="0.125" fill="black"></circle>
+                    <circle cx="0.875" cy="0.5" r="0.125" fill="black"></circle>
+                    <circle cx="0.125" cy="0.5" r="0.125" fill="white"></circle>
+                </mask>
+                <mask id="ml" maskContentUnits="objectBoundingBox">
+                    <rect x="0.125" y="0.125" width="0.75" height="0.75" fill="white"></rect>
+                    <circle cx="0.5" cy="0.125" r="0.125" fill="black"></circle>
+                    <circle cx="0.875" cy="0.5" r="0.125" fill="black"></circle>
+                    <circle cx="0.5" cy="0.875" r="0.125" fill="white"></circle>
+                </mask>
+                <mask id="mr" maskContentUnits="objectBoundingBox">
+                    <rect x="0.125" y="0.125" width="0.75" height="0.75" fill="white"></rect>
+                    <circle cx="0.5" cy="0.125" r="0.125" fill="black"></circle>
+                    <circle cx="0.5" cy="0.875" r="0.125" fill="white"></circle>
+                    <circle cx="0.125" cy="0.5" r="0.125" fill="white"></circle>
+                </mask>
+                <mask id="m" maskContentUnits="objectBoundingBox">
+                    <rect x="0.125" y="0.125" width="0.75" height="0.75" fill="white"></rect>
+                    <circle cx="0.5" cy="0.125" r="0.125" fill="black"></circle>
+                    <circle cx="0.875" cy="0.5" r="0.125" fill="black"></circle>
+                    <circle cx="0.5" cy="0.875" r="0.125" fill="white"></circle>
+                    <circle cx="0.125" cy="0.5" r="0.125" fill="white"></circle>
+                </mask>
+            </defs>
+        </svg>
+        <header>
+            <h1><a href="./">puzzling</a></h1>
+        </header>
+        <main>
+            <div id="board"></div>
+            <div id="instructions">
+                <h3 id="hideInstructions">&times;</h3>
+                <h3>Instructions</h3>
+                <p>- 
+                    <input type="file" id="imageUpload" accept="image/*">
+                    <a id="uploadButton">Upload</a> your own photo
+                </p>
+                <p>- Adjust the difficulty 
+                    (<button id="easyButton" class="difficultyButton">Easy</button>, 
+                    <button id="mediumButton" class="difficultyButton">Medium</button>, 
+                    or <button id="hardButton" class="difficultyButton">Hard</button>)
+                </p>
+                <p>- Click a piece to pick it up</p>
+                <p>- Use the cursor to position it</p>
+                <p>- Press r to rotate it</p>
+                <p>- Click again to put it down</p>
+            </div>
+        </main>
+        <footer>
+            <div>
+                <a href="https://tomhorsey.com/">Tom Horsey</a>
+            </div>
+            <div>
+                <a id="showInstructions">Feeling Puzzled?</a>
+            </div>
+            <div>
+                <a href="https://github.com/thomashorsey/puzzling">Source Code</a>
+            </div>
+        </footer>
+        <script src="script.js"></script>
+    </body>
+</html>

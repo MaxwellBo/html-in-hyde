@@ -1,0 +1,131 @@
+/* Fonts */
+body {
+    font-family: "Jost", sans-serif;
+    color: black;
+}
+
+h1 {
+    font-size: x-large;
+    padding: 0;
+    margin: 0;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+a:hover {
+    cursor: pointer;
+}
+
+/* Body */
+html, body {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Header */
+header {
+    padding: 10px;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+}
+
+/* Main */
+main {
+    flex: 1 0 auto;
+}
+
+/* Board */
+#board {
+    background-color: lightgrey;
+    position: absolute; 
+    z-index: 1;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* Instructions */
+#instructions {
+    display: none;
+    background-color: lightgrey;
+    position: absolute; 
+    z-index: 999;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 10px;
+    box-sizing: border-box;
+    flex-direction: column;
+}
+
+#instructions h3, p {
+    margin: 0;
+}
+
+#hideInstructions {
+    cursor: pointer;
+    font-size: 24px;
+    position: absolute;
+    top: -1px;
+    right: 12px;
+}
+
+#imageUpload {
+    display: none;
+}
+
+#uploadButton {
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+.difficultyButton {
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    font: inherit;
+    color: inherit;
+    cursor: pointer;
+    text-decoration: none; 
+}
+
+.difficulty {
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+/* Piece */
+.piece {
+    position: absolute;
+    z-index: 1;
+    cursor: grab;
+    transform-origin: center;
+}
+
+/* Footer */
+footer {
+    padding: 10px;
+    margin: 0;
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+}
+
+footer > div:nth-child(2) {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* Masks */
+svg {
+    height: 0;
+    width: 0;
+}
