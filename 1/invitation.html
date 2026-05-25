@@ -53,9 +53,17 @@
     }
 
     body {
-      background-color: rgb(200, 200, 200);
+      background-color: rgb(245, 244, 230);
       cursor: url('cursor.png'), auto;
       padding: 1em;
+    }
+
+    body.rainy {
+      background-color: rgb(200, 200, 200);
+    }
+
+    #weather-toggle {
+      cursor: pointer;
     }
 
     .border {
@@ -188,6 +196,7 @@
 
     .rain {
     position: fixed;
+    display: none;
     top: -20px;
     left: 0;
     width: 100%;
@@ -196,6 +205,10 @@
     z-index: 1000;
     overflow: hidden;
 }
+
+    body.rainy .rain {
+      display: block;
+    }
 
   .drop {
       position: absolute;
@@ -772,7 +785,7 @@
   </script>
 </head>
 
-<body>
+<body class="rainy">
   <div class="rain">
     <div class="drop"></div>
     <div class="drop"></div>
@@ -794,6 +807,17 @@
     <div class="drop"></div>
     <div class="drop"></div>
   </div>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const weatherToggle = document.getElementById('weather-toggle');
+
+      weatherToggle.addEventListener('click', function () {
+        const isRainy = document.body.classList.toggle('rainy');
+        weatherToggle.setAttribute('aria-pressed', isRainy);
+        weatherToggle.textContent = isRainy ? 'make it sunny' : 'make it rain';
+      });
+    });
+  </script>
 
   <div id="col1">
     <a href="../index.html">
@@ -839,6 +863,8 @@
             <a href="https://www.wilsoncafe.com.au">Wilson Cafe</a> has kindly offered their garage space as an emergency shelter
             in anticipation of the <a href="http://www.bom.gov.au/nsw/forecasts/sydney.shtml">forecast</a> wet weather 💖<br />
           </p>
+          <button id="weather-toggle" type="button" aria-pressed="true">make it sunny</button>
+          <br />
           <small><i>Last updated at 2:03pm July 31 </i></small>
           </center>
           <p>
