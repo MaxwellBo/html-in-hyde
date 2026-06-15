@@ -484,6 +484,64 @@
     </li>
 
     <li>
+      <a href="https://github.com/bijection/g9">g9</a>
+      <br />
+      Uses some weird gradient descent shit to figure out how to propogate updates through the diagram constraint function. More examples on the <a href="https://omrelli.ug/g9/gallery/">g9 gallery</a>.
+
+<pre style="overflow: scroll;">
+<code class="echo">&lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/g9/1.0.16/g9.js&quot;&gt;&lt;/script&gt;
+&lt;div id=&quot;demo-dragon&quot; style=&quot;height: 300px&quot;&gt;&lt;/div&gt;
+&lt;script&gt;
+var data = { squareness: 0.8, fromX: 175, fromY: 96, toX: -220, toY: 39 }
+function render(data, ctx) {
+  var lineoptions = { 'stroke-width': 4, 'stroke-linecap': 'round', affects: ['squareness'] }
+  function dragon(x1, y1, x2, y2, dir, level) {
+    if (level == 0) {
+      ctx.line(x1, y1, x2, y2, lineoptions)
+    } else {
+      var midx = (x1 + x2 + data.squareness * dir * (y2 - y1)) / 2
+      var midy = (y1 + y2 - data.squareness * dir * (x2 - x1)) / 2
+      dragon(x1, y1, midx, midy, -1, level - 1)
+      dragon(midx, midy, x2, y2, 1, level - 1)
+    }
+  }
+  dragon = ctx.pure(dragon)
+  dragon(data.fromX, data.fromY, data.toX, data.toY, -1, 9)
+  ctx.point(data.fromX, data.fromY, { r: 5 })
+  ctx.point(data.toX, data.toY, { r: 5 })
+}
+g9(data, render).align('center', 'center').insertInto('#demo-dragon')
+&lt;/script&gt;
+</code>
+</pre>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/g9/1.0.16/g9.js"></script>
+    <div id="demo-dragon" style="height: 300px"></div>
+    <script>
+    var data = { squareness: 0.8, fromX: 175, fromY: 96, toX: -220, toY: 39 }
+    function render(data, ctx) {
+      var lineoptions = { 'stroke-width': 4, 'stroke-linecap': 'round', affects: ['squareness'] }
+      function dragon(x1, y1, x2, y2, dir, level) {
+        if (level == 0) {
+          ctx.line(x1, y1, x2, y2, lineoptions)
+        } else {
+          var midx = (x1 + x2 + data.squareness * dir * (y2 - y1)) / 2
+          var midy = (y1 + y2 - data.squareness * dir * (x2 - x1)) / 2
+          dragon(x1, y1, midx, midy, -1, level - 1)
+          dragon(midx, midy, x2, y2, 1, level - 1)
+        }
+      }
+      dragon = ctx.pure(dragon)
+      dragon(data.fromX, data.fromY, data.toX, data.toY, -1, 9)
+      ctx.point(data.fromX, data.fromY, { r: 5 })
+      ctx.point(data.toX, data.toY, { r: 5 })
+    }
+    g9(data, render).align('center', 'center').insertInto('#demo-dragon')
+    </script>
+
+    </li>
+
+    <li>
       <a href="https://aframe.io/docs/">A-Frame</a>
       <br />
       <blockquote>
