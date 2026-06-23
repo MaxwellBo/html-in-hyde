@@ -1,0 +1,16 @@
+{
+  "name": "html-in-hyde",
+  "owner": {
+    "name": "Max Bo"
+  },
+  "metadata": {
+    "description": "Registers the Val Town plugin for HTML in Hyde contributors."
+  },
+  "plugins": [
+    {
+      "name": "valtown",
+      "source": "https://github.com/val-town/plugins",
+      "description": "Val Town MCP server + platform skills for building and deploying vals."
+    }
+  ]
+}

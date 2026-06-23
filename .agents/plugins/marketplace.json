@@ -1,0 +1,23 @@
+{
+  "name": "html-in-hyde",
+  "interface": {
+    "displayName": "HTML in Hyde"
+  },
+  "plugins": [
+    {
+      "name": "vals",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/val-town/plugins.git",
+        "path": "./plugin",
+        "ref": "main"
+      },
+      "policy": {
+        "installation": "INSTALLED_BY_DEFAULT",
+        "authentication": "ON_USE"
+      },
+      "category": "Coding",
+      "description": "Val Town MCP server + platform skills for building and deploying vals."
+    }
+  ]
+}

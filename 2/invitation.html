@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HTML in Hyde #2</title>
+  <meta name="description" content="a HTML freewrite on August 8 2026 in Hyde Park, Sydney">
+  <meta property="og:title" content="HTML in Hyde #2" />
+  <meta property="og:description" content="a HTML freewrite on August 8 2026 in Hyde Park, Sydney" />
+  <meta property="og:url" content="https://maxbo.me/html-in-hyde/2/invitation" />
+</head>
+
+<body>
+  <a href="../index.html">← index</a>
+
+  <h1>HTML in Hyde #2</h1>
+
+  <p>
+    <b>What?</b>
+    HTML in Hyde is a <i>HTML Freewrite</i> — <a href="https://html.energy/events.html"><q>[an event] in which people get together and write HTML documents</q></a>.
+  </p>
+
+  <p>
+    <b>When?</b>
+    August 8 (Saturday), 12pm (sharp) - 3:00, Sydney time
+    (<a href="https://calendar.google.com/calendar/render?action=TEMPLATE&dates=20260808T020000Z%2F20260808T050000Z&details=%F0%9F%93%8D%20https%3A%2F%2Fwww.google.com%2Fmaps%2Fplace%2F33%25C2%25B052%2732.3%2522S%2B151%25C2%25B012%2741.9%2522E%2F%40-33.8756429%2C151.2109979%2C19z%2Fdata%3D%213m1%214b1%214m4%213m3%218m2%213d-33.875644%214d151.211643%3Fentry%3Dttu%0A%F0%9F%94%97%20https%3A%2F%2Fmaxbo.me%2Fhtml-in-hyde%2F2%2Finvitation.html&location=Hyde%20Park%2C%20near%20the%20Anzac%20memorial&text=HTML%20in%20Hyde%20%232">gcal</a>)
+    (<a href="https://2026.html.energy/">HTML Day 2026</a>)
+  </p>
+
+  <p>
+    <b>Where?</b>
+    Hyde Park, north-east the Anzac Memorial
+    <a href="https://www.google.com/maps/place/33%C2%B052'32.3%22S+151%C2%B012'41.9%22E/@-33.8756429,151.2109979,19z/data=!3m1!4b1!4m4!3m3!8m2!3d-33.875644!4d151.211643?entry=ttu">(map)</a>
+  </p>
+
+  <p><b>Bring:</b></p>
+  <ul>
+    <li>a charged laptop</li>
+    <li>phone charger (you'll be hotspotting internet)</li>
+    <li>snacks</li>
+    <li>a picnic blanket, if you have one</li>
+  </ul>
+
+  <p><b>Schedule:</b></p>
+  <ul>
+    <li>12:00 (sharp) — setup</li>
+    <li>12:15 — call to action</li>
+    <li>12:22 — build build build</li>
+    <li>2:45 — demos</li>
+    <li>3:00 — keep cooking (if you want)</li>
+  </ul>
+
+  <form action="https://mbo--efef75fe6e9f11f1a6751607ee4eb77e.web.val.run/rsvps" method="POST" enctype="multipart/form-data">
+    <p><b>RSVP</b></p>
+    <input type="text" name="name" placeholder="Name" required />
+    <input type="email" name="email" placeholder="Email (for reminder)" required />
+    <br />
+    <label for="color">Color: <input id="color" type="color" name="color" value="#ff0000" required /></label>
+    <br />
+    <label for="image">Photo <i>(optional, max 512KiB)</i>: <input id="image" type="file" name="image" accept="image/*" /></label>
+    <br />
+    <button type="submit" name="status" value="going">Going</button>
+    <button type="submit" name="status" value="maybe">Maybe</button>
+    <button type="submit" name="status" value="can't come">Can't come</button>
+    <p><i>Resubmit with the same email to update your RSVP, color or photo.</i></p>
+  </form>
+
+  <p><b>RSVPs</b></p>
+  <ul id="rsvps"></ul>
+
+  <script>
+    const fileInput = document.getElementById("image");
+    fileInput.addEventListener("change", function () {
+      if (fileInput.files.length > 0) {
+        const file = fileInput.files[0];
+        if (file.size > 512 * 1024) {
+          alert("Image must be less than 512KiB. Yours was " + (file.size / 1024).toFixed(2) + "KB. Sorry!");
+          fileInput.value = "";
+        }
+      }
+    });
+
+    const colorInput = document.getElementById("color");
+    const randomColor = () => {
+      const r = Math.floor(Math.random() * 256);
+      const g = Math.floor(Math.random() * 256);
+      const b = Math.floor(Math.random() * 256);
+      if ((r + g + b) / 3 > 100) {
+        return "#" + r.toString(16).padStart(2, "0") + g.toString(16).padStart(2, "0") + b.toString(16).padStart(2, "0");
+      }
+      return randomColor();
+    };
+    colorInput.value = randomColor();
+
+    document.addEventListener("DOMContentLoaded", async function () {
+      const endpoint = "https://mbo--efef75fe6e9f11f1a6751607ee4eb77e.web.val.run";
+      const ul = document.getElementById("rsvps");
+      const rsvps = await fetch(endpoint + "/rsvps").then((response) => response.json());
+
+      for (let i = 0; i < rsvps.length; i++) {
+        const { name, status, color } = rsvps[i];
+        const li = document.createElement("li");
+
+        const colorBox = document.createElement("span");
+        colorBox.style.display = "inline-block";
+        colorBox.style.width = "1em";
+        colorBox.style.height = "1em";
+        colorBox.style.backgroundColor = color;
+        colorBox.style.verticalAlign = "middle";
+        li.appendChild(colorBox);
+        li.appendChild(document.createTextNode(" " + name + (status === "going" ? "" : ` (${status})`)));
+
+        fetch(endpoint + "/image?index=" + i)
+          .then((res) => res.text())
+          .then((imageb64) => {
+            if (imageb64 && imageb64 !== "NULL") {
+              const img = document.createElement("img");
+              img.src = imageb64;
+              img.alt = "";
+              img.width = 16;
+              img.height = 16;
+              img.style.verticalAlign = "middle";
+              li.insertBefore(img, li.childNodes[1]);
+            }
+          });
+
+        ul.appendChild(li);
+      }
+    });
+  </script>
+
+  <p>
+    <a href="https://github.com/MaxwellBo/html-in-hyde/blob/master/2/invitation.html">source</a>
+    ·
+    <a href="https://www.val.town/x/mbo/html_in_hyde_2/code/main.ts">backend</a>
+  </p>
+</body>
+
+</html>

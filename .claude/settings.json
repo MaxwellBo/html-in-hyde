@@ -1,0 +1,13 @@
+{
+  "extraKnownMarketplaces": {
+    "valtown": {
+      "source": {
+        "source": "github",
+        "repo": "val-town/plugins"
+      }
+    }
+  },
+  "enabledPlugins": {
+    "valtown@valtown": true
+  }
+}
