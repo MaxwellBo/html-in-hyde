@@ -12,7 +12,7 @@
 </head>
 
 <body>
-  <a href="../index.html">← index</a>
+  <a href="../index.html">← index, previous events, resources, motivation, etc</a>
 
   <h1>HTML in Hyde #2</h1>
 
@@ -28,18 +28,68 @@
     (<a href="https://2026.html.energy/">HTML Day 2026</a>)
   </p>
 
-  <p>
+  <div>
     <b>Where?</b>
+    <br />
     Hyde Park, north-east the Anzac Memorial
-    <a href="https://www.google.com/maps/place/33%C2%B052'32.3%22S+151%C2%B012'41.9%22E/@-33.8756429,151.2109979,19z/data=!3m1!4b1!4m4!3m3!8m2!3d-33.875644!4d151.211643?entry=ttu">(map)</a>
-  </p>
+    <a href="https://www.google.com/maps/place/33%C2%B052'32.3%22S+151%C2%B012'41.9%22E/@-33.8756429,151.2109979,19z/data=!3m1!4b1!4m4!3m3!8m2!3d-33.875644!4d151.211643?entry=ttu">(📍
+      map?)</a>
+    <br />
+    <details>
+      <summary>🗺️ Show map?</summary>
+      <iframe src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d828.1360196758059!2d151.2116389!3d-33.8756389!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMzPCsDUyJzMyLjMiUyAxNTHCsDEyJzQxLjkiRQ!5e0!3m2!1sen!2sau!4v1721097498079!5m2!1sen!2sau" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </details>
+    <details>
+      <summary>🚾 Bathroom location?</summary>
+      Museum Station (about a 3 min walk away)
+    </details>
+  </div>
 
-  <p><b>Bring:</b></p>
+  <br />
+  <div>
+    <b>Bring:</b>
+    <ul>
+      <li>a charged laptop</li>
+      <li>charger for they phone (you'll be hotspotting internet)</li>
+      <li>arts and crafts equipment (pencils, pens, paper, canvas, paint, etc). to make art for your website</li>
+      <li>snacky snacks</li>
+      <li>sunscreen and/or sunnies</li>
+      <li>a picnic blanket, if you have one</li>
+    </ul>
+  </div>
+
+  <div>
+    <b>Do NOT bring:</b>
+    <ul>
+      <li>your own coffee (coffee will only be available for purchase from <a href="https://www.wilsoncafe.com.au">Wilson Cafe</a> until 2pm)</li>
+    </ul>
+  </div>
+
+  <b>What should I do?</b>
   <ul>
-    <li>a charged laptop</li>
-    <li>phone charger (you'll be hotspotting internet)</li>
-    <li>snacks</li>
-    <li>a picnic blanket, if you have one</li>
+    <li>
+      start with an empty <code>.html</code> file open in a text editor
+    </li>
+    <li>
+      build a fun website for:
+      your dog? a poem? a recipe? a short story? a game? a gallery?
+    </li>
+    <li>
+      ask for help from others (no prior programming experience required)
+    </li>
+    <li>
+      read the <a href="../index.html#why"># Why?</a> and <a href="../index.html#resources"># Resources</a> sections
+      of the index page
+    </li>
+    <li>
+      NOT use a bundler (JS is allowed)
+    </li>
+    <li>
+      do the <a href="https://www.are.na/block/25688568">computer dance</a>
+    </li>
+    <li>
+      let the <a href="https://html.energy/goals.html">HTML energy</a> flow
+    </li>
   </ul>
 
   <p><b>Schedule:</b></p>
@@ -51,19 +101,34 @@
     <li>3:00 — keep cooking (if you want)</li>
   </ul>
 
-  <form action="https://mbo--efef75fe6e9f11f1a6751607ee4eb77e.web.val.run/rsvps" method="POST" enctype="multipart/form-data">
-    <p><b>RSVP</b></p>
-    <input type="text" name="name" placeholder="Name" required />
-    <input type="email" name="email" placeholder="Email (for reminder)" required />
-    <br />
-    <label for="color">Color: <input id="color" type="color" name="color" value="#ff0000" required /></label>
-    <br />
-    <label for="image">Photo <i>(optional, max 512KiB)</i>: <input id="image" type="file" name="image" accept="image/*" /></label>
-    <br />
-    <button type="submit" name="status" value="going">Going</button>
-    <button type="submit" name="status" value="maybe">Maybe</button>
-    <button type="submit" name="status" value="can't come">Can't come</button>
-    <p><i>Resubmit with the same email to update your RSVP, color or photo.</i></p>
+  <form id="rsvp" action="https://mbo--efef75fe6e9f11f1a6751607ee4eb77e.web.val.run/rsvps" method="POST" enctype="multipart/form-data">
+    <fieldset>
+      <legend>RSVP</legend>
+      <input type="email" name="email" placeholder="Email (for reminder)" required />
+      <input type="text" name="name" placeholder="Name" required />
+
+      <br />
+      <br />
+      <label for="color">
+        Choose a color for your carriage:
+        <input id="color" type="color" name="color" value="#ff0000" required />
+      </label>
+      <br />
+      <br />
+
+      <label for="image">
+        Upload a photo for your carriage <i>(optional, max 512KiB)</i>:
+        <input id="image" type="file" name="image" accept="image/*" />
+      </label>
+
+      <br />
+      <br />
+
+      <button id="going" type="submit" name="status" value="going">Going</button>
+      <button type="submit" name="status" value="maybe">Maybe</button>
+      <button type="submit" name="status" value="can't come">Can't come</button>
+      <i>(Resubmit your RSVP with the same email to change status, color or photo)</i>
+    </fieldset>
   </form>
 
   <p><b>RSVPs</b></p>
@@ -131,9 +196,16 @@
   </script>
 
   <p>
-    <a href="https://github.com/MaxwellBo/html-in-hyde/blob/master/2/invitation.html">source</a>
-    ·
-    <a href="https://www.val.town/x/mbo/html_in_hyde_2/code/main.ts">backend</a>
+    <a href="https://github.com/MaxwellBo/html-in-hyde/blob/master/2/invitation.html">page source code</a>
+    <br />
+    <a href="https://www.val.town/x/mbo/html_in_hyde_2/code/main.ts">backend source code</a>
+    <br />
+    <a href="https://maxbo.me">~mb</a>
+  </p>
+  <p>
+    <small style="width: 40ch; display: block;">
+      We acknowledge the Traditional Owners of the land on which this event takes place, the Gadigal of the Eora Nation and pay our respects to Elders past and present.
+    </small>
   </p>
 </body>
 

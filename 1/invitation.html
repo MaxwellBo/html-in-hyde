@@ -288,14 +288,19 @@
       margin-top: 0.5ch;
       margin-bottom: 0.5ch;
       padding: 0.2ch;
+      background-color: #9e5a5a;
+    }
+
+    body.rainy .alert-wrapper {
       background-color: darkred;
     }
+
     .alert {
       a {
         color: cyan
 
       }
-      background-color: darkred;
+      background-color: #a86464;
       color: white;
       padding: 0.5ch;
       margin: 0.5ch;
@@ -303,7 +308,11 @@
       font-family: monospace;
     }
 
-    .blink {
+    body.rainy .alert {
+      background-color: darkred;
+    }
+
+    body.rainy .blink {
       animation: blink 1s infinite;
     }
 
