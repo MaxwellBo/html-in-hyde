@@ -121,32 +121,28 @@
       transform-origin: 50% 100%;
     }
 
-    #kite-fliers,
-    .rope-layer {
+    #kite-fliers {
       position: absolute;
       inset: 0;
+      z-index: 3;
       width: 1000px;
       height: 560px;
       overflow: visible;
-    }
-
-    .rope-layer {
-      z-index: 2;
-      pointer-events: none;
+      transform: translateZ(70px);
       transform-style: preserve-3d;
     }
 
-    .rope-canvas {
-      display: block;
+    /* Ropes are drawn in scene/screen space: SVG user space does not
+       receive the same perspective projection as translate3d siblings
+       under transform-style: preserve-3d, so attachment points would drift. */
+    #rope-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 5;
       width: 100%;
       height: 100%;
       overflow: visible;
-    }
-
-    #kite-fliers {
-      z-index: 3;
-      transform: translateZ(70px);
-      transform-style: preserve-3d;
+      pointer-events: none;
     }
 
     .kite-rope {
@@ -154,6 +150,24 @@
       stroke: #453b32;
       stroke-width: 1.25;
       vector-effect: non-scaling-stroke;
+    }
+
+    .hand-anchor,
+    .kite-rope-anchor {
+      position: absolute;
+      width: 0;
+      height: 0;
+      pointer-events: none;
+    }
+
+    .hand-anchor {
+      left: 50%;
+      top: 100%;
+    }
+
+    .kite-rope-anchor {
+      right: 0;
+      bottom: 0;
     }
 
     .flier,
@@ -381,7 +395,7 @@
   </ul>
 
   <script type="module">
-    import { html } from "https://esm.sh/htl@1.0.0";
+    import { html, svg } from "https://esm.sh/htl@1.0.0";
 
     // upload and colour picker settings
     const BYTES_PER_KIB = 1024;
@@ -396,6 +410,7 @@
     const HEX_CHANNEL_WIDTH = 2;
 
     // positions in the unscaled 1000 by 560 scene
+    const WORLD_WIDTH = 1000;
     const FLIER_MIN_X = 300;
     const FLIER_MAX_X = 700;
     const FLIER_MIN_GRASS_PROGRESS = 0.05;
@@ -422,9 +437,6 @@
     const KITE_ROTATION_OFFSET_DEGREES = 45;
     const KITE_PHASE_STEP = 1.71;
     const KITE_HALF_SIZE = 22;
-    const KITE_SHAPE_INSET = 2;
-    const KITE_CORNER_DISTANCE =
-      Math.SQRT2 * (KITE_HALF_SIZE - KITE_SHAPE_INSET);
 
     // wind changes gradually, with occasional calm periods and gusts
     const INITIAL_WIND_SPEED = 55;
@@ -494,9 +506,20 @@
     document.addEventListener("DOMContentLoaded", async function () {
       const endpoint = "https://mbo--efef75fe6e9f11f1a6751607ee4eb77e.web.val.run";
       const ul = document.getElementById("rsvps");
+      const scene = document.getElementById("scene");
       const fliers = document.getElementById("kite-fliers");
+      const ropeOverlay = document.getElementById("rope-overlay");
       const windReadout = document.getElementById("wind-readout");
       const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      // map a 3D-projected element into the flat rope overlay's SVG coordinates
+      const toOverlay = (element, sceneRect) => {
+        const rect = element.getBoundingClientRect();
+        return {
+          x: rect.left + rect.width / 2 - sceneRect.left,
+          y: rect.top + rect.height / 2 - sceneRect.top
+        };
+      };
 
       // the backend supplies both the visible rsvp list and the kite fliers.
       let rsvps = [];
@@ -553,36 +576,23 @@
             <div class="person-drawing">
               <div class="head" aria-hidden="true"></div>
               <div class="body"></div>
-              <div class="arm arm-left"></div>
-              <div class="arm arm-right"></div>
+              <div class="arm arm-left"><span class="hand-anchor" data-hand="left"></span></div>
+              <div class="arm arm-right"><span class="hand-anchor" data-hand="right"></span></div>
               <div class="leg leg-left"></div>
               <div class="leg leg-right"></div>
             </div>
           </div>
           <div class="kite" style=${{ "--kite-color": color }}>
-            <div class="kite-shape"></div>
+            <div class="kite-shape">
+              <span class="kite-rope-anchor"></span>
+            </div>
           </div>
         `;
         const [flier, kite] = people.children;
         fliers.append(people);
 
-        const ropeLayer = html`
-          <div
-            class="rope-layer"
-            style=${{ transform: `translateZ(${depth}px)` }}
-          >
-            <svg
-              class="rope-canvas"
-              viewBox="0 0 1000 560"
-              preserveAspectRatio="none"
-              aria-hidden="true"
-            >
-              <path class="kite-rope"></path>
-            </svg>
-          </div>
-        `;
-        const rope = ropeLayer.querySelector(".kite-rope");
-        fliers.append(ropeLayer);
+        const rope = svg`<path class="kite-rope">`;
+        ropeOverlay.append(rope);
 
         // begin with a taut rope and alternate which side each kite starts on.
         const ropeLength = ROPE_LENGTH;
@@ -610,6 +620,9 @@
           flier,
           kite,
           rope,
+          leftHand: flier.querySelector('[data-hand="left"]'),
+          rightHand: flier.querySelector('[data-hand="right"]'),
+          kiteAnchor: kite.querySelector(".kite-rope-anchor"),
           personX,
           personY,
           ropeLength,
@@ -760,35 +773,52 @@
 
           const kiteX = person.x;
           const kiteY = person.y;
-          const kiteToHandX = handX - kiteX;
-          const kiteToHandY = handY - kiteY;
-          const kiteToHandDistance = Math.max(
-            ROPE_EPSILON,
-            Math.hypot(kiteToHandX, kiteToHandY)
-          );
-          const ropeEndX =
-            kiteX +
-            (kiteToHandX / kiteToHandDistance) * KITE_CORNER_DISTANCE;
-          const ropeEndY =
-            kiteY +
-            (kiteToHandY / kiteToHandDistance) * KITE_CORNER_DISTANCE;
 
           // the rope already supplies the kite's orientation, even while slack.
+          // rotate so the kite-shape's bottom-right corner faces the hand.
           const angle =
             Math.atan2(handY - kiteY, handX - kiteX) * RADIANS_TO_DEGREES -
             KITE_ROTATION_OFFSET_DEGREES;
           person.kite.style.transform = `translate3d(${kiteX - KITE_HALF_SIZE}px, ${kiteY - KITE_HALF_SIZE}px, ${person.depth}px) rotateZ(${angle}deg)`;
+        });
 
-          const ropeDistance = Math.hypot(kiteX - handX, kiteY - handY);
+        // project 3D hand + kite-corner anchors into the flat overlay so the
+        // stroke meets the same perspective-projected points as the sprites.
+        const sceneRect = scene.getBoundingClientRect();
+        // sag constants are authored in world pixels; match #world's 2D scale.
+        const slackScale = Number.parseFloat(
+          getComputedStyle(document.getElementById("world"))
+            .getPropertyValue("--scene-scale")
+        ) || sceneRect.width / WORLD_WIDTH;
+        kitePeople.forEach((person) => {
+          const handAnchor =
+            person.handSide < 0 ? person.leftHand : person.rightHand;
+          const hand = toOverlay(handAnchor, sceneRect);
+          const ropeEnd = toOverlay(person.kiteAnchor, sceneRect);
+          const handX =
+            person.personX +
+            (person.handSide < 0
+              ? LEFT_HAND_OFFSET_X
+              : RIGHT_HAND_OFFSET_X);
+          const handY =
+            person.personY +
+            (person.handSide < 0
+              ? LEFT_HAND_OFFSET_Y
+              : RIGHT_HAND_OFFSET_Y);
+          const ropeDistance = Math.hypot(person.x - handX, person.y - handY);
           const slack = Math.max(0, person.ropeLength - ropeDistance);
-          const controlX = (handX + ropeEndX) / 2;
-          const controlY =
-            (handY + ropeEndY) / 2 +
-            ROPE_SLACK_OFFSET +
-            slack * ROPE_SLACK_FACTOR;
+          const chord = Math.hypot(ropeEnd.x - hand.x, ropeEnd.y - hand.y);
+          const sag = Math.min(
+            chord * 0.45,
+            (ROPE_SLACK_OFFSET + slack * ROPE_SLACK_FACTOR) * slackScale
+          );
+          const controlX = (hand.x + ropeEnd.x) / 2;
+          const controlY = (hand.y + ropeEnd.y) / 2 + sag;
 
-          // a quadratic curve lets an untensioned rope sag naturally.
-          person.rope.setAttribute("d", `M ${handX} ${handY} Q ${controlX} ${controlY} ${ropeEndX} ${ropeEndY}`);
+          person.rope.setAttribute(
+            "d",
+            `M ${hand.x} ${hand.y} Q ${controlX} ${controlY} ${ropeEnd.x} ${ropeEnd.y}`
+          );
         });
 
         requestAnimationFrame(draw);
@@ -860,6 +890,7 @@
         <img id="tree1" src="../0/img/tree1.png" alt="" />
         <div id="kite-fliers"></div>
       </div>
+      <svg id="rope-overlay" aria-hidden="true"></svg>
     </div>
   </aside>
 </body>
