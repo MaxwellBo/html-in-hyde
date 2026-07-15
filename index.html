@@ -37,6 +37,14 @@
     #past-events-container * {
       max-width: 80ch;
     }
+
+    .event-screenshot {
+      width: 100%;
+      max-width: 400px;
+      aspect-ratio: 1;
+      object-fit: cover;
+      object-position: top;
+    }
   </style>
 
 <!-- <script>
@@ -72,10 +80,10 @@
   <h2>Future events</h2>
 
   <div style="max-width: 80ch;">
-    <h3>🌿 HTML in Hyde #2 (<a href="https://2026.html.energy/">❇️ HTML Day 2026</a> / <time>August 8 2026</time>)</h3>
+    <h3>🪁 HTML in Hyde #2 (<a href="https://2026.html.energy/">❇️ HTML Day 2026</a> / <time>August 8 2026</time>)</h3>
     <figure>
       <a href="2/invitation.html">
-        <img src="2/screenshot.png" alt="HTML in Hyde #2 invitation" style="width: 100%; max-width: 400px;">
+        <img class="event-screenshot" src="2/screenshot.png" alt="HTML in Hyde #2 invitation">
       </a>
       <figcaption>
         <a href="2/invitation.html">↑ Invitation</a> <i>(work in progress)</i>
@@ -91,7 +99,7 @@
     <div>
       <h3>🍃🚂 HTML in Hyde #1 (<a href="https://html.energy/html-day/2025/index.html">❇️ HTML Day 2025</a> / <time>August 2 2025</time>)</h3>
       <figure>
-        <a href="1/invitation.html"><img src="1/screenshot.jpg" style="width: 100%; max-width: 400px;"></a>
+        <a href="1/invitation.html"><img class="event-screenshot" src="1/screenshot.jpg"></a>
         <figcaption>
           <a href="1/invitation.html">↑ Invitation</a>
         </figcaption>
@@ -105,7 +113,7 @@
     <h3>🌳🧺 HTML in Hyde #0 (<time>21st July 2024</time>)</h3>
 
       <figure>
-        <a href="0/invitation.html"><img src="0/invitation.png" style="width: 100%; max-width: 400px;"></a>
+        <a href="0/invitation.html"><img class="event-screenshot" src="0/invitation.png"></a>
         <figcaption>
           <a href="0/invitation.html">↑ Invitation</a>
           <br />

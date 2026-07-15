@@ -116,6 +116,18 @@
       transform-origin: 50% 0;
     }
 
+    #tree1 {
+      position: absolute;
+      z-index: 2;
+      left: 650px;
+      top: 50px;
+      width: 300px;
+      height: 300px;
+      object-fit: contain;
+      transform: translateZ(-20px) rotateY(315deg) rotateZ(0);
+      transform-origin: 50% 100%;
+    }
+
     #ropes,
     #kite-fliers {
       position: absolute;
@@ -313,8 +325,8 @@
 
   <p>
     <b>When?</b>
-    August 8 (Saturday), 12pm (sharp) - 3:00, Sydney time
-    (<a href="https://calendar.google.com/calendar/render?action=TEMPLATE&dates=20260808T020000Z%2F20260808T050000Z&details=%F0%9F%93%8D%20https%3A%2F%2Fwww.google.com%2Fmaps%2Fplace%2F33%25C2%25B052%2732.3%2522S%2B151%25C2%25B012%2741.9%2522E%2F%40-33.8756429%2C151.2109979%2C19z%2Fdata%3D%213m1%214b1%214m4%213m3%218m2%213d-33.875644%214d151.211643%3Fentry%3Dttu%0A%F0%9F%94%97%20https%3A%2F%2Fmaxbo.me%2Fhtml-in-hyde%2F2%2Finvitation.html&location=Hyde%20Park%2C%20near%20the%20Anzac%20memorial&text=HTML%20in%20Hyde%20%232">gcal</a>)
+    August 8 (Saturday), 3pm (sharp) - 6:00, Sydney time
+    (<a href="https://calendar.google.com/calendar/render?action=TEMPLATE&dates=20260808T050000Z%2F20260808T080000Z&details=%F0%9F%93%8D%20https%3A%2F%2Fwww.google.com%2Fmaps%2Fplace%2F33%25C2%25B052%2732.3%2522S%2B151%25C2%25B012%2741.9%2522E%2F%40-33.8756429%2C151.2109979%2C19z%2Fdata%3D%213m1%214b1%214m4%213m3%218m2%213d-33.875644%214d151.211643%3Fentry%3Dttu%0A%F0%9F%94%97%20https%3A%2F%2Fmaxbo.me%2Fhtml-in-hyde%2F2%2Finvitation.html&location=Hyde%20Park%2C%20near%20the%20Anzac%20memorial&text=HTML%20in%20Hyde%20%232">gcal</a>)
     (<a href="https://2026.html.energy/">HTML Day 2026</a>)
   </p>
 
@@ -387,11 +399,11 @@
 
   <p><b>Schedule:</b></p>
   <ul>
-    <li>12:00 (sharp) — setup</li>
-    <li>12:15 — call to action</li>
-    <li>12:22 — build build build</li>
-    <li>2:45 — demos</li>
-    <li>3:00 — keep cooking (if you want)</li>
+    <li>3:00 (sharp) — setup</li>
+    <li>3:15 — call to action</li>
+    <li>3:22 — build build build</li>
+    <li>5:45 — demos</li>
+    <li>6:00 — keep cooking (if you want)</li>
   </ul>
 
   <script type="module">
@@ -461,10 +473,8 @@
     const NOMINAL_FPS = 60;
     const MAX_DELTA_SECONDS = 0.033;
     const ROPE_EPSILON = 0.001;
-    const TENSION_EPSILON = 0.01;
     const GROUND_Y = 350;
     const LANDED_Y = 328;
-    const KITE_YAW_FACTOR = -0.05;
     const ROPE_SLACK_OFFSET = 4;
     const ROPE_SLACK_FACTOR = 0.45;
     const MILLISECONDS_PER_SECOND = 1000;
@@ -514,7 +524,8 @@
 
       // size the park once so narrowing the window makes it encroach rather
       // than shrinking the people, grass, and kites.
-      world.style.setProperty("--scene-scale", scene.clientWidth / WORLD_WIDTH);
+      const sceneScale = scene.clientWidth / WORLD_WIDTH;
+      world.style.setProperty("--scene-scale", sceneScale);
 
       // the backend supplies both the visible rsvp list and the kite fliers.
       let rsvps = [];
@@ -594,10 +605,6 @@
           (goingIndex % INITIAL_KITE_HEIGHT_VARIANTS) * INITIAL_KITE_HEIGHT_STEP;
         const verticalDistance = initialY - (personY + HAND_OFFSET_Y);
         const initialX = personX + initialDirection * Math.sqrt(Math.max(0, ropeLength ** 2 - verticalDistance ** 2));
-        const initialRopeAngle = Math.atan2(
-          personY + HAND_OFFSET_Y - initialY,
-          personX + initialDirection * HAND_OFFSET_X - initialX
-        ) * RADIANS_TO_DEGREES;
         const kitePerson = {
           flier,
           kite,
@@ -610,7 +617,6 @@
           vx: 0,
           vy: 0,
           handSide: initialDirection,
-          kiteAngle: initialRopeAngle - KITE_ROTATION_OFFSET_DEGREES,
           phase: goingIndex * KITE_PHASE_STEP,
           depth
         };
@@ -680,11 +686,6 @@
           const gust = reducedMotion
             ? 0
             : Math.sin(now / GUST_PERIOD_MS + person.phase) * GUST_AMPLITUDE;
-          let forceX = 0;
-          let liftForce = 0;
-          let forceY = GRAVITY;
-          let tensionX = 0;
-          let tensionY = 0;
 
           const takeoffLift = Math.min(
             MAX_LIFT,
@@ -706,14 +707,13 @@
             const airSpeed = Math.hypot(airX, airY);
             const dragX = DRAG_COEFFICIENT * airSpeed * airX;
             const dragY = DRAG_COEFFICIENT * airSpeed * airY;
-            liftForce = -Math.min(
+            const liftForce = -Math.min(
               MAX_LIFT,
               LIFT_COEFFICIENT * Math.abs(airX) * airSpeed
             );
-            forceX = dragX;
-            forceY = GRAVITY + dragY + liftForce;
+            const forceY = GRAVITY + dragY + liftForce;
 
-            person.vx += forceX * delta;
+            person.vx += dragX * delta;
             person.vy += forceY * delta;
             person.vx *= Math.pow(VELOCITY_DAMPING, delta * NOMINAL_FPS);
             person.vy *= Math.pow(VELOCITY_DAMPING, delta * NOMINAL_FPS);
@@ -731,9 +731,6 @@
               person.x = handX + normalX * person.ropeLength;
               person.y = handY + normalY * person.ropeLength;
 
-              const outwardForce = Math.max(0, forceX * normalX + forceY * normalY);
-              tensionX = -normalX * outwardForce;
-              tensionY = -normalY * outwardForce;
               const radialVelocity = person.vx * normalX + person.vy * normalY;
 
               // remove velocity moving away from the hand so the rope cannot stretch.
@@ -752,18 +749,14 @@
             }
           }
 
-          // rotate only while measurable rope tension gives a stable direction.
-          if (Math.hypot(tensionX, tensionY) > TENSION_EPSILON) {
-            person.kiteAngle =
-              Math.atan2(tensionY, tensionX) * RADIANS_TO_DEGREES -
-              KITE_ROTATION_OFFSET_DEGREES;
-          }
-          const angle = person.kiteAngle;
-          const rotateY = person.landed ? 0 : wind * KITE_YAW_FACTOR;
-          person.kite.style.transform = `translate3d(${person.x - KITE_HALF_SIZE}px, ${person.y - KITE_HALF_SIZE}px, ${person.depth + KITE_DEPTH_OFFSET}px) rotateZ(${angle}deg) rotateY(${rotateY}deg)`;
-
           const kiteX = person.x;
           const kiteY = person.y;
+          // the rope already supplies the kite's orientation, even while slack.
+          const angle =
+            Math.atan2(handY - kiteY, handX - kiteX) * RADIANS_TO_DEGREES -
+            KITE_ROTATION_OFFSET_DEGREES;
+          person.kite.style.transform = `translate3d(${kiteX - KITE_HALF_SIZE}px, ${kiteY - KITE_HALF_SIZE}px, ${person.depth + KITE_DEPTH_OFFSET}px) rotateZ(${angle}deg)`;
+
           const ropeDistance = Math.hypot(kiteX - handX, kiteY - handY);
           const slack = Math.max(0, person.ropeLength - ropeDistance);
           const controlX = (handX + kiteX) / 2;
@@ -840,6 +833,7 @@
     <div id="scene">
       <div id="world">
         <div id="grass"></div>
+        <img id="tree1" src="../0/img/tree1.png" alt="" />
         <svg id="ropes" viewBox="0 0 1000 560" preserveAspectRatio="none" aria-hidden="true"></svg>
         <div id="kite-fliers"></div>
       </div>
