@@ -39,6 +39,10 @@
       margin-block: 0;
     }
 
+    #col1 > section {
+      padding-bottom: 1em;
+    }
+
     iframe {
       max-width: 100%;
     }
@@ -51,6 +55,11 @@
 
     #rsvps {
       columns: 4;
+    }
+
+    #schedule td {
+      border: 1px solid #aeaeae;
+      padding: 0.2ch;
     }
 
     @media (min-width: 1000px) {
@@ -293,20 +302,20 @@
 
   <h1>HTML in Hyde #2</h1>
 
-  <p>
+  <section>
     <b>What?</b>
     <br />
     HTML in Hyde is a <i>HTML Freewrite</i> — <a href="https://html.energy/events.html"><q>[an event] in which people get together and write HTML documents</q></a>.
-  </p>
+  </section>
 
-  <p>
+  <section>
     <b>When?</b>
     August 8 (Saturday), 3pm (sharp) - 6:00, Sydney time
     (<a href="https://calendar.google.com/calendar/render?action=TEMPLATE&dates=20260808T050000Z%2F20260808T080000Z&details=%F0%9F%93%8D%20https%3A%2F%2Fwww.google.com%2Fmaps%2Fplace%2F33%25C2%25B052%2732.3%2522S%2B151%25C2%25B012%2741.9%2522E%2F%40-33.8756429%2C151.2109979%2C19z%2Fdata%3D%213m1%214b1%214m4%213m3%218m2%213d-33.875644%214d151.211643%3Fentry%3Dttu%0A%F0%9F%94%97%20https%3A%2F%2Fmaxbo.me%2Fhtml-in-hyde%2F2%2Finvitation.html&location=Hyde%20Park%2C%20near%20the%20Anzac%20memorial&text=HTML%20in%20Hyde%20%232">gcal</a>)
     (<a href="https://2026.html.energy/">HTML Day 2026</a>)
-  </p>
+  </section>
 
-  <div>
+  <section>
     <b>Where?</b>
     <br />
     Hyde Park, north-east the Anzac Memorial
@@ -331,10 +340,9 @@
         referrerpolicy="strict-origin-when-cross-origin"
       ></iframe>
     </details>
-  </div>
+  </section>
 
-  <br />
-  <div>
+  <section>
     <b>Bring:</b>
     <ul>
       <li>a charged laptop</li>
@@ -344,46 +352,65 @@
       <li>sunscreen and/or sunnies</li>
       <li>a picnic blanket, if you have one</li>
     </ul>
-  </div>
+  </section>
 
-  <b>What should I do?</b>
-  <ul>
-    <li>
-      start with an empty <code>.html</code> file open in a text editor
-    </li>
-    <li>
-      build a fun website for:
-      your dog? a poem? a recipe? a short story? a game? a gallery?
-    </li>
-    <li>
-      ask for help from others (no prior programming experience required)
-    </li>
-    <li>
-      read the <a href="../index.html#why"># Why?</a> and <a href="../index.html#resources"># Resources</a> sections
-      of the index page
-    </li>
-    <li>
-      NOT use a bundler (JS is allowed)
-    </li>
-    <li>
-      try to refrain from LLM usage (within reason)
-    </li>
-    <li>
-      do the <a href="https://web.archive.org/web/20230610012104/https://extrapractice.space/computer-dance/#instructions#instructions">computer dance</a>
-    </li>
-    <li>
-      let the <a href="https://html.energy/goals.html">HTML energy</a> flow
-    </li>
-  </ul>
+  <section>
+    <b>What should I do?</b>
+    <ul>
+      <li>
+        start with an empty <code>.html</code> file open in a text editor
+      </li>
+      <li>
+        build a fun website for:
+        your dog? a poem? a recipe? a short story? a game? a gallery?
+      </li>
+      <li>
+        ask for help from others (no prior programming experience required)
+      </li>
+      <li>
+        read the <a href="../index.html#why"># Why?</a> and <a href="../index.html#resources"># Resources</a> sections
+        of the index page
+      </li>
+      <li>
+        NOT use a bundler (JS is allowed)
+      </li>
+      <li>
+        try to refrain from LLM usage (within reason)
+      </li>
+      <li>
+        do the <a href="https://web.archive.org/web/20230610012104/https://extrapractice.space/computer-dance/#instructions#instructions">computer dance</a>
+      </li>
+      <li>
+        let the <a href="https://html.energy/goals.html">HTML energy</a> flow
+      </li>
+    </ul>
+  </section>
 
-  <b>Schedule:</b>
-  <ul>
-    <li>3:00 (sharp) — setup</li>
-    <li>3:15 — call to action</li>
-    <li>3:22 — build build build</li>
-    <li>5:45 — demos</li>
-    <li>6:00 — keep cooking (if you want)</li>
-  </ul>
+  <section>
+    <b>Schedule:</b>
+    <table id="schedule">
+      <tr>
+        <td>3:00 (sharp)</td>
+        <td>setup</td>
+      </tr>
+      <tr>
+        <td>3:15</td>
+        <td>call to action</td>
+      </tr>
+      <tr>
+        <td>3:22</td>
+        <td>build build build</td>
+      </tr>
+      <tr>
+        <td>5:45</td>
+        <td>demos</td>
+      </tr>
+      <tr>
+        <td>6:00</td>
+        <td>keep cooking (if you want)</td>
+      </tr>
+    </table>
+  </section>
 
   <script type="module">
     import { html, svg } from "https://esm.sh/htl@1.0.0";
