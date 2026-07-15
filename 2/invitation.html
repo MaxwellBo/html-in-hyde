@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#dff4fb">
+  <meta name="theme-color" content="#d8e7d2">
   <title>HTML in Hyde #2</title>
   <meta name="description" content="a HTML freewrite on August 8 2026 in Hyde Park, Sydney">
   <link rel="icon" type="image/png" href="kite.png" />
@@ -14,7 +14,6 @@
   <meta property="og:url" content="https://maxbo.me/html-in-hyde/2/invitation" />
   <style>
     :root {
-      --scene-width: 640px;
       --scene-scale: 0.64;
     }
 
@@ -25,10 +24,8 @@
     body {
       margin: 0;
       padding: 1em;
-      background: #dff4fb;
-      background-attachment: fixed;
-      background-repeat: no-repeat;
-      background-size: 100vw 100vh;
+      color: black;
+      background: #d8e7d2;
     }
 
     #col1 {
@@ -36,6 +33,10 @@
       z-index: 4;
       max-width: 80ch;
       min-width: 0;
+    }
+
+    #col1 ul {
+      margin-block: 0;
     }
 
     iframe {
@@ -46,21 +47,6 @@
       position: relative;
       z-index: 1;
       min-width: 0;
-    }
-
-    body.night {
-      color: #f7f8ff;
-      text-shadow: 0 1px 2px #000;
-    }
-
-    body.night a {
-      color: #b9d8ff;
-    }
-
-    body.night input,
-    body.night button {
-      color: #111;
-      text-shadow: none;
     }
 
     #rsvps {
@@ -75,6 +61,7 @@
       }
 
       #scene {
+        width: calc(100% + 10em);
         margin-left: -10em;
       }
     }
@@ -91,7 +78,7 @@
 
     #scene {
       position: relative;
-      width: var(--scene-width);
+      width: 100%;
       aspect-ratio: 25 / 14;
       overflow: visible;
       background: transparent;
@@ -134,8 +121,8 @@
       transform-origin: 50% 100%;
     }
 
-    #ropes,
-    #kite-fliers {
+    #kite-fliers,
+    .rope-layer {
       position: absolute;
       inset: 0;
       width: 1000px;
@@ -143,15 +130,23 @@
       overflow: visible;
     }
 
-    #ropes {
+    .rope-layer {
       z-index: 2;
       pointer-events: none;
-      transform: translateZ(50px);
+      transform-style: preserve-3d;
+    }
+
+    .rope-canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+      overflow: visible;
     }
 
     #kite-fliers {
       z-index: 3;
       transform: translateZ(70px);
+      transform-style: preserve-3d;
     }
 
     .kite-rope {
@@ -292,33 +287,6 @@
 </head>
 
 <body>
-  <script type="module">
-    import SunCalc from "https://esm.sh/suncalc@1.9.0";
-    import renderHorizon from "./horizon.js";
-
-    const SYDNEY_LATITUDE = -33.8688;
-    const SYDNEY_LONGITUDE = 151.2093;
-    const SKY_REFRESH_INTERVAL_MS = 60 * 1000;
-
-    // calculate the sun over sydney, then feed its altitude into horizon's
-    // atmospheric model so the gradient follows sydney's actual day and night.
-    const updateSydneySky = () => {
-      const { altitude } = SunCalc.getPosition(
-        new Date(),
-        SYDNEY_LATITUDE,
-        SYDNEY_LONGITUDE
-      );
-      const { background, top, bottom } = renderHorizon(altitude);
-      document.body.style.backgroundImage = background;
-      document.body.style.backgroundColor = `rgb(${bottom.join(", ")})`;
-      document.body.classList.toggle("night", altitude < 0);
-      document.querySelector('meta[name="theme-color"]')
-        .setAttribute("content", `rgb(${top.join(", ")})`);
-    };
-    updateSydneySky();
-    setInterval(updateSydneySky, SKY_REFRESH_INTERVAL_MS);
-  </script>
-
   <main id="col1">
   <a href="../index.html">← index, previous events, resources, motivation, etc</a>
 
@@ -403,7 +371,7 @@
     </li>
   </ul>
 
-  <p><b>Schedule:</b></p>
+  <b>Schedule:</b>
   <ul>
     <li>3:00 (sharp) — setup</li>
     <li>3:15 — call to action</li>
@@ -413,7 +381,7 @@
   </ul>
 
   <script type="module">
-    import { html, svg } from "https://esm.sh/htl@1.0.0";
+    import { html } from "https://esm.sh/htl@1.0.0";
 
     // upload and colour picker settings
     const BYTES_PER_KIB = 1024;
@@ -428,30 +396,35 @@
     const HEX_CHANNEL_WIDTH = 2;
 
     // positions in the unscaled 1000 by 560 scene
-    const WORLD_WIDTH = 1000;
-    const MAX_FLIER_COLUMNS = 8;
     const FLIER_MIN_X = 300;
     const FLIER_MAX_X = 700;
-    const FLIER_CENTER_X = 500;
-    const SINGLE_ROW_Y = 265;
-    const FIRST_ROW_Y = 230;
-    const ROW_SPAN = 55;
-    const FRONT_DEPTH = 18;
-    const BACK_DEPTH = -12;
+    const FLIER_MIN_GRASS_PROGRESS = 0.05;
+    const FLIER_MAX_GRASS_PROGRESS = 0.75;
     const FLIER_OFFSET_X = 29;
     const FLIER_OFFSET_Y = 18;
+    const FLIER_FEET_OFFSET_Y = 90;
+    const FLIER_LAYER_DEPTH = 70;
+    const FLIER_GRASS_CLEARANCE = 6;
+    const GRASS_BACK_Y = 350;
+    const GRASS_BACK_DEPTH = -45;
+    const GRASS_LENGTH = 340;
+    const GRASS_TILT_RADIANS = 68 * Math.PI / 180;
 
     // kite geometry and the starting pose for each new flier
     const ROPE_LENGTH = 245;
     const INITIAL_KITE_HEIGHT = 175;
     const INITIAL_KITE_HEIGHT_STEP = 15;
     const INITIAL_KITE_HEIGHT_VARIANTS = 3;
-    const HAND_OFFSET_X = 17;
-    const HAND_OFFSET_Y = 56;
+    const LEFT_HAND_OFFSET_X = -18.06;
+    const LEFT_HAND_OFFSET_Y = 56.42;
+    const RIGHT_HAND_OFFSET_X = 21.28;
+    const RIGHT_HAND_OFFSET_Y = 53.67;
     const KITE_ROTATION_OFFSET_DEGREES = 45;
     const KITE_PHASE_STEP = 1.71;
     const KITE_HALF_SIZE = 22;
-    const KITE_DEPTH_OFFSET = 35;
+    const KITE_SHAPE_INSET = 2;
+    const KITE_CORNER_DISTANCE =
+      Math.SQRT2 * (KITE_HALF_SIZE - KITE_SHAPE_INSET);
 
     // wind changes gradually, with occasional calm periods and gusts
     const INITIAL_WIND_SPEED = 55;
@@ -479,7 +452,7 @@
     const NOMINAL_FPS = 60;
     const MAX_DELTA_SECONDS = 0.033;
     const ROPE_EPSILON = 0.001;
-    const GROUND_Y = 350;
+    const GROUND_Y = GRASS_BACK_Y;
     const LANDED_Y = 328;
     const ROPE_SLACK_OFFSET = 4;
     const ROPE_SLACK_FACTOR = 0.45;
@@ -521,8 +494,6 @@
     document.addEventListener("DOMContentLoaded", async function () {
       const endpoint = "https://mbo--efef75fe6e9f11f1a6751607ee4eb77e.web.val.run";
       const ul = document.getElementById("rsvps");
-      const world = document.getElementById("world");
-      const ropes = document.getElementById("ropes");
       const fliers = document.getElementById("kite-fliers");
       const windReadout = document.getElementById("wind-readout");
       const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -542,12 +513,9 @@
       const isMax = (name) => /^max( bo)?$/i.test(name.trim());
       const getsKite = (rsvp) => rsvp.status === "going" || isMax(rsvp.name);
       const kitePeople = [];
-      const goingTotal = rsvps.filter(getsKite).length;
-      const flierColumns = Math.min(MAX_FLIER_COLUMNS, Math.max(1, goingTotal));
-      const flierRows = Math.ceil(goingTotal / flierColumns);
       let goingIndex = 0;
 
-      // spread attending people across the grass and give each one a kite.
+      // place each attending person at a random spot on the grass.
       for (let i = 0; i < rsvps.length; i++) {
         const { name, status, color } = rsvps[i];
         const li = html`<li><span style=${{
@@ -561,16 +529,21 @@
 
         if (!getsKite(rsvps[i])) continue;
 
-        const column = goingIndex % flierColumns;
-        const row = Math.floor(goingIndex / flierColumns);
-        const personX = flierColumns === 1
-          ? FLIER_CENTER_X
-          : FLIER_MIN_X +
-            column * ((FLIER_MAX_X - FLIER_MIN_X) / (flierColumns - 1));
-        const personY = flierRows === 1
-          ? SINGLE_ROW_Y
-          : FIRST_ROW_Y + row * (ROW_SPAN / (flierRows - 1));
-        const depth = row % 2 === 0 ? FRONT_DEPTH : BACK_DEPTH;
+        const personX =
+          FLIER_MIN_X + Math.random() * (FLIER_MAX_X - FLIER_MIN_X);
+        const grassProgress =
+          FLIER_MIN_GRASS_PROGRESS +
+          Math.random() *
+            (FLIER_MAX_GRASS_PROGRESS - FLIER_MIN_GRASS_PROGRESS);
+        const personY =
+          GRASS_BACK_Y +
+          Math.cos(GRASS_TILT_RADIANS) * GRASS_LENGTH * grassProgress -
+          FLIER_FEET_OFFSET_Y;
+        const depth =
+          GRASS_BACK_DEPTH +
+          Math.sin(GRASS_TILT_RADIANS) * GRASS_LENGTH * grassProgress -
+          FLIER_LAYER_DEPTH +
+          FLIER_GRASS_CLEARANCE;
 
         const people = html.fragment`
           <div class="flier" style=${{
@@ -593,18 +566,46 @@
         const [flier, kite] = people.children;
         fliers.append(people);
 
-        const rope = svg`<path class="kite-rope"></path>`;
-        ropes.append(rope);
+        const ropeLayer = html`
+          <div
+            class="rope-layer"
+            style=${{ transform: `translateZ(${depth}px)` }}
+          >
+            <svg
+              class="rope-canvas"
+              viewBox="0 0 1000 560"
+              preserveAspectRatio="none"
+              aria-hidden="true"
+            >
+              <path class="kite-rope"></path>
+            </svg>
+          </div>
+        `;
+        const rope = ropeLayer.querySelector(".kite-rope");
+        fliers.append(ropeLayer);
 
         // begin with a taut rope and alternate which side each kite starts on.
         const ropeLength = ROPE_LENGTH;
         const initialDirection = goingIndex % 2 ? -1 : 1;
+        const initialHandX =
+          personX +
+          (initialDirection < 0
+            ? LEFT_HAND_OFFSET_X
+            : RIGHT_HAND_OFFSET_X);
+        const initialHandY =
+          personY +
+          (initialDirection < 0
+            ? LEFT_HAND_OFFSET_Y
+            : RIGHT_HAND_OFFSET_Y);
         const initialY =
           personY -
           INITIAL_KITE_HEIGHT -
           (goingIndex % INITIAL_KITE_HEIGHT_VARIANTS) * INITIAL_KITE_HEIGHT_STEP;
-        const verticalDistance = initialY - (personY + HAND_OFFSET_Y);
-        const initialX = personX + initialDirection * Math.sqrt(Math.max(0, ropeLength ** 2 - verticalDistance ** 2));
+        const verticalDistance = initialY - initialHandY;
+        const initialX =
+          initialHandX +
+          initialDirection *
+            Math.sqrt(Math.max(0, ropeLength ** 2 - verticalDistance ** 2));
         const kitePerson = {
           flier,
           kite,
@@ -681,8 +682,16 @@
         windReadout.textContent = `wind ${wind < 0 ? "←" : "→"} ${Math.round(Math.abs(wind))}`;
 
         kitePeople.forEach((person) => {
-          const handX = person.personX + person.handSide * HAND_OFFSET_X;
-          const handY = person.personY + HAND_OFFSET_Y;
+          const handX =
+            person.personX +
+            (person.handSide < 0
+              ? LEFT_HAND_OFFSET_X
+              : RIGHT_HAND_OFFSET_X);
+          const handY =
+            person.personY +
+            (person.handSide < 0
+              ? LEFT_HAND_OFFSET_Y
+              : RIGHT_HAND_OFFSET_Y);
           const gust = reducedMotion
             ? 0
             : Math.sin(now / GUST_PERIOD_MS + person.phase) * GUST_AMPLITUDE;
@@ -751,22 +760,35 @@
 
           const kiteX = person.x;
           const kiteY = person.y;
+          const kiteToHandX = handX - kiteX;
+          const kiteToHandY = handY - kiteY;
+          const kiteToHandDistance = Math.max(
+            ROPE_EPSILON,
+            Math.hypot(kiteToHandX, kiteToHandY)
+          );
+          const ropeEndX =
+            kiteX +
+            (kiteToHandX / kiteToHandDistance) * KITE_CORNER_DISTANCE;
+          const ropeEndY =
+            kiteY +
+            (kiteToHandY / kiteToHandDistance) * KITE_CORNER_DISTANCE;
+
           // the rope already supplies the kite's orientation, even while slack.
           const angle =
             Math.atan2(handY - kiteY, handX - kiteX) * RADIANS_TO_DEGREES -
             KITE_ROTATION_OFFSET_DEGREES;
-          person.kite.style.transform = `translate3d(${kiteX - KITE_HALF_SIZE}px, ${kiteY - KITE_HALF_SIZE}px, ${person.depth + KITE_DEPTH_OFFSET}px) rotateZ(${angle}deg)`;
+          person.kite.style.transform = `translate3d(${kiteX - KITE_HALF_SIZE}px, ${kiteY - KITE_HALF_SIZE}px, ${person.depth}px) rotateZ(${angle}deg)`;
 
           const ropeDistance = Math.hypot(kiteX - handX, kiteY - handY);
           const slack = Math.max(0, person.ropeLength - ropeDistance);
-          const controlX = (handX + kiteX) / 2;
+          const controlX = (handX + ropeEndX) / 2;
           const controlY =
-            (handY + kiteY) / 2 +
+            (handY + ropeEndY) / 2 +
             ROPE_SLACK_OFFSET +
             slack * ROPE_SLACK_FACTOR;
 
           // a quadratic curve lets an untensioned rope sag naturally.
-          person.rope.setAttribute("d", `M ${handX} ${handY} Q ${controlX} ${controlY} ${kiteX} ${kiteY}`);
+          person.rope.setAttribute("d", `M ${handX} ${handY} Q ${controlX} ${controlY} ${ropeEndX} ${ropeEndY}`);
         });
 
         requestAnimationFrame(draw);
@@ -780,8 +802,6 @@
       <a href="https://github.com/MaxwellBo/html-in-hyde/blob/master/2/invitation.html">page source code</a>
       <br />
       <a href="https://www.val.town/x/mbo/html_in_hyde_2/code/main.ts">backend source code</a>
-      <br />
-      <a href="https://github.com/dnlzro/horizon">physically accurate sydney sky rendering</a>
       <br />
       <a href="https://maxbo.me">~mjbo</a>
       <br />
@@ -838,7 +858,6 @@
       <div id="world">
         <div id="grass"></div>
         <img id="tree1" src="../0/img/tree1.png" alt="" />
-        <svg id="ropes" viewBox="0 0 1000 560" preserveAspectRatio="none" aria-hidden="true"></svg>
         <div id="kite-fliers"></div>
       </div>
     </div>
