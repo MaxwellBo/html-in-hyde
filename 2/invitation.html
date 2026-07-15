@@ -472,15 +472,14 @@
     const LIFT_COEFFICIENT = 0.03;
     const DRAG_COEFFICIENT = 0.005;
     const TAKEOFF_THRESHOLD = 1.1;
-    const TAKEOFF_Y = 326;
+    // how far above the landed rest pose a kite lifts when it takes off
+    const TAKEOFF_CLEARANCE = 2;
     const TAKEOFF_VELOCITY_FACTOR = 0.08;
     const TAKEOFF_VELOCITY_Y = -18;
     const VELOCITY_DAMPING = 0.996;
     const NOMINAL_FPS = 60;
     const MAX_DELTA_SECONDS = 0.033;
     const ROPE_EPSILON = 0.001;
-    const GROUND_Y = GRASS_BACK_Y;
-    const LANDED_Y = 328;
     const ROPE_SLACK_OFFSET = 4;
     const ROPE_SLACK_FACTOR = 0.45;
     const MILLISECONDS_PER_SECOND = 1000;
@@ -583,6 +582,9 @@
           GRASS_BACK_Y +
           Math.cos(GRASS_TILT_RADIANS) * GRASS_LENGTH * grassProgress -
           FLIER_FEET_OFFSET_Y;
+        // grass surface Y at this flier's footing — landed kites must share it
+        const groundY = personY + FLIER_FEET_OFFSET_Y;
+        const landedY = groundY - KITE_HALF_SIZE;
         const depth =
           GRASS_BACK_DEPTH +
           Math.sin(GRASS_TILT_RADIANS) * GRASS_LENGTH * grassProgress -
@@ -670,6 +672,8 @@
           kiteAnchor: kite.querySelector(".kite-rope-anchor"),
           personX,
           personY,
+          groundY,
+          landedY,
           ropeLength,
           x: initialX,
           y: initialY,
@@ -770,7 +774,7 @@
           // release a landed kite only when lift comfortably exceeds gravity.
           if (person.landed && takeoffLift > GRAVITY * TAKEOFF_THRESHOLD) {
             person.landed = false;
-            person.y = TAKEOFF_Y;
+            person.y = person.landedY - TAKEOFF_CLEARANCE;
             person.vx = wind * TAKEOFF_VELOCITY_FACTOR;
             person.vy = TAKEOFF_VELOCITY_Y;
           }
@@ -815,9 +819,9 @@
               }
             }
 
-            // stop the kite at the grass until the wind produces enough lift.
-            if (person.y + KITE_HALF_SIZE >= GROUND_Y) {
-              person.y = LANDED_Y;
+            // rest on this flier's grass footing (same billboard depth as the person).
+            if (person.y + KITE_HALF_SIZE >= person.groundY) {
+              person.y = person.landedY;
               person.vx = 0;
               person.vy = 0;
               person.landed = true;
