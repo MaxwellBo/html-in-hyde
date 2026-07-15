@@ -427,15 +427,15 @@
     const KITE_HALF_SIZE = 22;
 
     // wind changes gradually, with occasional calm periods and gusts
-    const INITIAL_WIND_SPEED = 55;
-    const INITIAL_WIND_CHANGE_DELAY_MS = 4500;
+    const INITIAL_WIND_SPEED = 120;
+    const INITIAL_WIND_CHANGE_DELAY_MS = 3000;
     const CALM_WIND_CHANCE = 0.1;
-    const MINIMUM_WIND_STRENGTH = 75;
+    const MINIMUM_WIND_STRENGTH = 95;
     const WIND_STRENGTH_RANGE = 65;
     const WIND_DIRECTION_THRESHOLD = 0.5;
-    const MINIMUM_WIND_CHANGE_DELAY_MS = 6000;
-    const WIND_CHANGE_DELAY_RANGE_MS = 5000;
-    const WIND_SMOOTHING = 0.45;
+    const MINIMUM_WIND_CHANGE_DELAY_MS = 4000;
+    const WIND_CHANGE_DELAY_RANGE_MS = 3000;
+    const WIND_SMOOTHING = 0.65;
     const GUST_PERIOD_MS = 700;
     const GUST_AMPLITUDE = 18;
 
@@ -444,7 +444,6 @@
     const MAX_LIFT = 220;
     const LIFT_COEFFICIENT = 0.03;
     const DRAG_COEFFICIENT = 0.005;
-    const TAKEOFF_THRESHOLD = 1.1;
     const TAKEOFF_CLEARANCE = 2;
     const TAKEOFF_VELOCITY_FACTOR = 0.08;
     const TAKEOFF_VELOCITY_Y = -18;
@@ -496,7 +495,6 @@
       const world = document.getElementById("world");
       const fliers = document.getElementById("kite-fliers");
       const windReadout = document.getElementById("wind-readout");
-      const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
       // Fit the fixed-size world inside the available scene width on small screens.
       const updateSceneScale = () => {
@@ -675,8 +673,8 @@
         );
         lastTime = now;
 
-        // preserve steady wind for reduced motion; otherwise change it on schedule.
-        if (!reducedMotion && now > nextWindChange) {
+        // change the wind on schedule.
+        if (now > nextWindChange) {
           chooseNewWind();
         }
         wind += (targetWind - wind) * Math.min(1, delta * WIND_SMOOTHING);
@@ -693,17 +691,16 @@
             (person.handSide < 0
               ? LEFT_HAND_OFFSET_Y
               : RIGHT_HAND_OFFSET_Y);
-          const gust = reducedMotion
-            ? 0
-            : Math.sin(now / GUST_PERIOD_MS + person.phase) * GUST_AMPLITUDE;
+          const gust =
+            Math.sin(now / GUST_PERIOD_MS + person.phase) * GUST_AMPLITUDE;
 
           const takeoffLift = Math.min(
             MAX_LIFT,
             LIFT_COEFFICIENT * Math.abs(wind + gust) ** 2
           );
 
-          // release a landed kite only when lift comfortably exceeds gravity.
-          if (person.landed && takeoffLift > GRAVITY * TAKEOFF_THRESHOLD) {
+          // release a landed kite when lift exceeds gravity.
+          if (person.landed && takeoffLift > GRAVITY) {
             person.landed = false;
             person.y = person.landedY - TAKEOFF_CLEARANCE;
             person.vx = wind * TAKEOFF_VELOCITY_FACTOR;
@@ -858,7 +855,7 @@
     <p><i>(you get a kite if you're marked going)</i></p>
 
     <div class="scene-controls">
-      <span id="wind-readout" aria-live="polite">wind → 55</span>
+      <span id="wind-readout" aria-live="polite">wind → 120</span>
     </div>
     <div id="scene">
       <div id="world">
