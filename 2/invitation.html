@@ -14,7 +14,8 @@
   <meta property="og:url" content="https://maxbo.me/html-in-hyde/2/invitation" />
   <style>
     :root {
-      --scene-scale: 0.64;
+      /* fallback; JS fits #world to #scene on load/resize */
+      --scene-scale: 1;
     }
 
     * {
@@ -426,6 +427,7 @@
     const HEX_CHANNEL_WIDTH = 2;
 
     // positions in the unscaled 1000 by 560 scene
+    const WORLD_WIDTH = 1000;
     const FLIER_MIN_X = 300;
     const FLIER_MAX_X = 700;
     const FLIER_MIN_GRASS_PROGRESS = 0.05;
@@ -520,9 +522,21 @@
     document.addEventListener("DOMContentLoaded", async function () {
       const endpoint = "https://mbo--efef75fe6e9f11f1a6751607ee4eb77e.web.val.run";
       const ul = document.getElementById("rsvps");
+      const scene = document.getElementById("scene");
+      const world = document.getElementById("world");
       const fliers = document.getElementById("kite-fliers");
       const windReadout = document.getElementById("wind-readout");
       const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      // fit the 1000×560 world into the scene so mobile widths show the whole park
+      const fitScene = () => {
+        const width = scene.clientWidth;
+        if (width > 0) {
+          world.style.setProperty("--scene-scale", String(width / WORLD_WIDTH));
+        }
+      };
+      fitScene();
+      new ResizeObserver(fitScene).observe(scene);
 
       // screen-space centre of a 3D-projected anchor
       const screenPoint = (element) => {
