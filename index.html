@@ -441,6 +441,16 @@
         A tagged template literal that allows safe interpolation of values into HTML, following the HTML5 spec.
       </blockquote>
       Heavier than HTML custom elements, but lighter than React. Just enough for some light JSON to DOM transformation.
+
+<pre style="overflow: scroll;">
+<code class="echo">&lt;script type=&quot;module&quot;&gt;
+  import { html } from &quot;https://esm.sh/htl@1.0.0&quot;
+
+  const subject = &quot;world&quot;
+  document.body.append(html`&lt;h1&gt;Hello, ${subject}!&lt;/h1&gt;`)
+&lt;/script&gt;
+</code>
+</pre>
     </li>
   </ul>
 
@@ -461,6 +471,19 @@
         Scope your inline style tags in pure vanilla CSS! Only 16 lines. No build. No dependencies.
       </blockquote>
       Built by the same guy as surreal, so they have similar APIs (see <code>me</code> selector).
+
+<pre style="overflow: scroll;">
+<code class="echo">&lt;script src=&quot;https://cdn.jsdelivr.net/gh/gnat/css-scope-inline@main/script.js&quot;&gt;&lt;/script&gt;
+
+&lt;div&gt;
+  &lt;style&gt;
+    me { background: red; }
+    me button { background: blue; }
+  &lt;/style&gt;
+  &lt;button&gt;I'm blue&lt;/button&gt;
+&lt;/div&gt;
+</code>
+</pre>
     </li>
     <!-- <li>
       <a href="https://matcha.mizu.sh/">matcha.css</a>
