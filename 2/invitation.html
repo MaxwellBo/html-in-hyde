@@ -411,6 +411,7 @@
 
     // positions in the unscaled 1000 by 560 scene
     const WORLD_WIDTH = 1000;
+    const MAX_SCENE_SCALE = 0.64;
     const FLIER_MIN_X = 300;
     const FLIER_MAX_X = 700;
     const FLIER_MIN_GRASS_PROGRESS = 0.05;
@@ -457,15 +458,13 @@
     const LIFT_COEFFICIENT = 0.03;
     const DRAG_COEFFICIENT = 0.005;
     const TAKEOFF_THRESHOLD = 1.1;
-    const TAKEOFF_Y = 326;
+    const TAKEOFF_CLEARANCE = 2;
     const TAKEOFF_VELOCITY_FACTOR = 0.08;
     const TAKEOFF_VELOCITY_Y = -18;
     const VELOCITY_DAMPING = 0.996;
     const NOMINAL_FPS = 60;
     const MAX_DELTA_SECONDS = 0.033;
     const ROPE_EPSILON = 0.001;
-    const GROUND_Y = GRASS_BACK_Y;
-    const LANDED_Y = 328;
     const ROPE_SLACK_OFFSET = 4;
     const ROPE_SLACK_FACTOR = 0.45;
     const MILLISECONDS_PER_SECOND = 1000;
@@ -507,10 +506,19 @@
       const endpoint = "https://mbo--efef75fe6e9f11f1a6751607ee4eb77e.web.val.run";
       const ul = document.getElementById("rsvps");
       const scene = document.getElementById("scene");
+      const world = document.getElementById("world");
       const fliers = document.getElementById("kite-fliers");
       const ropeOverlay = document.getElementById("rope-overlay");
       const windReadout = document.getElementById("wind-readout");
       const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      // Fit the fixed-size world inside the available scene width on small screens.
+      const updateSceneScale = () => {
+        const scale = Math.min(MAX_SCENE_SCALE, scene.clientWidth / WORLD_WIDTH);
+        world.style.setProperty("--scene-scale", scale);
+      };
+      updateSceneScale();
+      new ResizeObserver(updateSceneScale).observe(scene);
 
       // map a 3D-projected element into the flat rope overlay's SVG coordinates
       const toOverlay = (element, sceneRect) => {
@@ -558,20 +566,21 @@
           FLIER_MIN_GRASS_PROGRESS +
           Math.random() *
             (FLIER_MAX_GRASS_PROGRESS - FLIER_MIN_GRASS_PROGRESS);
-        const personY =
+        const grassSurfaceY =
           GRASS_BACK_Y +
-          Math.cos(GRASS_TILT_RADIANS) * GRASS_LENGTH * grassProgress -
-          FLIER_FEET_OFFSET_Y;
-        const depth =
+          Math.cos(GRASS_TILT_RADIANS) * GRASS_LENGTH * grassProgress;
+        const personY = grassSurfaceY - FLIER_FEET_OFFSET_Y;
+        const grassSurfaceDepth =
           GRASS_BACK_DEPTH +
           Math.sin(GRASS_TILT_RADIANS) * GRASS_LENGTH * grassProgress -
-          FLIER_LAYER_DEPTH +
-          FLIER_GRASS_CLEARANCE;
+          FLIER_LAYER_DEPTH;
+        const flierDepth = grassSurfaceDepth + FLIER_GRASS_CLEARANCE;
+        const landedY = grassSurfaceY - KITE_HALF_SIZE;
 
         const people = html.fragment`
           <div class="flier" style=${{
             "--kite-color": color,
-            transform: `translate3d(${personX - FLIER_OFFSET_X}px, ${personY - FLIER_OFFSET_Y}px, ${depth}px)`
+            transform: `translate3d(${personX - FLIER_OFFSET_X}px, ${personY - FLIER_OFFSET_Y}px, ${flierDepth}px)`
           }}>
             <div class="person-drawing">
               <div class="head" aria-hidden="true"></div>
@@ -632,7 +641,8 @@
           vy: 0,
           handSide: initialDirection,
           phase: goingIndex * KITE_PHASE_STEP,
-          depth
+          depth: grassSurfaceDepth,
+          landedY
         };
         kitePeople.push(kitePerson);
 
@@ -717,7 +727,7 @@
           // release a landed kite only when lift comfortably exceeds gravity.
           if (person.landed && takeoffLift > GRAVITY * TAKEOFF_THRESHOLD) {
             person.landed = false;
-            person.y = TAKEOFF_Y;
+            person.y = person.landedY - TAKEOFF_CLEARANCE;
             person.vx = wind * TAKEOFF_VELOCITY_FACTOR;
             person.vy = TAKEOFF_VELOCITY_Y;
           }
@@ -763,8 +773,8 @@
             }
 
             // stop the kite at the grass until the wind produces enough lift.
-            if (person.y + KITE_HALF_SIZE >= GROUND_Y) {
-              person.y = LANDED_Y;
+            if (person.y >= person.landedY) {
+              person.y = person.landedY;
               person.vx = 0;
               person.vy = 0;
               person.landed = true;
@@ -787,7 +797,7 @@
         const sceneRect = scene.getBoundingClientRect();
         // sag constants are authored in world pixels; match #world's 2D scale.
         const slackScale = Number.parseFloat(
-          getComputedStyle(document.getElementById("world"))
+          getComputedStyle(world)
             .getPropertyValue("--scene-scale")
         ) || sceneRect.width / WORLD_WIDTH;
         kitePeople.forEach((person) => {
