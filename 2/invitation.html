@@ -7,10 +7,17 @@
   <meta name="theme-color" content="#dff4fb">
   <title>HTML in Hyde #2</title>
   <meta name="description" content="a HTML freewrite on August 8 2026 in Hyde Park, Sydney">
+  <link rel="icon" type="image/png" href="kite.png" />
   <meta property="og:title" content="HTML in Hyde #2" />
   <meta property="og:description" content="a HTML freewrite on August 8 2026 in Hyde Park, Sydney" />
+  <meta property="og:image" content="https://maxbo.me/html-in-hyde/2/kite.png" />
   <meta property="og:url" content="https://maxbo.me/html-in-hyde/2/invitation" />
   <style>
+    :root {
+      --scene-width: 640px;
+      --scene-scale: 0.64;
+    }
+
     * {
       box-sizing: border-box;
     }
@@ -68,7 +75,6 @@
       }
 
       #scene {
-        width: calc(100% + 10em);
         margin-left: -10em;
       }
     }
@@ -85,7 +91,7 @@
 
     #scene {
       position: relative;
-      width: 100%;
+      width: var(--scene-width);
       aspect-ratio: 25 / 14;
       overflow: visible;
       background: transparent;
@@ -98,7 +104,7 @@
       position: absolute;
       width: 1000px;
       height: 560px;
-      transform: scale(var(--scene-scale, 1));
+      transform: scale(var(--scene-scale));
       transform-origin: top left;
       transform-style: preserve-3d;
     }
@@ -516,16 +522,10 @@
       const endpoint = "https://mbo--efef75fe6e9f11f1a6751607ee4eb77e.web.val.run";
       const ul = document.getElementById("rsvps");
       const world = document.getElementById("world");
-      const scene = document.getElementById("scene");
       const ropes = document.getElementById("ropes");
       const fliers = document.getElementById("kite-fliers");
       const windReadout = document.getElementById("wind-readout");
       const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-      // size the park once so narrowing the window makes it encroach rather
-      // than shrinking the people, grass, and kites.
-      const sceneScale = scene.clientWidth / WORLD_WIDTH;
-      world.style.setProperty("--scene-scale", sceneScale);
 
       // the backend supplies both the visible rsvp list and the kite fliers.
       let rsvps = [];
@@ -776,15 +776,17 @@
   </script>
 
   <p>
-    <a href="https://github.com/MaxwellBo/html-in-hyde/blob/master/2/invitation.html">page source code</a>
-    <br />
-    <a href="https://www.val.town/x/mbo/html_in_hyde_2/code/main.ts">backend source code</a>
-    <br />
-    physically accurate sydney sky rendering
-    <br />
-    <a href="https://maxbo.me">~mjbo</a>
-    <br />
-    <a href="https://vaibhavsagar.com/">~vaibhavsagar</a>
+    <small>
+      <a href="https://github.com/MaxwellBo/html-in-hyde/blob/master/2/invitation.html">page source code</a>
+      <br />
+      <a href="https://www.val.town/x/mbo/html_in_hyde_2/code/main.ts">backend source code</a>
+      <br />
+      <a href="https://github.com/dnlzro/horizon">physically accurate sydney sky rendering</a>
+      <br />
+      <a href="https://maxbo.me">~mjbo</a>
+      <br />
+      <a href="https://vaibhavsagar.com/">~vaibhavsagar</a>
+    </small>
   </p>
   <p>
     <small style="width: 40ch; display: block;">
