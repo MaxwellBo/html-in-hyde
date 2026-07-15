@@ -467,6 +467,13 @@
     const KITE_ROTATION_OFFSET_DEGREES = 45;
     const KITE_PHASE_STEP = 1.71;
     const KITE_HALF_SIZE = 22;
+    // while flying, the kite is a diamond pointed at the hand. On the ground that
+    // pose parks the sail a shin above the feet; rest nearly flat on the footing.
+    const LAND_REST_TILT_DEGREES = 18;
+    // how far above the feet the kite centre sits at the back of the park
+    const LAND_CENTER_ABOVE_FEET = 10;
+    // nearer billboards make a grounded sail read high — bury a little toward the front
+    const LAND_SINK_AT_FRONT = 14;
 
     // wind changes gradually, with occasional calm periods and gusts
     const INITIAL_WIND_SPEED = 55;
@@ -664,7 +671,10 @@
           FLIER_FEET_OFFSET_Y;
         // grass surface Y at this flier's footing — landed kites must share it
         const groundY = personY + FLIER_FEET_OFFSET_Y;
-        const landedY = groundY - KITE_HALF_SIZE;
+        // sit the sail on the footing (not balanced on a diamond tip), with
+        // extra sink in the foreground so it still reads as grounded.
+        const landSink = grassProgress * LAND_SINK_AT_FRONT;
+        const landedY = groundY - LAND_CENTER_ABOVE_FEET + landSink;
         const depth =
           GRASS_BACK_DEPTH +
           Math.sin(GRASS_TILT_RADIANS) * GRASS_LENGTH * grassProgress -
@@ -900,7 +910,7 @@
             }
 
             // rest on this flier's grass footing (same billboard depth as the person).
-            if (person.y + KITE_HALF_SIZE >= person.groundY) {
+            if (person.y >= person.landedY) {
               person.y = person.landedY;
               person.vx = 0;
               person.vy = 0;
@@ -911,11 +921,12 @@
           const kiteX = person.x;
           const kiteY = person.y;
 
-          // the rope already supplies the kite's orientation, even while slack.
-          // rotate so the kite-shape's bottom-right corner faces the hand.
-          const angle =
-            Math.atan2(handY - kiteY, handX - kiteX) * RADIANS_TO_DEGREES -
-            KITE_ROTATION_OFFSET_DEGREES;
+          // in the air, point the kite-shape's bottom-right corner at the hand.
+          // on the ground, lay nearly flat so the sail sits beside the feet.
+          const angle = person.landed
+            ? person.handSide * LAND_REST_TILT_DEGREES
+            : Math.atan2(handY - kiteY, handX - kiteX) * RADIANS_TO_DEGREES -
+              KITE_ROTATION_OFFSET_DEGREES;
           // XY only — depth lives on the flattened .kite-person wrapper
           person.kite.style.transform = `translate(${kiteX - KITE_HALF_SIZE}px, ${kiteY - KITE_HALF_SIZE}px) rotateZ(${angle}deg)`;
         });
