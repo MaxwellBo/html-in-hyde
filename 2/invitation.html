@@ -432,7 +432,7 @@
     const CALM_WIND_CHANCE = 0.1;
     const MINIMUM_WIND_STRENGTH = 95;
     const WIND_STRENGTH_RANGE = 65;
-    const WIND_DIRECTION_THRESHOLD = 0.5;
+    const WIND_DIRECTION_CHANGE_CHANCE = 0.15;
     const MINIMUM_WIND_CHANGE_DELAY_MS = 4000;
     const WIND_CHANGE_DELAY_RANGE_MS = 3000;
     const WIND_SMOOTHING = 0.65;
@@ -647,6 +647,7 @@
 
       let wind = INITIAL_WIND_SPEED;
       let targetWind = wind;
+      let windDirection = Math.sign(wind);
       let nextWindChange = performance.now() + INITIAL_WIND_CHANGE_DELAY_MS;
       let lastTime = performance.now();
 
@@ -657,7 +658,10 @@
           targetWind = 0;
         } else {
           const strength = MINIMUM_WIND_STRENGTH + Math.random() * WIND_STRENGTH_RANGE;
-          targetWind = (Math.random() > WIND_DIRECTION_THRESHOLD ? 1 : -1) * strength;
+          if (Math.random() < WIND_DIRECTION_CHANGE_CHANCE) {
+            windDirection *= -1;
+          }
+          targetWind = windDirection * strength;
         }
         nextWindChange =
           performance.now() +
