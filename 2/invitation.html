@@ -132,17 +132,33 @@
       transform-style: preserve-3d;
     }
 
-    /* Ropes are drawn in scene/screen space: SVG user space does not
-       receive the same perspective projection as translate3d siblings
-       under transform-style: preserve-3d, so attachment points would drift. */
-    #rope-overlay {
+    /* One flattened billboard per flier at their grass depth. Inside it,
+       normal CSS paint order applies (rope under kite under person) so the
+       kite can occlude its string — z-index alone is unreliable among
+       preserve-3d siblings. */
+    .kite-person {
       position: absolute;
       inset: 0;
-      z-index: 5;
+      width: 1000px;
+      height: 560px;
+      overflow: visible;
+      pointer-events: none;
+      transform-style: flat;
+    }
+
+    .rope-layer {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      overflow: visible;
+      pointer-events: none;
+    }
+
+    .rope-canvas {
+      display: block;
       width: 100%;
       height: 100%;
       overflow: visible;
-      pointer-events: none;
     }
 
     .kite-rope {
@@ -175,11 +191,11 @@
       position: absolute;
       left: 0;
       top: 0;
-      transform-style: preserve-3d;
+      pointer-events: none;
     }
 
     .flier {
-      z-index: 4;
+      z-index: 3;
       width: 58px;
       height: 112px;
     }
@@ -261,7 +277,7 @@
     }
 
     .kite {
-      z-index: 3;
+      z-index: 2;
       width: 44px;
       height: 44px;
     }
@@ -410,7 +426,6 @@
     const HEX_CHANNEL_WIDTH = 2;
 
     // positions in the unscaled 1000 by 560 scene
-    const WORLD_WIDTH = 1000;
     const FLIER_MIN_X = 300;
     const FLIER_MAX_X = 700;
     const FLIER_MIN_GRASS_PROGRESS = 0.05;
@@ -506,19 +521,25 @@
     document.addEventListener("DOMContentLoaded", async function () {
       const endpoint = "https://mbo--efef75fe6e9f11f1a6751607ee4eb77e.web.val.run";
       const ul = document.getElementById("rsvps");
-      const scene = document.getElementById("scene");
       const fliers = document.getElementById("kite-fliers");
-      const ropeOverlay = document.getElementById("rope-overlay");
       const windReadout = document.getElementById("wind-readout");
       const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-      // map a 3D-projected element into the flat rope overlay's SVG coordinates
-      const toOverlay = (element, sceneRect) => {
+      // screen-space centre of a 3D-projected anchor
+      const screenPoint = (element) => {
         const rect = element.getBoundingClientRect();
-        return {
-          x: rect.left + rect.width / 2 - sceneRect.left,
-          y: rect.top + rect.height / 2 - sceneRect.top
-        };
+        return new DOMPoint(
+          rect.left + rect.width / 2,
+          rect.top + rect.height / 2
+        );
+      };
+
+      // map a screen point into an SVG's local user space via that SVG's CTM
+      const toSvgPoint = (point, svg) => {
+        const ctm = svg.getScreenCTM();
+        if (!ctm) return { x: 0, y: 0 };
+        const local = point.matrixTransform(ctm.inverse());
+        return { x: local.x, y: local.y };
       };
 
       // the backend supplies both the visible rsvp list and the kite fliers.
@@ -567,32 +588,54 @@
           Math.sin(GRASS_TILT_RADIANS) * GRASS_LENGTH * grassProgress -
           FLIER_LAYER_DEPTH +
           FLIER_GRASS_CLEARANCE;
+        // nearer the camera (higher translateZ / grassProgress) paints above
+        const stack = Math.round(grassProgress * 1000);
 
-        const people = html.fragment`
-          <div class="flier" style=${{
-            "--kite-color": color,
-            transform: `translate3d(${personX - FLIER_OFFSET_X}px, ${personY - FLIER_OFFSET_Y}px, ${depth}px)`
-          }}>
-            <div class="person-drawing">
-              <div class="head" aria-hidden="true"></div>
-              <div class="body"></div>
-              <div class="arm arm-left"><span class="hand-anchor" data-hand="left"></span></div>
-              <div class="arm arm-right"><span class="hand-anchor" data-hand="right"></span></div>
-              <div class="leg leg-left"></div>
-              <div class="leg leg-right"></div>
+        const personRoot = html`
+          <div
+            class="kite-person"
+            style=${{
+              zIndex: stack,
+              transform: `translateZ(${depth}px)`
+            }}
+          >
+            <div class="rope-layer">
+              <svg
+                class="rope-canvas"
+                viewBox="0 0 1000 560"
+                preserveAspectRatio="none"
+                aria-hidden="true"
+              ></svg>
             </div>
-          </div>
-          <div class="kite" style=${{ "--kite-color": color }}>
-            <div class="kite-shape">
-              <span class="kite-rope-anchor"></span>
+            <div class="kite" style=${{ "--kite-color": color }}>
+              <div class="kite-shape">
+                <span class="kite-rope-anchor"></span>
+              </div>
+            </div>
+            <div
+              class="flier"
+              style=${{
+                "--kite-color": color,
+                transform: `translate(${personX - FLIER_OFFSET_X}px, ${personY - FLIER_OFFSET_Y}px)`
+              }}
+            >
+              <div class="person-drawing">
+                <div class="head" aria-hidden="true"></div>
+                <div class="body"></div>
+                <div class="arm arm-left"><span class="hand-anchor" data-hand="left"></span></div>
+                <div class="arm arm-right"><span class="hand-anchor" data-hand="right"></span></div>
+                <div class="leg leg-left"></div>
+                <div class="leg leg-right"></div>
+              </div>
             </div>
           </div>
         `;
-        const [flier, kite] = people.children;
-        fliers.append(people);
-
+        const ropeCanvas = personRoot.querySelector(".rope-canvas");
         const rope = svg`<path class="kite-rope">`;
-        ropeOverlay.append(rope);
+        ropeCanvas.append(rope);
+        const kite = personRoot.querySelector(".kite");
+        const flier = personRoot.querySelector(".flier");
+        fliers.append(personRoot);
 
         // begin with a taut rope and alternate which side each kite starts on.
         const ropeLength = ROPE_LENGTH;
@@ -617,8 +660,10 @@
           initialDirection *
             Math.sqrt(Math.max(0, ropeLength ** 2 - verticalDistance ** 2));
         const kitePerson = {
+          root: personRoot,
           flier,
           kite,
+          ropeCanvas,
           rope,
           leftHand: flier.querySelector('[data-hand="left"]'),
           rightHand: flier.querySelector('[data-hand="right"]'),
@@ -658,6 +703,14 @@
 
         goingIndex++;
       }
+
+      // DOM order matches depth too: farthest first, nearest last (on top).
+      kitePeople
+        .slice()
+        .sort((a, b) => a.depth - b.depth)
+        .forEach((person) => {
+          fliers.append(person.root);
+        });
 
       let wind = INITIAL_WIND_SPEED;
       let targetWind = wind;
@@ -779,22 +832,22 @@
           const angle =
             Math.atan2(handY - kiteY, handX - kiteX) * RADIANS_TO_DEGREES -
             KITE_ROTATION_OFFSET_DEGREES;
-          person.kite.style.transform = `translate3d(${kiteX - KITE_HALF_SIZE}px, ${kiteY - KITE_HALF_SIZE}px, ${person.depth}px) rotateZ(${angle}deg)`;
+          // XY only — depth lives on the flattened .kite-person wrapper
+          person.kite.style.transform = `translate(${kiteX - KITE_HALF_SIZE}px, ${kiteY - KITE_HALF_SIZE}px) rotateZ(${angle}deg)`;
         });
 
-        // project 3D hand + kite-corner anchors into the flat overlay so the
-        // stroke meets the same perspective-projected points as the sprites.
-        const sceneRect = scene.getBoundingClientRect();
-        // sag constants are authored in world pixels; match #world's 2D scale.
+        // project anchors to screen, build the sag curve there, then map into
+        // each rope SVG so the stroke stays attached under perspective while
+        // still sorting under its kite in the depth stack.
         const slackScale = Number.parseFloat(
           getComputedStyle(document.getElementById("world"))
             .getPropertyValue("--scene-scale")
-        ) || sceneRect.width / WORLD_WIDTH;
+        ) || 0.64;
         kitePeople.forEach((person) => {
           const handAnchor =
             person.handSide < 0 ? person.leftHand : person.rightHand;
-          const hand = toOverlay(handAnchor, sceneRect);
-          const ropeEnd = toOverlay(person.kiteAnchor, sceneRect);
+          const handScreen = screenPoint(handAnchor);
+          const endScreen = screenPoint(person.kiteAnchor);
           const handX =
             person.personX +
             (person.handSide < 0
@@ -807,17 +860,25 @@
               : RIGHT_HAND_OFFSET_Y);
           const ropeDistance = Math.hypot(person.x - handX, person.y - handY);
           const slack = Math.max(0, person.ropeLength - ropeDistance);
-          const chord = Math.hypot(ropeEnd.x - hand.x, ropeEnd.y - hand.y);
+          const chord = Math.hypot(
+            endScreen.x - handScreen.x,
+            endScreen.y - handScreen.y
+          );
           const sag = Math.min(
             chord * 0.45,
             (ROPE_SLACK_OFFSET + slack * ROPE_SLACK_FACTOR) * slackScale
           );
-          const controlX = (hand.x + ropeEnd.x) / 2;
-          const controlY = (hand.y + ropeEnd.y) / 2 + sag;
+          const controlScreen = new DOMPoint(
+            (handScreen.x + endScreen.x) / 2,
+            (handScreen.y + endScreen.y) / 2 + sag
+          );
+          const hand = toSvgPoint(handScreen, person.ropeCanvas);
+          const ropeEnd = toSvgPoint(endScreen, person.ropeCanvas);
+          const control = toSvgPoint(controlScreen, person.ropeCanvas);
 
           person.rope.setAttribute(
             "d",
-            `M ${hand.x} ${hand.y} Q ${controlX} ${controlY} ${ropeEnd.x} ${ropeEnd.y}`
+            `M ${hand.x} ${hand.y} Q ${control.x} ${control.y} ${ropeEnd.x} ${ropeEnd.y}`
           );
         });
 
@@ -890,7 +951,6 @@
         <img id="tree1" src="../0/img/tree1.png" alt="" />
         <div id="kite-fliers"></div>
       </div>
-      <svg id="rope-overlay" aria-hidden="true"></svg>
     </div>
   </aside>
 </body>
