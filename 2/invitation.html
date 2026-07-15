@@ -80,6 +80,7 @@
     #scene {
       position: relative;
       width: 100%;
+      /* height set by fitScene() so pan/scale crops stay framed */
       aspect-ratio: 25 / 14;
       overflow: visible;
       background: transparent;
@@ -90,9 +91,11 @@
 
     #world {
       position: absolute;
+      left: 0;
+      top: 0;
       width: 1000px;
       height: 560px;
-      transform: scale(var(--scene-scale));
+      transform: translate3d(var(--scene-pan-x, 0px), 0, 0) scale(var(--scene-scale));
       transform-origin: top left;
       transform-style: preserve-3d;
     }
@@ -298,6 +301,11 @@
       #rsvps {
         columns: 2;
       }
+
+      html,
+      body {
+        overflow-x: clip;
+      }
     }
 
     @media (max-width: 480px) {
@@ -428,6 +436,11 @@
 
     // positions in the unscaled 1000 by 560 scene
     const WORLD_WIDTH = 1000;
+    const WORLD_HEIGHT = 560;
+    // park content (grass + tree), used to crop/center on narrow viewports
+    const PARK_CONTENT_LEFT = 150;
+    const PARK_CONTENT_RIGHT = 950;
+    const PARK_CROP_QUERY = "(max-width: 900px)";
     const FLIER_MIN_X = 300;
     const FLIER_MAX_X = 700;
     const FLIER_MIN_GRASS_PROGRESS = 0.05;
@@ -528,14 +541,67 @@
       const windReadout = document.getElementById("wind-readout");
       const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-      // fit the 1000×560 world into the scene so mobile widths show the whole park
+      // fit the 1000×560 world into the scene; on narrow viewports zoom into the
+      // park and center the perspective-projected grass so it isn't left-weighted
+      const parkCrop = window.matchMedia(PARK_CROP_QUERY);
+      const grass = document.getElementById("grass");
+      let lastFitKey = "";
       const fitScene = () => {
         const width = scene.clientWidth;
-        if (width > 0) {
-          world.style.setProperty("--scene-scale", String(width / WORLD_WIDTH));
+        if (width <= 0) return;
+
+        if (!parkCrop.matches) {
+          const scale = width / WORLD_WIDTH;
+          const key = `full:${width}`;
+          if (key === lastFitKey) return;
+          lastFitKey = key;
+          world.style.setProperty("--scene-scale", String(scale));
+          world.style.setProperty("--scene-pan-x", "0px");
+          scene.style.height = `${WORLD_HEIGHT * scale}px`;
+          return;
         }
+
+        const contentWidth = PARK_CONTENT_RIGHT - PARK_CONTENT_LEFT;
+        let scale = width / contentWidth;
+        let panX = -PARK_CONTENT_LEFT * scale;
+        world.style.setProperty("--scene-scale", String(scale));
+        world.style.setProperty("--scene-pan-x", `${panX}px`);
+        scene.style.height = `${WORLD_HEIGHT * scale}px`;
+
+        // perspective couples pan and projection — iterate shrink-to-fit + center
+        for (let pass = 0; pass < 6; pass++) {
+          const sceneBox = scene.getBoundingClientRect();
+          const grassBox = grass.getBoundingClientRect();
+          let changed = false;
+
+          if (grassBox.width > sceneBox.width + 1) {
+            scale *= sceneBox.width / grassBox.width;
+            world.style.setProperty("--scene-scale", String(scale));
+            scene.style.height = `${WORLD_HEIGHT * scale}px`;
+            changed = true;
+          }
+
+          const sceneBox2 = scene.getBoundingClientRect();
+          const grassBox2 = grass.getBoundingClientRect();
+          const delta =
+            (sceneBox2.left + sceneBox2.right) / 2 -
+            (grassBox2.left + grassBox2.right) / 2;
+          if (Math.abs(delta) > 0.5) {
+            panX += delta;
+            world.style.setProperty("--scene-pan-x", `${panX}px`);
+            changed = true;
+          }
+
+          if (!changed) break;
+        }
+
+        lastFitKey = `crop:${width}:${scale.toFixed(4)}:${panX.toFixed(2)}`;
       };
       fitScene();
+      parkCrop.addEventListener("change", () => {
+        lastFitKey = "";
+        fitScene();
+      });
       new ResizeObserver(fitScene).observe(scene);
 
       // screen-space centre of a 3D-projected anchor
