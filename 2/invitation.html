@@ -105,6 +105,16 @@
       transform-style: preserve-3d;
     }
 
+    #scene-space {
+      position: absolute;
+      inset: 0;
+      width: 1000px;
+      height: 560px;
+      transform: translateZ(-45px) rotateX(-22deg);
+      transform-origin: 50% 350px;
+      transform-style: preserve-3d;
+    }
+
     #grass {
       position: absolute;
       z-index: 1;
@@ -114,7 +124,7 @@
       height: 340px;
       background: url("../1/img/grass.jpg") center / cover;
       filter: grayscale(0.35) brightness(0.9);
-      transform: translateZ(-45px) rotateX(68deg);
+      transform: rotateX(90deg);
       transform-origin: 50% 0;
     }
 
@@ -137,7 +147,6 @@
       width: 1000px;
       height: 560px;
       overflow: visible;
-      transform: translateZ(70px);
       transform-style: preserve-3d;
     }
 
@@ -146,7 +155,7 @@
       inset: 0;
       width: 1000px;
       height: 560px;
-      transform-style: preserve-3d;
+      transform-style: flat;
     }
 
     .kite-rope-layer {
@@ -171,7 +180,6 @@
       position: absolute;
       left: 0;
       top: 0;
-      transform-style: preserve-3d;
     }
 
     .flier {
@@ -438,12 +446,8 @@
     const FLIER_OFFSET_X = 29;
     const FLIER_OFFSET_Y = 18;
     const FLIER_FEET_OFFSET_Y = 90;
-    const FLIER_LAYER_DEPTH = 70;
-    const FLIER_GRASS_CLEARANCE = 6;
     const GRASS_BACK_Y = 350;
-    const GRASS_BACK_DEPTH = -45;
     const GRASS_LENGTH = 340;
-    const GRASS_TILT_RADIANS = 68 * Math.PI / 180;
 
     // kite geometry and the starting pose for each new flier
     const ROPE_LENGTH = 245;
@@ -573,20 +577,13 @@
           FLIER_MIN_GRASS_PROGRESS +
           Math.random() *
             (FLIER_MAX_GRASS_PROGRESS - FLIER_MIN_GRASS_PROGRESS);
-        const grassSurfaceY =
-          GRASS_BACK_Y +
-          Math.cos(GRASS_TILT_RADIANS) * GRASS_LENGTH * grassProgress;
-        const personY = grassSurfaceY - FLIER_FEET_OFFSET_Y;
-        const grassSurfaceDepth =
-          GRASS_BACK_DEPTH +
-          Math.sin(GRASS_TILT_RADIANS) * GRASS_LENGTH * grassProgress -
-          FLIER_LAYER_DEPTH;
-        const groupDepth = grassSurfaceDepth + FLIER_GRASS_CLEARANCE;
-        const landedY = grassSurfaceY - KITE_HALF_SIZE;
+        const grassDepth = GRASS_LENGTH * grassProgress;
+        const personY = GRASS_BACK_Y - FLIER_FEET_OFFSET_Y;
+        const landedY = GRASS_BACK_Y - KITE_HALF_SIZE;
 
         const people = html.fragment`
           <div class="kite-person" style=${{
-            transform: `translateZ(${groupDepth}px)`
+            transform: `translateZ(${grassDepth}px)`
           }}>
             <div class="flier" style=${{
               "--kite-color": color,
@@ -895,9 +892,11 @@
     </div>
     <div id="scene">
       <div id="world">
-        <div id="grass"></div>
-        <img id="tree1" src="../0/img/tree1.png" alt="" />
-        <div id="kite-fliers"></div>
+        <div id="scene-space">
+          <div id="grass"></div>
+          <img id="tree1" src="../0/img/tree1.png" alt="" />
+          <div id="kite-fliers"></div>
+        </div>
       </div>
     </div>
   </aside>
