@@ -160,11 +160,10 @@
 
     .kite-rope-layer {
       position: absolute;
-      inset: 0;
+      left: 0;
+      top: 0;
       z-index: 1;
-      width: 1000px;
-      height: 560px;
-      overflow: visible;
+      overflow: hidden;
       pointer-events: none;
     }
 
@@ -461,6 +460,8 @@
     const KITE_ROTATION_OFFSET_DEGREES = 45;
     const KITE_PHASE_STEP = 1.71;
     const KITE_HALF_SIZE = 22;
+    const ROPE_LAYER_SIZE = 460;
+    const ROPE_LAYER_HALF_SIZE = ROPE_LAYER_SIZE / 2;
 
     // wind changes gradually, with occasional calm periods and gusts
     const INITIAL_WIND_SPEED = 120;
@@ -484,12 +485,14 @@
     const TAKEOFF_VELOCITY_FACTOR = 0.08;
     const TAKEOFF_VELOCITY_Y = -18;
     const VELOCITY_DAMPING = 0.996;
+    const MILLISECONDS_PER_SECOND = 1000;
+    const TARGET_FRAME_RATE = 30;
+    const FRAME_INTERVAL_MS = MILLISECONDS_PER_SECOND / TARGET_FRAME_RATE;
     const NOMINAL_FPS = 60;
-    const MAX_DELTA_SECONDS = 0.033;
+    const MAX_DELTA_SECONDS = 1 / TARGET_FRAME_RATE;
     const ROPE_EPSILON = 0.001;
     const ROPE_SLACK_OFFSET = 4;
     const ROPE_SLACK_FACTOR = 0.45;
-    const MILLISECONDS_PER_SECOND = 1000;
     const RADIANS_TO_DEGREES = 180 / Math.PI;
 
     document.addEventListener("DOMContentLoaded", function () {
@@ -606,7 +609,12 @@
         const group = people.firstElementChild;
         const flier = group.querySelector(".flier");
         const kite = group.querySelector(".kite");
-        const ropeLayer = html`<svg class="kite-rope-layer" aria-hidden="true"></svg>`;
+        const ropeLayer = html`<svg
+          class="kite-rope-layer"
+          width=${ROPE_LAYER_SIZE}
+          height=${ROPE_LAYER_SIZE}
+          aria-hidden="true"
+        ></svg>`;
         const rope = svg`<path class="kite-rope"></path>`;
         ropeLayer.append(rope);
         group.prepend(ropeLayer);
@@ -625,6 +633,10 @@
           (initialDirection < 0
             ? LEFT_HAND_OFFSET_Y
             : RIGHT_HAND_OFFSET_Y);
+        ropeLayer.style.left =
+          `${initialHandX - ROPE_LAYER_HALF_SIZE}px`;
+        ropeLayer.style.top =
+          `${initialHandY - ROPE_LAYER_HALF_SIZE}px`;
         const initialY =
           personY -
           INITIAL_KITE_HEIGHT -
@@ -700,11 +712,15 @@
 
       // advance the kite simulation once per animation frame.
       const draw = (now) => {
+        requestAnimationFrame(draw);
+        const elapsed = now - lastTime;
+        if (elapsed < FRAME_INTERVAL_MS) return;
+
         const delta = Math.min(
           MAX_DELTA_SECONDS,
-          (now - lastTime) / MILLISECONDS_PER_SECOND
+          elapsed / MILLISECONDS_PER_SECOND
         );
-        lastTime = now;
+        lastTime = now - (elapsed % FRAME_INTERVAL_MS);
 
         // change the wind on schedule.
         if (now > nextWindChange) {
@@ -823,11 +839,13 @@
 
           person.rope.setAttribute(
             "d",
-            `M ${handX} ${handY} Q ${controlX} ${controlY} ${ropeEndX} ${ropeEndY}`
+            `M ${ROPE_LAYER_HALF_SIZE} ${ROPE_LAYER_HALF_SIZE} ` +
+            `Q ${ROPE_LAYER_HALF_SIZE + controlX - handX} ` +
+            `${ROPE_LAYER_HALF_SIZE + controlY - handY} ` +
+            `${ROPE_LAYER_HALF_SIZE + ropeEndX - handX} ` +
+            `${ROPE_LAYER_HALF_SIZE + ropeEndY - handY}`
           );
         });
-
-        requestAnimationFrame(draw);
       };
       requestAnimationFrame(draw);
     });
