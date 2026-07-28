@@ -152,10 +152,11 @@
 
     .kite-person {
       position: absolute;
-      inset: 0;
-      width: 1000px;
-      height: 560px;
-      transform-style: flat;
+      left: 0;
+      top: 0;
+      width: 0;
+      height: 0;
+      transform-style: preserve-3d;
     }
 
     .kite-rope-layer {
@@ -429,6 +430,7 @@
     const MAX_IMAGE_BYTES = MAX_IMAGE_KIB * BYTES_PER_KIB;
     const IMAGE_PREVIEW_SIZE = 16;
     const RENDER_SCENE_IMAGES = false;
+    const RENDER_KITE_ROPES = false;
     const FILE_SIZE_DECIMAL_PLACES = 2;
     const COLOR_CHANNEL_VALUES = 256;
     const COLOR_CHANNEL_COUNT = 3;
@@ -618,7 +620,9 @@
         ></svg>`;
         const rope = svg`<path class="kite-rope"></path>`;
         ropeLayer.append(rope);
-        group.prepend(ropeLayer);
+        if (RENDER_KITE_ROPES) {
+          group.prepend(ropeLayer);
+        }
         fliers.append(people);
 
         // begin with a taut rope and alternate which side each kite starts on.
@@ -836,14 +840,16 @@
           const controlX = (handX + ropeEndX) / 2;
           const controlY = (handY + ropeEndY) / 2 + sag;
 
-          person.rope.setAttribute(
-            "d",
-            `M ${ROPE_LAYER_HALF_SIZE} ${ROPE_LAYER_HALF_SIZE} ` +
-            `Q ${ROPE_LAYER_HALF_SIZE + controlX - handX} ` +
-            `${ROPE_LAYER_HALF_SIZE + controlY - handY} ` +
-            `${ROPE_LAYER_HALF_SIZE + ropeEndX - handX} ` +
-            `${ROPE_LAYER_HALF_SIZE + ropeEndY - handY}`
-          );
+          if (RENDER_KITE_ROPES) {
+            person.rope.setAttribute(
+              "d",
+              `M ${ROPE_LAYER_HALF_SIZE} ${ROPE_LAYER_HALF_SIZE} ` +
+              `Q ${ROPE_LAYER_HALF_SIZE + controlX - handX} ` +
+              `${ROPE_LAYER_HALF_SIZE + controlY - handY} ` +
+              `${ROPE_LAYER_HALF_SIZE + ropeEndX - handX} ` +
+              `${ROPE_LAYER_HALF_SIZE + ropeEndY - handY}`
+            );
+          }
         });
       };
       requestAnimationFrame(draw);
