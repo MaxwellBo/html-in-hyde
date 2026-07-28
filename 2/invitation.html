@@ -428,6 +428,7 @@
     const MAX_IMAGE_KIB = 512;
     const MAX_IMAGE_BYTES = MAX_IMAGE_KIB * BYTES_PER_KIB;
     const IMAGE_PREVIEW_SIZE = 16;
+    const RENDER_SCENE_IMAGES = false;
     const FILE_SIZE_DECIMAL_PLACES = 2;
     const COLOR_CHANNEL_VALUES = 256;
     const COLOR_CHANNEL_COUNT = 3;
@@ -562,7 +563,7 @@
 
       // place each attending person at a random spot on the grass.
       for (let i = 0; i < rsvps.length; i++) {
-        const { name, status, color } = rsvps[i];
+        const { name, status, color, image } = rsvps[i];
         const li = html`<li><span style=${{
           display: "inline-block",
           width: "1em",
@@ -663,25 +664,23 @@
         };
         kitePeople.push(kitePerson);
 
-        // use an uploaded rsvp image for both the person's face and list icon.
-        fetch(endpoint + "/image?index=" + i + "&v=" + Date.now())
-          .then((res) => res.text())
-          .then((imageb64) => {
-            if (!imageb64 || imageb64 === "NULL") return;
-            const img = html`<img src=${imageb64} alt="" />`;
+        // use the thumbnail included in the RSVP response for both images.
+        if (image) {
+          if (RENDER_SCENE_IMAGES) {
+            const img = html`<img src=${image} alt="" />`;
             flier.classList.add("has-photo");
             flier.querySelector(".head").replaceChildren(img);
+          }
 
-            const listImg = html`<img
-              src=${imageb64}
-              alt=""
-              width=${IMAGE_PREVIEW_SIZE}
-              height=${IMAGE_PREVIEW_SIZE}
-              style=${{ objectFit: "cover", verticalAlign: "middle" }}
-            />`;
-            li.firstElementChild.after(listImg);
-          })
-          .catch((error) => console.error("Could not load RSVP image", error));
+          const listImg = html`<img
+            src=${image}
+            alt=""
+            width=${IMAGE_PREVIEW_SIZE}
+            height=${IMAGE_PREVIEW_SIZE}
+            style=${{ objectFit: "cover", verticalAlign: "middle" }}
+          />`;
+          li.firstElementChild.after(listImg);
+        }
 
         goingIndex++;
       }
