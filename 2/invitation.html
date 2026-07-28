@@ -463,8 +463,9 @@
     const KITE_ROTATION_OFFSET_DEGREES = 45;
     const KITE_PHASE_STEP = 1.71;
     const KITE_HALF_SIZE = 22;
-    const ROPE_LAYER_SIZE = 460;
-    const ROPE_LAYER_HALF_SIZE = ROPE_LAYER_SIZE / 2;
+    const ROPE_LAYER_PADDING = 64;
+    const ROPE_LAYER_WIDTH = ROPE_LENGTH + ROPE_LAYER_PADDING * 2;
+    const ROPE_LAYER_HEIGHT = ROPE_LAYER_PADDING * 2;
 
     // wind changes gradually, with occasional calm periods and gusts
     const INITIAL_WIND_SPEED = 120;
@@ -614,8 +615,8 @@
         const kite = group.querySelector(".kite");
         const ropeLayer = html`<svg
           class="kite-rope-layer"
-          width=${ROPE_LAYER_SIZE}
-          height=${ROPE_LAYER_SIZE}
+          width=${ROPE_LAYER_WIDTH}
+          height=${ROPE_LAYER_HEIGHT}
           aria-hidden="true"
         ></svg>`;
         const rope = svg`<path class="kite-rope"></path>`;
@@ -639,9 +640,11 @@
             ? LEFT_HAND_OFFSET_Y
             : RIGHT_HAND_OFFSET_Y);
         ropeLayer.style.left =
-          `${initialHandX - ROPE_LAYER_HALF_SIZE}px`;
+          `${initialHandX - ROPE_LAYER_PADDING}px`;
         ropeLayer.style.top =
-          `${initialHandY - ROPE_LAYER_HALF_SIZE}px`;
+          `${initialHandY - ROPE_LAYER_PADDING}px`;
+        ropeLayer.style.transformOrigin =
+          `${ROPE_LAYER_PADDING}px ${ROPE_LAYER_PADDING}px`;
         const initialY =
           personY -
           INITIAL_KITE_HEIGHT -
@@ -655,6 +658,7 @@
           flier,
           kite,
           rope,
+          ropeLayer,
           personX,
           personY,
           ropeLength,
@@ -837,17 +841,21 @@
             chord * 0.45,
             ROPE_SLACK_OFFSET + slack * ROPE_SLACK_FACTOR
           );
-          const controlX = (handX + ropeEndX) / 2;
-          const controlY = (handY + ropeEndY) / 2 + sag;
 
           if (RENDER_KITE_ROPES) {
+            const ropeAngle = Math.atan2(
+              ropeEndY - handY,
+              ropeEndX - handX
+            );
+            const localSagX = Math.sin(ropeAngle) * sag;
+            const localSagY = Math.cos(ropeAngle) * sag;
+            person.ropeLayer.style.transform = `rotate(${ropeAngle}rad)`;
             person.rope.setAttribute(
               "d",
-              `M ${ROPE_LAYER_HALF_SIZE} ${ROPE_LAYER_HALF_SIZE} ` +
-              `Q ${ROPE_LAYER_HALF_SIZE + controlX - handX} ` +
-              `${ROPE_LAYER_HALF_SIZE + controlY - handY} ` +
-              `${ROPE_LAYER_HALF_SIZE + ropeEndX - handX} ` +
-              `${ROPE_LAYER_HALF_SIZE + ropeEndY - handY}`
+              `M ${ROPE_LAYER_PADDING} ${ROPE_LAYER_PADDING} ` +
+              `Q ${ROPE_LAYER_PADDING + chord / 2 + localSagX} ` +
+              `${ROPE_LAYER_PADDING + localSagY} ` +
+              `${ROPE_LAYER_PADDING + chord} ${ROPE_LAYER_PADDING}`
             );
           }
         });
