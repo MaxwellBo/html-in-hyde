@@ -250,6 +250,14 @@
       transform: rotate(-62deg);
     }
 
+    .flier.no-kite .arm-left {
+      transform: rotate(18deg);
+    }
+
+    .flier.no-kite .arm-right {
+      transform: rotate(-18deg);
+    }
+
     .leg {
       left: 29px;
       top: 73px;
@@ -570,7 +578,7 @@
       const kitePeople = [];
       let goingIndex = 0;
 
-      // place each attending person at a random spot on the grass.
+      // place each RSVP as a stick figure on the grass; only goings get a kite.
       for (let i = 0; i < rsvps.length; i++) {
         const { name, status, color, image } = rsvps[i];
         const li = html`<li><span style=${{
@@ -582,8 +590,7 @@
         }}></span> ${name}${status === "going" ? "" : ` (${status})`}</li>`;
         ul.append(li);
 
-        if (!getsKite(rsvps[i])) continue;
-
+        const withKite = getsKite(rsvps[i]);
         const personX =
           FLIER_MIN_X + Math.random() * (FLIER_MAX_X - FLIER_MIN_X);
         const grassProgress =
@@ -598,7 +605,7 @@
           <div class="kite-person" style=${{
             transform: `translateZ(${grassDepth}px)`
           }}>
-            <div class="flier" style=${{
+            <div class=${withKite ? "flier" : "flier no-kite"} style=${{
               "--kite-color": color,
               transform: `translate(${personX - FLIER_OFFSET_X}px, ${personY - FLIER_OFFSET_Y}px)`
             }}>
@@ -611,72 +618,76 @@
                 <div class="leg leg-right"></div>
               </div>
             </div>
-            <div class="kite" style=${{ "--kite-color": color }}>
-              <div class="kite-shape"></div>
-            </div>
           </div>
         `;
         const group = people.firstElementChild;
         const flier = group.querySelector(".flier");
-        const kite = group.querySelector(".kite");
-        const ropeLayer = html`<svg
-          class="kite-rope-layer"
-          width=${ROPE_LAYER_WIDTH}
-          height=${ROPE_LAYER_HEIGHT}
-          aria-hidden="true"
-        ></svg>`;
-        const rope = svg`<path class="kite-rope"></path>`;
-        ropeLayer.append(rope);
-        if (RENDER_KITE_ROPES) {
-          group.prepend(ropeLayer);
-        }
         fliers.append(people);
 
-        // begin with a taut rope and alternate which side each kite starts on.
-        const ropeLength = ROPE_LENGTH;
-        const initialDirection = goingIndex % 2 ? -1 : 1;
-        const initialHandX =
-          personX +
-          (initialDirection < 0
-            ? LEFT_HAND_OFFSET_X
-            : RIGHT_HAND_OFFSET_X);
-        const initialHandY =
-          personY +
-          (initialDirection < 0
-            ? LEFT_HAND_OFFSET_Y
-            : RIGHT_HAND_OFFSET_Y);
-        ropeLayer.style.left =
-          `${initialHandX - ROPE_LAYER_PADDING}px`;
-        ropeLayer.style.top =
-          `${initialHandY - ROPE_LAYER_PADDING}px`;
-        ropeLayer.style.transformOrigin =
-          `${ROPE_LAYER_PADDING}px ${ROPE_LAYER_PADDING}px`;
-        const initialY =
-          personY -
-          INITIAL_KITE_HEIGHT -
-          (goingIndex % INITIAL_KITE_HEIGHT_VARIANTS) * INITIAL_KITE_HEIGHT_STEP;
-        const verticalDistance = initialY - initialHandY;
-        const initialX =
-          initialHandX +
-          initialDirection *
-            Math.sqrt(Math.max(0, ropeLength ** 2 - verticalDistance ** 2));
-        const kitePerson = {
-          flier,
-          kite,
-          rope,
-          ropeLayer,
-          personX,
-          personY,
-          ropeLength,
-          x: initialX,
-          y: initialY,
-          vx: 0,
-          vy: 0,
-          handSide: initialDirection,
-          phase: goingIndex * KITE_PHASE_STEP,
-          landedY
-        };
-        kitePeople.push(kitePerson);
+        if (withKite) {
+          const kite = html`<div class="kite" style=${{ "--kite-color": color }}>
+            <div class="kite-shape"></div>
+          </div>`;
+          group.append(kite);
+
+          const ropeLayer = html`<svg
+            class="kite-rope-layer"
+            width=${ROPE_LAYER_WIDTH}
+            height=${ROPE_LAYER_HEIGHT}
+            aria-hidden="true"
+          ></svg>`;
+          const rope = svg`<path class="kite-rope"></path>`;
+          ropeLayer.append(rope);
+          if (RENDER_KITE_ROPES) {
+            group.prepend(ropeLayer);
+          }
+
+          // begin with a taut rope and alternate which side each kite starts on.
+          const ropeLength = ROPE_LENGTH;
+          const initialDirection = goingIndex % 2 ? -1 : 1;
+          const initialHandX =
+            personX +
+            (initialDirection < 0
+              ? LEFT_HAND_OFFSET_X
+              : RIGHT_HAND_OFFSET_X);
+          const initialHandY =
+            personY +
+            (initialDirection < 0
+              ? LEFT_HAND_OFFSET_Y
+              : RIGHT_HAND_OFFSET_Y);
+          ropeLayer.style.left =
+            `${initialHandX - ROPE_LAYER_PADDING}px`;
+          ropeLayer.style.top =
+            `${initialHandY - ROPE_LAYER_PADDING}px`;
+          ropeLayer.style.transformOrigin =
+            `${ROPE_LAYER_PADDING}px ${ROPE_LAYER_PADDING}px`;
+          const initialY =
+            personY -
+            INITIAL_KITE_HEIGHT -
+            (goingIndex % INITIAL_KITE_HEIGHT_VARIANTS) * INITIAL_KITE_HEIGHT_STEP;
+          const verticalDistance = initialY - initialHandY;
+          const initialX =
+            initialHandX +
+            initialDirection *
+              Math.sqrt(Math.max(0, ropeLength ** 2 - verticalDistance ** 2));
+          kitePeople.push({
+            flier,
+            kite,
+            rope,
+            ropeLayer,
+            personX,
+            personY,
+            ropeLength,
+            x: initialX,
+            y: initialY,
+            vx: 0,
+            vy: 0,
+            handSide: initialDirection,
+            phase: goingIndex * KITE_PHASE_STEP,
+            landedY
+          });
+          goingIndex++;
+        }
 
         // use the thumbnail included in the RSVP response for both images.
         if (image) {
@@ -695,8 +706,6 @@
           />`;
           li.firstElementChild.after(listImg);
         }
-
-        goingIndex++;
       }
 
       let wind = INITIAL_WIND_SPEED;
