@@ -250,14 +250,6 @@
       transform: rotate(-62deg);
     }
 
-    .flier.no-kite .arm-left {
-      transform: rotate(18deg);
-    }
-
-    .flier.no-kite .arm-right {
-      transform: rotate(-18deg);
-    }
-
     .leg {
       left: 29px;
       top: 73px;
@@ -587,7 +579,7 @@
           height: "1em",
           backgroundColor: color,
           verticalAlign: "middle"
-        }}></span> ${name}${status === "going" ? "" : ` (${status})`}</li>`;
+        }}></span> ${name}${status === "going" ? "" : html` <small><i>(${status})</i></small>`}</li>`;
         ul.append(li);
 
         const withKite = getsKite(rsvps[i]);
@@ -605,7 +597,7 @@
           <div class="kite-person" style=${{
             transform: `translateZ(${grassDepth}px)`
           }}>
-            <div class=${withKite ? "flier" : "flier no-kite"} style=${{
+            <div class="flier" style=${{
               "--kite-color": color,
               transform: `translate(${personX - FLIER_OFFSET_X}px, ${personY - FLIER_OFFSET_Y}px)`
             }}>
