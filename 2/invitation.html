@@ -6,10 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#d8e7d2">
   <title>HTML in Hyde #2</title>
-  <meta name="description" content="a HTML freewrite on August 8 2026 in Hyde Park, Sydney">
+  <meta name="description" content="a HTML freewrite held August 8 2026 in Hyde Park, Sydney">
   <link rel="icon" type="image/png" href="kite.png" />
   <meta property="og:title" content="HTML in Hyde #2" />
-  <meta property="og:description" content="a HTML freewrite on August 8 2026 in Hyde Park, Sydney" />
+  <meta property="og:description" content="a HTML freewrite held August 8 2026 in Hyde Park, Sydney" />
   <meta property="og:image" content="https://maxbo.me/html-in-hyde/2/kite.png" />
   <meta property="og:url" content="https://maxbo.me/html-in-hyde/2/invitation" />
   <style>
@@ -310,6 +310,11 @@
 
   <h1>HTML in Hyde #2</h1>
 
+  <p>
+    <b>This event has finished!</b>
+    See the <a href="gallery.html">projects and photos in the gallery</a>.
+  </p>
+
   <section>
     <b>What?</b>
     <br />
@@ -510,6 +515,7 @@
 
     document.addEventListener("DOMContentLoaded", function () {
       const fileInput = document.getElementById("image");
+      if (!fileInput) return;
       fileInput.addEventListener("change", function () {
         if (fileInput.files.length > 0) {
           const file = fileInput.files[0];
@@ -540,8 +546,7 @@
       colorInput.value = randomColor();
     });
 
-    document.addEventListener("DOMContentLoaded", async function () {
-      const endpoint = "https://mbo--efef75fe6e9f11f1a6751607ee4eb77e.web.val.run";
+    document.addEventListener("DOMContentLoaded", function () {
       const ul = document.getElementById("rsvps");
       const scene = document.getElementById("scene");
       const world = document.getElementById("world");
@@ -556,17 +561,55 @@
       updateSceneScale();
       new ResizeObserver(updateSceneScale).observe(scene);
 
-      // the backend supplies both the visible rsvp list and the kite fliers.
-      let rsvps = [];
-      try {
-        rsvps = await fetch(endpoint + "/rsvps").then((response) => {
-          if (!response.ok) throw new Error("Could not load RSVPs");
-          return response.json();
-        });
-      } catch (error) {
-        ul.append(html`<li>RSVPs are taking a little nap. Try refreshing?</li>`);
-        console.error(error);
-      }
+      // Archived after the event so the attendee list and kite scene load
+      // instantly without depending on the RSVP backend.
+      const rsvps = [
+        { "name": "Max", "status": "going", "color": "#f2de8c" },
+        { "name": "Vaibhav Sagar", "status": "going", "color": "#85f4a1" },
+        { "name": "Frank Li", "status": "going", "color": "#27a500" },
+        { "name": "Hamish", "status": "can't come", "color": "#0300e6" },
+        { "name": "huw", "status": "going", "color": "#01c7fc" },
+        { "name": "Abby Shen", "status": "can't come", "color": "#d3f997" },
+        { "name": "Anna", "status": "maybe", "color": "#a5b12c" },
+        { "name": "marc", "status": "going", "color": "#d8e6d2" },
+        { "name": "Ray Zhu", "status": "going", "color": "#f5ec00" },
+        { "name": "LIAMZ", "status": "maybe", "color": "#8c8a6a" },
+        { "name": "Matt Low", "status": "going", "color": "#83857a" },
+        { "name": "Annabelle L", "status": "going", "color": "#36ac75" },
+        { "name": "Nicole", "status": "going", "color": "#f9d3e0" },
+        { "name": "Lewis", "status": "going", "color": "#e100ff" },
+        { "name": "Jamie", "status": "going", "color": "#ffffff" },
+        { "name": "Becky H", "status": "going", "color": "#0000ff" },
+        { "name": "Fernando Borretti", "status": "going", "color": "#b1002e" },
+        { "name": "Oskar", "status": "going", "color": "#d37a14" },
+        { "name": "Tom", "status": "going", "color": "#5781ff" },
+        { "name": "cyan", "status": "going", "color": "#00ffff" },
+        { "name": "Josh Crowley", "status": "going", "color": "#f26a21" },
+        { "name": "jo", "status": "maybe", "color": "#bcb8f4" },
+        { "name": "Hannah", "status": "maybe", "color": "#25f500" },
+        { "name": "Kelli", "status": "going", "color": "#ec59c7" },
+        { "name": "Nathan", "status": "can't come", "color": "#4c5fe4" },
+        { "name": "juvia ", "status": "going", "color": "#ffd3ac" },
+        { "name": "Sha", "status": "maybe", "color": "#990100" },
+        { "name": "Angus", "status": "maybe", "color": "color(display-p3 1 1 0.330897)" },
+        { "name": "Dani", "status": "maybe", "color": "#ff0000" },
+        { "name": "Joseph", "status": "going", "color": "#2f7c88" },
+        { "name": "Talin", "status": "maybe", "color": "#c24e00" },
+        { "name": "Vanessa Long", "status": "can't come", "color": "#f7ec52" },
+        { "name": "M", "status": "maybe", "color": "#373b43" },
+        { "name": "Joshua Rees", "status": "going", "color": "#d8e7d2" },
+        { "name": "Brian L", "status": "going", "color": "#ee6944" },
+        { "name": "Lachy", "status": "going", "color": "#99dfff" },
+        { "name": "Catherine", "status": "maybe", "color": "#005c13" },
+        { "name": "Jennifer", "status": "going", "color": "#0000ff" },
+        { "name": "David Oates", "status": "going", "color": "#32baf8" },
+        { "name": "Dan O", "status": "going", "color": "#70d5e0" },
+        { "name": "Ryan", "status": "going", "color": "#d28b7f" },
+        { "name": "David", "status": "going", "color": "#13ae30" },
+        { "name": "Grace T", "status": "going", "color": "#38571a" },
+        { "name": "Vilia", "status": "going", "color": "#cbf0ff" },
+        { "name": "Elijah Shervey", "status": "going", "color": "#ffff00" }
+      ];
 
       const isMax = (name) => /^max( bo)?$/i.test(name.trim());
       const getsKite = (rsvp) => rsvp.status === "going" || isMax(rsvp.name);
@@ -893,6 +936,7 @@
   </main>
 
   <aside id="col2">
+    <p><b>RSVPs are closed.</b></p>
     <form id="rsvp" action="https://mbo--efef75fe6e9f11f1a6751607ee4eb77e.web.val.run/rsvps" method="POST" enctype="multipart/form-data">
       <fieldset>
         <legend>RSVP</legend>
@@ -916,15 +960,15 @@
         <br />
         <br />
 
-        <button id="going" type="submit" name="status" value="going">Going</button>
-        <button type="submit" name="status" value="maybe">Maybe</button>
-        <button type="submit" name="status" value="can't come">Can't come</button>
-        <i>(Resubmit your RSVP with the same email to change status, colour or photo)</i>
+        <button id="going" type="submit" name="status" value="going" disabled>Going</button>
+        <button type="submit" name="status" value="maybe" disabled>Maybe</button>
+        <button type="submit" name="status" value="can't come" disabled>Can't come</button>
+        <i>(RSVPs closed after the event)</i>
       </fieldset>
     </form>
 
     <br />
-    <b>RSVPs</b>
+    <b>Attendees</b>
     <ul id="rsvps"></ul>
     <p><i>(you get a kite if you're marked going)</i></p>
 

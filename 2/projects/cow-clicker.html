@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<body style="background-color:#99CC00;">
+
+
+<head>
+<title>Cow clicker!</title>
+</head>
+<body>
+<center>
+<p>Click on the cows!!!</p>
+<div id="grass" style="background-color:green; height:600px">
+<img src="https://www.clipartmax.com/png/small/1-14098_cartoon-cow-cartoonw-images-free-download-clip-art-cute-cow-transparent.png" alt="Cartoon Cow Cartoonw Images Free Download Clip Art - Cute Cow Transparent @clipartmax.com" style="height:100px; width:100px">
+</div>
+<div>
+<br></br>
+<button class="button" onclick="createCows()">Create another cow</button>
+</div>
+</center>
+</body>
+
+<script>
+function createCows() {
+const myImage = new Image(100,100);
+myImage.src = 'https://www.clipartmax.com/png/small/1-14098_cartoon-cow-cartoonw-images-free-download-clip-art-cute-cow-transparent.png';
+document.getElementById("grass").appendChild(myImage);
+}
+</script>
+
+</html>
