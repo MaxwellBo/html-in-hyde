@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>hammer</title>
+</head>
+
+<body>
+
+  <button onclick="enableSound()">Enable sound</button>
+
+  <p style="font-size:4em;">HELLO</p>
+  <p style="font-size:4em;">HELLO</p>
+  <p style="font-size:4em;">HELLO</p>
+  <p style="font-size:4em;">HELLO</p>
+  <p style="font-size:4em;">HELLO</p>
+  <p style="font-size:4em;">HELLO</p>
+  <p style="font-size:4em;">HELLO</p>
+  <p style="font-size:4em;">HELLO</p>
+  <p style="font-size:4em;">HELLO</p>
+  <p style="font-size:4em;">HELLO</p>
+  <p style="font-size:4em;">HELLO</p>
+  <p style="font-size:4em;">HELLO</p>
+  <p style="font-size:4em;">HELLO</p>
+  <p style="font-size:4em;">HELLO</p>
+  <p style="font-size:4em;">HELLO</p>
+
+
+  <div>
+    <h1>🔔</h1>
+    <br />
+    <input type="range" id="meter" name="meter" value="0" min="0" max="100"
+      style="writing-mode: bt-lr; -webkit-appearance: slider-vertical; width: 8px; height: 200px;" />
+  </div>
+
+
+
+  <script>
+    function sleep(duration, value) {
+      return new Promise(function (resolve) {
+        setTimeout(function () {
+          resolve(value);
+        }, duration);
+      });
+    }
+
+    // Relative to this page: 2/projects/wack.html → 2/pipe.mp3
+    const pipeSound = new Audio('pipe.mp3');
+    pipeSound.preload = 'auto';
+
+    let audioCtx = null;
+    let oscillator = null;
+    let gainNode = null;
+    let soundUnlocked = false;
+
+    function enableSound() {
+      if (!audioCtx) {
+        audioCtx = new AudioContext();
+      }
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+
+      // Unlock mp3 playback with the same user gesture
+      pipeSound.muted = true;
+      pipeSound.play().then(() => {
+        pipeSound.pause();
+        pipeSound.currentTime = 0;
+        pipeSound.muted = false;
+        soundUnlocked = true;
+      }).catch(() => {
+        pipeSound.muted = false;
+        soundUnlocked = true; // oscillator still usable
+      });
+    }
+
+    function meterToFreq(value) {
+      // 220 Hz at bottom → 880 Hz at top
+      return 220 + (Number(value) / 100) * 660;
+    }
+
+    function startTone() {
+      if (!audioCtx) return;
+      stopTone();
+      oscillator = audioCtx.createOscillator();
+      gainNode = audioCtx.createGain();
+      oscillator.type = 'sine';
+      oscillator.frequency.value = meterToFreq(meter.value);
+      gainNode.gain.value = 0.15;
+      oscillator.connect(gainNode);
+      gainNode.connect(audioCtx.destination);
+      oscillator.start();
+    }
+
+    function setTonePitch(value) {
+      if (!oscillator || !audioCtx) return;
+      oscillator.frequency.setValueAtTime(meterToFreq(value), audioCtx.currentTime);
+    }
+
+    function stopTone() {
+      if (oscillator) {
+        try { oscillator.stop(); } catch (_) {}
+        oscillator.disconnect();
+        oscillator = null;
+      }
+      if (gainNode) {
+        gainNode.disconnect();
+        gainNode = null;
+      }
+    }
+
+    function playPipe() {
+      if (!soundUnlocked) return;
+      pipeSound.currentTime = 0;
+      pipeSound.play().catch(() => {});
+    }
+
+    const gravity = 0.1;
+
+    async function hit(force) {
+
+      force /= 80;
+      console.log("force adjusted", force);
+      let rangBell = false;
+      startTone();
+
+      while (true) {
+        console.log("force", force);
+        console.log("meter.value", meter.value);
+        meter.value = Math.min(100, meter.value + force);
+        setTonePitch(meter.value);
+        force -= gravity;
+        await sleep(1000 / 60);
+
+        if (meter.value >= 100 && !rangBell) {
+          rangBell = true;
+          playPipe();
+          break;
+        }
+
+        if (force <= 0) {
+          break;
+        }
+      }
+
+      let down = 0;
+
+      while (true) {
+        meter.value = Math.max(0, meter.value - down);
+        setTonePitch(meter.value);
+        down += gravity;
+
+        await sleep(1000 / 60);
+
+        if (meter.value <= 0) {
+          break;
+        }
+      }
+
+      stopTone();
+    }
+
+    let lastPos = null;
+    let timer;
+    let delta = 0;
+    const delay = 50; // in "ms" (higher means lower fidelity)
+
+    const clear = () => {
+      lastPos = null;
+      delta = 0;
+    };
+
+    clear();
+
+    let running = false;
+
+    const onScroll = async() => {
+
+      const newPos = window.scrollY;
+      if (lastPos !== null) {
+        delta = newPos - lastPos;
+
+        if (delta > 0 && window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 10) {
+          if (!running) {
+            running = true;
+            await hit(delta)
+            running = false;
+          }
+          clear();
+        }
+      }
+      lastPos = newPos;
+      clearTimeout(timer);
+      timer = setTimeout(clear, delay);
+      return delta;
+    };
+
+    window.addEventListener('scroll', () => {
+      onScroll();
+    });
+
+
+
+  </script>
+</body>
+
+</html>
