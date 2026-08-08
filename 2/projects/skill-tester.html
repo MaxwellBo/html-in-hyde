@@ -172,8 +172,6 @@
       delta = 0;
     };
 
-    clear();
-
     let running = false;
 
     const onScroll = async() => {
@@ -188,7 +186,6 @@
             await hit(delta)
             running = false;
           }
-          clear();
         }
       }
       lastPos = newPos;
@@ -200,7 +197,6 @@
     window.addEventListener('scroll', () => {
       onScroll();
     });
-
 
 
   </script>
