@@ -31,7 +31,7 @@
   <div>
     <h1>🔔</h1>
     <br />
-    <input type="range" id="meter" name="meter" value="0" min="0" max="100"
+    <input type="range" id="meter" name="meter" value="0" min="0" max="100" step="any"
       style="writing-mode: bt-lr; -webkit-appearance: slider-vertical; width: 8px; height: 200px;" />
   </div>
 
@@ -121,20 +121,20 @@
 
     async function hit(force) {
 
-      force /= 80;
+      force /= 6;
       console.log("force adjusted", force);
       let rangBell = false;
       startTone();
 
       while (true) {
         console.log("force", force);
-        console.log("meter.value", meter.value);
-        meter.value = Math.min(100, meter.value + force);
-        setTonePitch(meter.value);
+        console.log("meter.value", meter.valueAsNumber);
+        meter.valueAsNumber = Math.min(100, meter.valueAsNumber + force);
+        setTonePitch(meter.valueAsNumber);
         force -= gravity;
         await sleep(1000 / 60);
 
-        if (meter.value >= 100 && !rangBell) {
+        if (meter.valueAsNumber >= 100 && !rangBell) {
           rangBell = true;
           playPipe();
           break;
@@ -148,13 +148,13 @@
       let down = 0;
 
       while (true) {
-        meter.value = Math.max(0, meter.value - down);
-        setTonePitch(meter.value);
+        meter.valueAsNumber = Math.max(0, meter.valueAsNumber - down);
+        setTonePitch(meter.valueAsNumber);
         down += gravity;
 
         await sleep(1000 / 60);
 
-        if (meter.value <= 0) {
+        if (meter.valueAsNumber <= 0) {
           break;
         }
       }
