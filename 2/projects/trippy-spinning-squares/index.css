@@ -1,0 +1,40 @@
+html {
+    font-family: Trebuchet MS, sans-serif;
+    text-align: center;
+    cursor: url("https://i.imgur.com/IAhsSaf.png"), auto;
+}
+
+.box {
+    position: absolute;
+}
+
+.box:hover {
+    opacity: 0;
+}
+
+.box-container {
+    background-color: #fff;
+    position: absolute;
+}
+
+#container-2 {
+    z-index: 15;
+    width: 400px;
+    height: 400px;
+}
+
+@keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+#boxes {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 1000px;
+}
