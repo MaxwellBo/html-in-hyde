@@ -1,0 +1,62 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="collage_styles.css">
+    </head>
+    <body>
+        <style>
+            html {
+                cursor: url("https://i.imgur.com/8Jhi9oS.png"), auto;
+            }
+        </style>
+        <h1>HTML in Hyde</h1>
+        <div class="grass">
+            <!-- <img src="./images/anz.JPG" class="item"/>
+            <img src="./images/backpack_red.JPG" class="item"/>
+            <img src="./images/canva_backpack.JPG" class="item"/>
+            <img src="ce_larg.JPG" class="item"/>
+            <img src="check_new.JPG" class="item"/>
+            <img src="green_ipod_ne.JPG" class="item"/>
+            <img src="mat_nw`.JPG" class="item"/>
+            <img src="north_jumper.JPG" class="item"/>
+            <img src="rm.JPG" class="item"/>
+            <img src="sce_yellow.JPG" class="item"/>
+            <img src="sw_print.JPG" class="item"/> -->
+        </div>
+        
+    </body>
+   
+    <script>
+        const items = [
+        { src: "./images/anz.JPG",            x: 12, y: 18, size: 140,  rot: -8 },
+        // { src: "./images/backpack_red.JPG",   x: 30, y: 68, size: 160, rot:  5 },
+        { src: "./images/canva_backpack.JPG", x: 72, y: 20, size: 175, rot: -4 },
+        { src: "./images/ce_large.JPG",        x: 50, y: 42, size: 140, rot:  7 },
+        { src: "./images/check_nw.JPG",      x: 84, y: 65, size: 150,  rot: -6 },
+        { src: "./images/green_ipod_ne.JPG",  x: 18, y: 52, size: 135,  rot:  9 },
+        { src: "./images/mat_nw.JPG",        x: 65, y: 72, size: 190, rot: -3 },
+        { src: "./images/north_jumper.JPG",   x: 42, y: 15, size: 180, rot:  4 },
+        { src: "./images/backpack_red.JPG",             x: 87, y: 35, size: 135,  rot: -7 },
+        { src: "./images/sce_yellow.JPG",     x: 50, y: 85, size: 145,  rot:  6 },
+        { src: "./images/sw_print.JPG",       x: 15, y: 75, size: 170,  rot: -5 },
+        { src: "./images/laptop.JPG",       x: 40, y: 50, size: 180,  rot: 0 },
+        { src: "./images/portaloos.JPG",       x: 25, y: 25, size: 170,  rot: -5 },
+        { src: "./images/rm.JPG",       x: 75, y: 80, size: 120,  rot: -5 },
+        { src: "./images/antler.JPG",       x: 90, y: 85, size: 140,  rot: -10 },
+        ];
+        const grass = document.getElementsByClassName("grass")[0]
+
+        items.forEach(item => {
+        const img = document.createElement("img");
+
+        img.src = item.src;
+        img.className = "item";
+
+        img.style.left = `${item.x}%`;
+        img.style.top = `${item.y}%`;
+        img.style.width = `${item.size}px`;
+        img.style.transform = `translate(-50%, -50%) rotate(${item.rot}deg)`;
+
+        grass.appendChild(img);
+        });
+    </script>
+</html>
