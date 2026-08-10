@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML Day 2026 – Joshua Crowley</title>
+    
+      <script type="module">
+      
+      //ripped from https://github.com/MaxwellBo/html-in-hyde/blob/master/2/invitation.html
+
+    // upload and colour picker settings
+    const BYTES_PER_KIB = 1024;
+    const MAX_IMAGE_KIB = 512;
+    const MAX_IMAGE_BYTES = MAX_IMAGE_KIB * BYTES_PER_KIB;
+    const IMAGE_PREVIEW_SIZE = 16;
+    const RENDER_SCENE_IMAGES = true;
+    const RENDER_KITE_ROPES = true;
+    const FILE_SIZE_DECIMAL_PLACES = 2;
+    const COLOR_CHANNEL_VALUES = 256;
+    const COLOR_CHANNEL_COUNT = 3;
+    const MINIMUM_COLOR_AVERAGE = 100;
+    const HEX_RADIX = 16;
+    const HEX_CHANNEL_WIDTH = 2;
+
+    // positions in the unscaled 1000 by 560 scene
+    const WORLD_WIDTH = 1000;
+    const MAX_SCENE_SCALE = 0.64;
+    const GRASS_LEFT_X = 150;
+    const GRASS_WIDTH = 700;
+    const GRASS_HORIZONTAL_EDGE_MARGIN = 0.1;
+    const GRASS_DEPTH_EDGE_MARGIN = 0.05;
+    const FLIER_MIN_X =
+      GRASS_LEFT_X + GRASS_WIDTH * GRASS_HORIZONTAL_EDGE_MARGIN;
+    const FLIER_MAX_X =
+      GRASS_LEFT_X + GRASS_WIDTH * (1 - GRASS_HORIZONTAL_EDGE_MARGIN);
+    const FLIER_MIN_GRASS_PROGRESS = GRASS_DEPTH_EDGE_MARGIN;
+    const FLIER_MAX_GRASS_PROGRESS = 1 - GRASS_DEPTH_EDGE_MARGIN;
+    const FLIER_OFFSET_X = 29;
+    const FLIER_OFFSET_Y = 18;
+    const FLIER_FEET_OFFSET_Y = 90;
+    const GRASS_BACK_Y = 350;
+    const GRASS_LENGTH = 340;
+
+    // kite geometry and the starting pose for each new flier
+    const ROPE_LENGTH = 245;
+    const INITIAL_KITE_HEIGHT = 175;
+    const INITIAL_KITE_HEIGHT_STEP = 15;
+    const INITIAL_KITE_HEIGHT_VARIANTS = 3;
+    const LEFT_HAND_OFFSET_X = -18.06;
+    const LEFT_HAND_OFFSET_Y = 56.42;
+    const RIGHT_HAND_OFFSET_X = 21.28;
+    const RIGHT_HAND_OFFSET_Y = 53.67;
+    const KITE_ROTATION_OFFSET_DEGREES = 45;
+    const KITE_PHASE_STEP = 1.71;
+    const KITE_HALF_SIZE = 22;
+    const ROPE_LAYER_PADDING = 64;
+    const ROPE_LAYER_WIDTH = ROPE_LENGTH + ROPE_LAYER_PADDING * 2;
+    const ROPE_LAYER_HEIGHT = ROPE_LAYER_PADDING * 2;
+
+    // wind changes gradually, with occasional calm periods and gusts
+    const INITIAL_WIND_SPEED = 120;
+    const INITIAL_WIND_CHANGE_DELAY_MS = 3000;
+    const CALM_WIND_CHANCE = 0.1;
+    const MINIMUM_WIND_STRENGTH = 95;
+    const WIND_STRENGTH_RANGE = 65;
+    const WIND_DIRECTION_CHANGE_CHANCE = 0.15;
+    const MINIMUM_WIND_CHANGE_DELAY_MS = 4000;
+    const WIND_CHANGE_DELAY_RANGE_MS = 3000;
+    const WIND_SMOOTHING = 0.65;
+    const GUST_PERIOD_MS = 700;
+    const GUST_AMPLITUDE = 18;
+
+    // forces, integration limits, and collision boundaries
+    const GRAVITY = 140;
+    const MAX_LIFT = 220;
+    const LIFT_COEFFICIENT = 0.03;
+    const DRAG_COEFFICIENT = 0.005;
+    const TAKEOFF_CLEARANCE = 2;
+    const TAKEOFF_VELOCITY_FACTOR = 0.08;
+    const TAKEOFF_VELOCITY_Y = -18;
+    const VELOCITY_DAMPING = 0.996;
+    const MILLISECONDS_PER_SECOND = 1000;
+    const TARGET_FRAME_RATE = 30;
+    const FRAME_INTERVAL_MS = MILLISECONDS_PER_SECOND / TARGET_FRAME_RATE;
+    const NOMINAL_FPS = 60;
+    const MAX_DELTA_SECONDS = 1 / TARGET_FRAME_RATE;
+    const ROPE_EPSILON = 0.001;
+    const ROPE_SLACK_OFFSET = 4;
+    const ROPE_SLACK_FACTOR = 0.45;
+    const RADIANS_TO_DEGREES = 180 / Math.PI;
+
+  const scene = document.getElementById("scene");
+  const world = document.getElementById("world");
+  const windReadout = document.getElementById("wind-readout");
+
+  const updateSceneScale = () => {
+    world.style.setProperty("--scene-scale",
+      Math.min(MAX_SCENE_SCALE, scene.clientWidth / WORLD_WIDTH));
+  };
+  updateSceneScale();
+  new ResizeObserver(updateSceneScale).observe(scene);
+
+  const group = document.querySelector(".kite-person");
+  const person = {
+    kite: group.querySelector(".kite"),
+    rope: group.querySelector(".kite-rope"),
+    ropeLayer: group.querySelector(".kite-rope-layer"),
+    personX: 293.275,
+    personY: 260,
+    ropeLength: ROPE_LENGTH,
+    x: 500, y: 250, vx: 14.91, vy: -24.28,
+    handSide: 1, phase: 0,
+    landedY: GRASS_BACK_Y - KITE_HALF_SIZE,
+    landed: false
+  };
+  
+  const kitePeople = [person];
+
+      let wind = INITIAL_WIND_SPEED;
+      let targetWind = wind;
+      let windDirection = Math.sign(wind);
+      let nextWindChange = performance.now() + INITIAL_WIND_CHANGE_DELAY_MS;
+      let lastTime = performance.now();
+
+      // choose a new target and ease toward it instead of changing instantly.
+      const chooseNewWind = () => {
+        // occasionally choose still air so the kites have a chance to land.
+        if (Math.random() < CALM_WIND_CHANCE) {
+          targetWind = 0;
+        } else {
+          const strength = MINIMUM_WIND_STRENGTH + Math.random() * WIND_STRENGTH_RANGE;
+          if (Math.random() < WIND_DIRECTION_CHANGE_CHANCE) {
+            windDirection *= -1;
+          }
+          targetWind = windDirection * strength;
+        }
+        nextWindChange =
+          performance.now() +
+          MINIMUM_WIND_CHANGE_DELAY_MS +
+          Math.random() * WIND_CHANGE_DELAY_RANGE_MS;
+      };
+
+      // advance the kite simulation once per animation frame.
+      const draw = (now) => {
+
+        requestAnimationFrame(draw);
+        const elapsed = now - lastTime;
+        if (elapsed < FRAME_INTERVAL_MS) return;
+
+        const delta = Math.min(
+          MAX_DELTA_SECONDS,
+          elapsed / MILLISECONDS_PER_SECOND
+        );
+        lastTime = now - (elapsed % FRAME_INTERVAL_MS);
+
+        // change the wind on schedule.
+        if (now > nextWindChange) {
+          chooseNewWind();
+        }
+        wind += (targetWind - wind) * Math.min(1, delta * WIND_SMOOTHING);
+        windReadout.textContent = `wind ${wind < 0 ? "←" : "→"} ${Math.round(Math.abs(wind))}`;
+
+        kitePeople.forEach((person) => {
+          const handX =
+            person.personX +
+            (person.handSide < 0
+              ? LEFT_HAND_OFFSET_X
+              : RIGHT_HAND_OFFSET_X);
+          const handY =
+            person.personY +
+            (person.handSide < 0
+              ? LEFT_HAND_OFFSET_Y
+              : RIGHT_HAND_OFFSET_Y);
+          const gust =
+            Math.sin(now / GUST_PERIOD_MS + person.phase) * GUST_AMPLITUDE;
+
+          const takeoffLift = Math.min(
+            MAX_LIFT,
+            LIFT_COEFFICIENT * Math.abs(wind + gust) ** 2
+          );
+
+          // release a landed kite when lift exceeds gravity.
+          if (person.landed && takeoffLift > GRAVITY) {
+            person.landed = false;
+            person.y = person.landedY - TAKEOFF_CLEARANCE;
+            person.vx = wind * TAKEOFF_VELOCITY_FACTOR;
+            person.vy = TAKEOFF_VELOCITY_Y;
+          }
+
+          // only airborne kites need forces, velocity, and position integrated.
+          if (!person.landed) {
+            const airX = wind + gust - person.vx;
+            const airY = -person.vy;
+            const airSpeed = Math.hypot(airX, airY);
+            const dragX = DRAG_COEFFICIENT * airSpeed * airX;
+            const dragY = DRAG_COEFFICIENT * airSpeed * airY;
+            const liftForce = -Math.min(
+              MAX_LIFT,
+              LIFT_COEFFICIENT * Math.abs(airX) * airSpeed
+            );
+            const forceY = GRAVITY + dragY + liftForce;
+
+            person.vx += dragX * delta;
+            person.vy += forceY * delta;
+            person.vx *= Math.pow(VELOCITY_DAMPING, delta * NOMINAL_FPS);
+            person.vy *= Math.pow(VELOCITY_DAMPING, delta * NOMINAL_FPS);
+            person.x += person.vx * delta;
+            person.y += person.vy * delta;
+
+            const ropeX = person.x - handX;
+            const ropeY = person.y - handY;
+            const ropeDistance = Math.max(ROPE_EPSILON, Math.hypot(ropeX, ropeY));
+            const normalX = ropeX / ropeDistance;
+            const normalY = ropeY / ropeDistance;
+
+            // keep the kite inside the rope's radius and remove outward speed.
+            if (ropeDistance > person.ropeLength) {
+              person.x = handX + normalX * person.ropeLength;
+              person.y = handY + normalY * person.ropeLength;
+
+              const radialVelocity = person.vx * normalX + person.vy * normalY;
+
+              // remove velocity moving away from the hand so the rope cannot stretch.
+              if (radialVelocity > 0) {
+                person.vx -= radialVelocity * normalX;
+                person.vy -= radialVelocity * normalY;
+              }
+            }
+
+            // stop the kite at the grass until the wind produces enough lift.
+            if (person.y >= person.landedY) {
+              person.y = person.landedY;
+              person.vx = 0;
+              person.vy = 0;
+              person.landed = true;
+            }
+          }
+
+          const kiteX = person.x;
+          const kiteY = person.y;
+
+          // the rope already supplies the kite's orientation, even while slack.
+          // rotate so the kite-shape's bottom-right corner faces the hand.
+          const angle =
+            Math.atan2(handY - kiteY, handX - kiteX) * RADIANS_TO_DEGREES -
+            KITE_ROTATION_OFFSET_DEGREES;
+          person.kite.style.transform = `translate(${kiteX - KITE_HALF_SIZE}px, ${kiteY - KITE_HALF_SIZE}px) rotateZ(${angle}deg)`;
+
+          // The person, kite, and rope share this group's depth. Rotate the
+          // kite's bottom-right anchor into the group's 2D coordinate space.
+          const anchorAngle = angle / RADIANS_TO_DEGREES;
+          const anchorOffset = KITE_HALF_SIZE - 2;
+          const ropeEndX =
+            kiteX +
+            anchorOffset * Math.cos(anchorAngle) -
+            anchorOffset * Math.sin(anchorAngle);
+          const ropeEndY =
+            kiteY +
+            anchorOffset * Math.sin(anchorAngle) +
+            anchorOffset * Math.cos(anchorAngle);
+          const ropeDistance = Math.hypot(person.x - handX, person.y - handY);
+          const slack = Math.max(0, person.ropeLength - ropeDistance);
+          const chord = Math.hypot(ropeEndX - handX, ropeEndY - handY);
+          const sag = Math.min(
+            chord * 0.45,
+            ROPE_SLACK_OFFSET + slack * ROPE_SLACK_FACTOR
+          );
+
+          if (RENDER_KITE_ROPES) {
+            const ropeAngle = Math.atan2(
+              ropeEndY - handY,
+              ropeEndX - handX
+            );
+            const localSagX = Math.sin(ropeAngle) * sag;
+            const localSagY = Math.cos(ropeAngle) * sag;
+            person.ropeLayer.style.transform = `rotate(${ropeAngle}rad)`;
+            person.rope.setAttribute(
+              "d",
+              `M ${ROPE_LAYER_PADDING} ${ROPE_LAYER_PADDING} ` +
+              `Q ${ROPE_LAYER_PADDING + chord / 2 + localSagX} ` +
+              `${ROPE_LAYER_PADDING + localSagY} ` +
+              `${ROPE_LAYER_PADDING + chord} ${ROPE_LAYER_PADDING}`
+            );
+          }
+        });
+      };
+      requestAnimationFrame(draw);
+
+    
+    </script>
+    
+    <script>
+    
+    var Josh = "nice";
+    console.log(Josh);
+    
+    
+     function changeImage1() {
+        if (document.getElementById("house").src == "house.jpg") 
+        {
+        document.getElementById("house").src = "background.jpg";    
+        }
+        else if (document.getElementById("image").src == "image2.png")
+        {
+            document.getElementById("image").src = "image1.png";
+        }
+        else if (document.getElementById("image").src == "image3.png")
+        {
+            document.getElementById("image").src = "image2.png";
+    }
+    else {}
+ }
+    
+    
+    </script>
+    
+      <style>
+    :root {
+      --scene-scale: 0.64;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 1em;
+      color: black;
+      background: #d8e7d2;
+      width:250px;
+    }
+
+    #col1 {
+      position: relative;
+      z-index: 4;
+      max-width: 80ch;
+      min-width: 0;
+    }
+
+    #col1 ul {
+      margin-block: 0;
+    }
+
+    #col1 > section {
+      padding-bottom: 1em;
+    }
+
+    iframe {
+      max-width: 100%;
+    }
+
+    #col2 {
+      position: relative;
+      z-index: 1;
+      min-width: 0;
+    }
+
+    #rsvps {
+      columns: 4;
+    }
+
+    #schedule td {
+      border: 1px solid #aeaeae;
+      padding: 0.2ch;
+    }
+
+/* 
+    @media (min-width: 1000px) {
+      body {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: clamp(1em, 4vw, 5em);
+      }
+
+      #scene {
+        width: calc(100% + 10em);
+        margin-left: -10em;
+      }
+    }
+ */
+
+    .scene-controls {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1em;
+      margin-bottom: 0.35em;
+      font-size: smaller;
+    }
+
+    #scene {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 25 / 14;
+      overflow: visible;
+      background: transparent;
+      perspective: 700px;
+      perspective-origin: 50% 32%;
+      touch-action: pan-y;
+    }
+
+    #world {
+      position: absolute;
+      width: 1000px;
+      height: 560px;
+      transform: scale(var(--scene-scale));
+      transform-origin: top left;
+      transform-style: preserve-3d;
+    }
+
+    #scene-space {
+      position: absolute;
+      inset: 0;
+      width: 1000px;
+      height: 560px;
+      transform: translateZ(-45px) rotateX(-22deg);
+      transform-origin: 50% 350px;
+      transform-style: preserve-3d;
+    }
+
+    #grass {
+      position: absolute;
+      z-index: 1;
+      left: 150px;
+      top: 350px;
+      width: 700px;
+      height: 340px;
+      background: url("../../1/img/grass.jpg") center / cover;
+      filter: grayscale(0.35) brightness(0.9);
+      transform: rotateX(90deg);
+      transform-origin: 50% 0;
+    }
+
+    #tree1 {
+      position: absolute;
+      z-index: 2;
+      left: 650px;
+      top: 50px;
+      width: 300px;
+      height: 300px;
+      object-fit: contain;
+      transform: translateZ(-20px) rotateY(315deg) rotateZ(0);
+      transform-origin: 50% 100%;
+    }
+
+    #kite-fliers {
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+      width: 1000px;
+      height: 560px;
+      overflow: visible;
+      transform-style: preserve-3d;
+    }
+
+    .kite-person {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 0;
+      height: 0;
+      transform-style: preserve-3d;
+    }
+
+    .kite-rope-layer {
+      position: absolute;
+      left: 0;
+      top: 0;
+      z-index: 1;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .kite-rope {
+      fill: none;
+      stroke: #453b32;
+      stroke-width: 1.25;
+      vector-effect: non-scaling-stroke;
+    }
+
+    .flier,
+    .kite {
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+
+    .flier {
+      z-index: 4;
+      width: 58px;
+      height: 112px;
+    }
+
+    .person-drawing {
+      position: absolute;
+      inset: 0;
+      height: 108px;
+      transform: scale(0.75);
+      transform-origin: 50% 100%;
+    }
+
+    .head {
+      position: absolute;
+      left: 11px;
+      top: 0;
+      width: 36px;
+      height: 36px;
+      border: 2px solid #252525;
+      border-radius: 50%;
+      background: #f2cba6;
+      overflow: hidden;
+      display: grid;
+      place-items: center;
+      font: 20px/1 sans-serif;
+    }
+
+    .head img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .flier:not(.has-photo) .head {
+      background: var(--kite-color);
+    }
+
+    .body,
+    .arm,
+    .leg {
+      position: absolute;
+      width: 2px;
+      background: #252525;
+      transform-origin: top center;
+    }
+
+    .body {
+      left: 28px;
+      top: 35px;
+      height: 40px;
+    }
+
+    .arm {
+      left: 29px;
+      top: 45px;
+      height: 31px;
+    }
+
+    .arm-left {
+      transform: rotate(54deg);
+    }
+
+    .arm-right {
+      transform: rotate(-62deg);
+    }
+
+    .leg {
+      left: 29px;
+      top: 73px;
+      height: 35px;
+    }
+
+    .leg-left {
+      transform: rotate(27deg);
+    }
+
+    .leg-right {
+      transform: rotate(-27deg);
+    }
+
+    .kite {
+      z-index: 3;
+      width: 44px;
+      height: 44px;
+    }
+
+    .kite-shape {
+      position: absolute;
+      inset: 2px;
+      background: var(--kite-color);
+    }
+
+    @media (max-width: 900px) {
+      #col2 {
+        width: min(100%, 700px);
+        margin: 0 auto;
+      }
+
+      #rsvps {
+        columns: 2;
+      }
+    }
+
+    @media (max-width: 480px) {
+      body {
+        padding: 0.6em;
+      }
+
+      .scene-controls {
+        font-size: 0.8em;
+      }
+
+      input {
+        max-width: 100%;
+      }
+    }
+
+  </style>
+    
+<style>
+
+body { background-color: #FFF; }
+
+h1 {color : #888;}
+
+.background {width : 250px;position: fixed;top: 0;right: 0;
+    animation:spin 4s linear infinite;         opacity : .5;
+}
+@-moz-keyframes spin { 
+    100% { -moz-transform: rotate(360deg); } 
+}
+@-webkit-keyframes spin { 
+    100% { -webkit-transform: rotate(360deg); } 
+}
+@keyframes spin { 
+    100% { 
+        -webkit-transform: rotate(360deg); 
+        transform:rotate(360deg); 
+
+    } 
+
+}
+
+#house {width: 250px;
+    display: block;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    opacity : .25;}
+    
+    p { max-width : 300px}
+
+table { width: 600px}
+
+
+    .kite {
+      z-index: 3;
+      width: 44px;
+      height: 44px;
+    }
+
+    .kite-shape {
+      position: absolute;
+      inset: 2px;
+      background: var(--kite-color);
+    }
+
+
+#kite-fliers {
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+      width: 1000px;
+      height: 560px;
+      overflow: visible;
+      transform-style: preserve-3d;
+    }
+
+    .kite-person {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 0;
+      height: 0;
+      transform-style: preserve-3d;
+    }
+
+    .kite-rope-layer {
+      position: absolute;
+      left: 0;
+      top: 0;
+      z-index: 1;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .kite-rope {
+      fill: none;
+      stroke: #453b32;
+      stroke-width: 1.25;
+      vector-effect: non-scaling-stroke;
+    }
+
+    .flier,
+    .kite {
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+
+</style>
+
+</head>
+<body>
+<h1>Happy HTML</h1>
+
+<p>I'm Josh! this is my website</p>
+
+
+<p>This is the first html doc I've hand written in quite a while. Let's see how far I can get<p>
+
+
+
+<table border=1>
+  <tr>
+    <td>Tiny</td>
+    <td>kite</td>
+    <td>Guy</td>
+  </tr>
+  <tr>
+    <td>Wind</td>
+    <td>
+          <span id="wind-readout" aria-live="polite"> → 120</span>
+    </td>
+    <td rowspan=2>
+    
+              <span id="wind-readout" aria-live="polite"> → 120</span>
+    </td>
+  </tr>
+  <tr>
+    <td rowspan=2>Seven</td>
+    <td rowspan=2>Eight</td>
+    <td>Extra</td>
+  </tr>
+  <tr>
+    <td>Nine</td>
+  </tr>
+</table>
+
+    <div class="scene-controls">
+
+    </div>
+
+
+    <div id="scene">
+      <div id="world">
+        <div id="scene-space">
+
+ <div id="kite-fliers">
+
+<div class="kite-person" style="transform: translateZ(310.54px);"><svg class="kite-rope-layer" width="373" height="128" aria-hidden="true" style="left: 250.555px; top: 249.67px; transform-origin: 64px 64px; transform: rotate(-0.923043rad);"><path class="kite-rope" d="M 64 64 Q 169.16809867588813 66.41358546081828 280.7157287525381 64"></path></svg>
+            <div class="flier" style="--kite-color: #d8e7d2; transform: translate(264.275px, 242px);">
+              <div class="person-drawing">
+                <div class="head" aria-hidden="true"></div>
+                <div class="body"></div>
+                <div class="arm arm-left"></div>
+                <div class="arm arm-right"></div>
+                <div class="leg leg-left"></div>
+                <div class="leg leg-right"></div>
+              </div>
+            </div>
+          <div class="kite" style="--kite-color: #FFD700; transform: translate(440.387px, 96.2969px) rotateZ(82.1135deg);">
+            <div class="kite-shape"></div>
+          </div></div>
+          
+          </div>
+          </div>
+          </div>
+                    </div>
+
+<img class="background" src="background.jpg" style=" transform: rotate(20deg);" />
+
+<img id="house" src="house.jpg" /> 
+
+
+<!-- 
+<button name="button1" id="button1" onclick="changeImage1()"> Wind</button>
+ -->
+
+
+
+
+
+
+<p></p>
+    
+</body>
+</html>
