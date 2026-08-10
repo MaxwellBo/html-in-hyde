@@ -1,0 +1,14 @@
+.grass {
+    position: relative;
+    width: 1000px;
+    height: 700px;
+  
+    background: url("images/grass.jpg") center / contain;
+  }
+  
+  .item {
+    position: absolute;
+    width: 80px;
+    object-fit: contain;
+  }
+  
