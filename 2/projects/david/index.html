@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Bag</title>
+  <link rel="stylesheet" href="bag.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.js"></script>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+    }
+
+    h1 {
+      text-align: center;
+      top: 1rem;
+      left: 1.25rem;
+      z-index: 10;
+      margin: 0;
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      font-weight: 600;
+      letter-spacing: 0.01em;
+      text-shadow: 0 2px 18px rgba(0, 0, 0, 0.55);
+      pointer-events: none;
+    }
+
+    .bag, #full_flatlay_container, #full_flatlay_svg {
+      width: 100vw;
+      height: 100vh;
+      display: block;
+    }
+
+    #full_flatlay_svg filter {
+      filter: url(#drop-shadow);
+    }
+  </style>
+</head>
+<body>
+
+  <h1>What's in my bag?</h1>
+<div class="bag">
+  <div id="full_flatlay_container">
+    <svg id="full_flatlay_svg" aria-label="Bag flatlay — hover items to identify them"></svg>
+  </div>
+</div>
+
+<script src="bag.js"></script>
+
+</body>
+</html>
