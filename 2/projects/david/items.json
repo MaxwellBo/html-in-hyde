@@ -1,0 +1,197 @@
+{
+  "image": "/bag/img/full_flatlay.jpg",
+  "width": 1024,
+  "height": 768,
+  "items": [
+    {
+      "label": "wallet",
+      "x": 161,
+      "y": 100,
+      "width": 141,
+      "height": 176
+    },
+    {
+      "label": "pen",
+      "x": 331,
+      "y": 104,
+      "width": 30,
+      "height": 126
+    },
+    {
+      "label": "knife",
+      "x": 368,
+      "y": 117,
+      "width": 49,
+      "height": 106
+    },
+    {
+      "label": "microphone",
+      "description": "This is a Boya Magic.",
+      "x": 434,
+      "y": 45,
+      "width": 60,
+      "height": 205
+    },
+    {
+      "label": "usb_stick",
+      "x": 508,
+      "y": 138,
+      "width": 37,
+      "height": 62
+    },
+    {
+      "label": "mosquito_repellent",
+      "x": 552,
+      "y": 131,
+      "width": 34,
+      "height": 74
+    },
+    {
+      "label": "tiger_balm",
+      "x": 590,
+      "y": 155,
+      "width": 36,
+      "height": 38
+    },
+    {
+      "label": "lip_balm",
+      "x": 635,
+      "y": 125,
+      "width": 58,
+      "height": 97
+    },
+    {
+      "label": "toothbrush",
+      "x": 714,
+      "y": 113,
+      "width": 68,
+      "height": 71
+    },
+    {
+      "label": "airtag",
+      "x": 711,
+      "y": 193,
+      "width": 50,
+      "height": 46
+    },
+    {
+      "label": "pills",
+      "x": 814,
+      "y": 105,
+      "width": 94,
+      "height": 102
+    },
+    {
+      "label": "infinity_tool",
+      "x": 305,
+      "y": 252,
+      "width": 502,
+      "height": 48
+    },
+    {
+      "label": "gloves",
+      "x": 814,
+      "y": 214,
+      "width": 126,
+      "height": 103
+    },
+    {
+      "label": "acme_bag",
+      "x": 62,
+      "y": 297,
+      "width": 196,
+      "height": 248
+    },
+    {
+      "label": "harness",
+      "x": 262,
+      "y": 303,
+      "width": 521,
+      "height": 140
+    },
+    {
+      "label": "headphones",
+      "x": 784,
+      "y": 369,
+      "width": 85,
+      "height": 155
+    },
+    {
+      "label": "earbuds_dongle",
+      "x": 881,
+      "y": 335,
+      "width": 65,
+      "height": 165
+    },
+    {
+      "label": "nano_bag",
+      "x": 151,
+      "y": 560,
+      "width": 136,
+      "height": 110
+    },
+    {
+      "label": "battery",
+      "x": 287,
+      "y": 518,
+      "width": 102,
+      "height": 150
+    },
+    {
+      "label": "magmo",
+      "x": 394,
+      "y": 526,
+      "width": 87,
+      "height": 142
+    },
+    {
+      "label": "light",
+      "x": 501,
+      "y": 523,
+      "width": 47,
+      "height": 110
+    },
+    {
+      "label": "inhaler",
+      "x": 550,
+      "y": 526,
+      "width": 42,
+      "height": 114
+    },
+    {
+      "label": "pocket_knife",
+      "x": 595,
+      "y": 544,
+      "width": 44,
+      "height": 104
+    },
+    {
+      "label": "keychain",
+      "x": 646,
+      "y": 492,
+      "width": 95,
+      "height": 174
+    },
+    {
+      "label": "sharge_disk",
+      "x": 744,
+      "y": 523,
+      "width": 87,
+      "height": 158
+    },
+    {
+      "label": "airpods",
+      "x": 858,
+      "y": 574,
+      "width": 113,
+      "height": 76
+    },
+    {
+      "label": "earplugs",
+      "x": 861,
+      "y": 528,
+      "width": 103,
+      "height": 43
+    }
+  ]
+}

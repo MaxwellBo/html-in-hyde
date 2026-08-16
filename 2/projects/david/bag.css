@@ -1,0 +1,134 @@
+.bag-popover {
+  position: fixed;
+  z-index: 20;
+  max-width: min(240px, calc(100vw - 24px));
+  padding: 0.55rem 0.85rem;
+  border: 1px solid rgba(40, 32, 18, 0.18);
+  border-radius: 6px;
+  background: rgba(28, 24, 18, 0.92);
+  color: #f6f0e4;
+  font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  font-size: 1rem;
+  line-height: 1.25;
+  letter-spacing: 0.01em;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.28);
+  pointer-events: none;
+  transform-origin: top left;
+  animation: bag-popover-in 120ms ease-out;
+}
+
+.bag-popover[hidden] {
+  display: none;
+}
+
+.bag-popover strong {
+  font-weight: 600;
+}
+
+@keyframes bag-popover-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+#full_flatlay_svg .box-glow {
+  transition: fill 140ms ease, stroke 140ms ease;
+}
+
+#full_flatlay_svg .box.is-hot .box-glow {
+  fill: rgba(255, 236, 160, 0.18);
+  stroke: rgba(255, 220, 120, 0.85);
+}
+
+.bag-error {
+  position: fixed;
+  left: 1rem;
+  bottom: 1rem;
+  color: crimson;
+  font-family: system-ui, sans-serif;
+}
+
+body.bag-lightbox-open {
+  overflow: hidden;
+}
+
+.bag-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  background: rgba(12, 10, 8, 0.82);
+  backdrop-filter: blur(4px);
+  animation: bag-lightbox-in 160ms ease-out;
+}
+
+.bag-lightbox[hidden] {
+  display: none;
+}
+
+.bag-lightbox-figure {
+  margin: 0;
+  max-width: min(920px, 100%);
+  max-height: calc(100vh - 3rem);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.bag-lightbox-figure img {
+  display: block;
+  max-width: 100%;
+  max-height: calc(100vh - 6.5rem);
+  width: auto;
+  height: auto;
+  border-radius: 4px;
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.45);
+  background: #2a241c;
+}
+
+.bag-lightbox-figure figcaption {
+  color: #f6f0e4;
+  font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  font-size: clamp(1.1rem, 2.4vw, 1.45rem);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  text-align: center;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
+}
+
+.bag-lightbox-close {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.9rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(246, 240, 228, 0.12);
+  color: #f6f0e4;
+  font-size: 1.75rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.bag-lightbox-close:hover {
+  background: rgba(246, 240, 228, 0.22);
+}
+
+@keyframes bag-lightbox-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

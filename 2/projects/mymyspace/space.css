@@ -1,0 +1,29 @@
+h1 {
+  color: green;
+  background-color: antiquewhite;
+  font-family: 'Comic Sans Ms';
+}
+body {
+    font-family: 'Comic Sans Ms';
+    background-color: antiquewhite;
+    opacity: 0.8;
+}
+
+#profile_picture {
+    height: 300px;
+    border-radius: 200px;
+}
+
+ol li {
+    float: left;
+    background-color: aquamarine;
+    border: 1px dotted black;
+    margin: 2px;
+    padding: 3px;
+}
+
+html {
+    background-image: url("img/tomorrow_25.jpg");
+    /* opacity: 0.5; */
+    /*  */
+}
