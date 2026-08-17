@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Build a tower!</title>
+</head>
+<style>
+    body {
+        margin: 0;
+        background-image: linear-gradient(to top, rgb(164, 255, 247), rgb(241, 241, 236));
+        font-family: 'Brush Script MT', cursive;
+        scroll-behavior: smooth;
+    }
+    #baseBuildingBlock {
+        width: calc(150px * 1.5);
+        height: 150px;
+        background: red;
+        position: absolute;
+        bottom: 0px;
+    }
+    #fallingBuildingBlock {
+         width: calc(150px * 1.5);
+        height: 150px;
+        position: relative;
+    }
+    #mainArea {
+        width: 2000px;
+        height: 100vh;
+    }
+    #fallArea {
+        width: 100vw;
+        height: 100vh;
+        position: fixed;
+    }
+    #container {
+        position: relative;
+    }
+    #endContainer{
+        display: flex;
+        width: 100%;
+        justify-content: center;
+        display: none;
+    }
+</style>
+<body>
+    <div id="container">
+        <div id="fallArea">
+            <div id="endContainer">
+                <h1 id="endHeading">ITS OVER! You got so high: 100</h1>
+            </div>
+        </div>
+        <div id="mainArea">
+            <img src="block1.png" id="baseBuildingBlock"></div>
+        </div>
+    </div>  
+</body>
+<script src="vibes.js"></script>
+</html>
